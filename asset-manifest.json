@@ -1,0 +1,18 @@
+{
+  "files": {
+    "main.css": "/static/css/main.073c9b0a.css",
+    "main.js": "/static/js/main.7458f198.js",
+    "static/js/787.7714a32c.chunk.js": "/static/js/787.7714a32c.chunk.js",
+    "index.html": "/index.html",
+    "static/media/lvl1skillchains.csv": "/static/media/lvl1skillchains.b599a18e0fd514ed85c0.csv",
+    "static/media/sword.csv": "/static/media/sword.0d8dfa0b18eb6570ddd7.csv",
+    "static/media/axe.csv": "/static/media/axe.a945762fcaccf92da5c2.csv",
+    "main.073c9b0a.css.map": "/static/css/main.073c9b0a.css.map",
+    "main.7458f198.js.map": "/static/js/main.7458f198.js.map",
+    "787.7714a32c.chunk.js.map": "/static/js/787.7714a32c.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.073c9b0a.css",
+    "static/js/main.7458f198.js"
+  ]
+}
