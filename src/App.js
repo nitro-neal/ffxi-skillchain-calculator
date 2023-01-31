@@ -1,11 +1,61 @@
 import './App.css';
 import React, { useState, useEffect } from 'react';
+import Papa from 'papaparse';
 
 import axe from './skillchain-info/axe.csv';
 import sword from './skillchain-info/sword.csv';
 import lvl1skillchains from './skillchain-info/lvl1skillchains.csv';
 
-import Papa from 'papaparse';
+// let axe = 
+//   `lvl,name,element1,element2,element3
+//   5,Raging Axe,Detonation,Impaction,-
+//   40,Smash Axe,Induration,Reverberation,-
+//   70,Gale Axe,Detonation,-,-
+//   100,Avalanche Axe,Scission,Impaction,-
+//   150,Spinning Axe,Liquefaction,Scission,Impaction
+//   175,Rampage,Scission,-,-
+//   200,Calamity,Scission,Impaction,-
+//   225,Mistral Axe,Fusion,-,-
+//   240,Decimation,Fusion,Reverberation,-
+//   290,Bora Axe,Scission,Detonation,-
+//   357,Ruinator,Distortion,Detonation,-`
+
+// let sword = 
+//   `lvl,name,element1,element2,element3
+//   5,Fast Blade,Scission,-
+//   30,Burning Blade,Liquefaction,-
+//   50,Red Lotus Blade,Liquefaction,Detonation
+//   75,Flat Blade,Impaction,-
+//   100,Shining Blade,Scission,-
+//   125,Seraph Blade,Scission,-
+//   150,Circle Blade,Reverberation,Impaction
+//   175,Spirits Within,-,-
+//   200,Vorpal Blade,Scission,Impaction
+//   225,Swift Blade,Gravitation,-
+//   240,Savage Blade,Fragmentation,Scission
+//   300,Sanguine Blade,-,-
+//   357,Requiescat,Gravitation,Scission`
+
+
+// let lvl1skillchains =
+// `ws1,ws2,result
+// Impaction,Liquefaction,Liquefaction
+// Scission,Liquefaction,Liquefaction
+// Reverberation,Impaction,Impaction
+// Induration,Impaction,Impaction
+// Impaction,Detonation,Detonation
+// Compression,Detonation,Detonation
+// Scission,Detonation,Detonation
+// Liquefaction,Scission,Scission
+// Detonation,Scission,Scission
+// Transfixion,Reverberation,Reverberation
+// Scission,Reverberation,Reverberation
+// Reverberation,Induration,Induration
+// Induration,Compression,Compression
+// Transfixion,Compression,Compression
+// Compression,Transfixion,Transfixion`
+
+
 
 function SkillchainResults(weaponOne, weaponTwo, lvl1sc) {
   let lvl1skillchainsMap = {}
@@ -38,11 +88,13 @@ function App() {
   const [swordMoves, setSwordMoves] = useState([]);
   const [lvl1sc, setlvl1sc] = useState([]);
 
-  useEffect(() => {        
+  useEffect(() => {       
+    console.log(axe) 
     Papa.parse(axe, {
       download: true,
       header: true,
       complete: (results) => {
+        console.log(results)
         setAxeMoves(results.data)
       },
     });
