@@ -1,0 +1,12 @@
+lvl,name,element1,element12,element3,power
+5,Hard Slash,Scission,-,-,50
+40,Power Slash,Transfixion,-,-,50
+70,Frostbite,Induration,-,-,50
+100,Freezebite,Induration,Detonation,-,50
+150,Shockwave,Reverberation,-,-,50
+175,Crescent Moon,Scission,-,-,50
+200,Sickle Moon,Scission,Impaction,-,50
+225,Spinning Slash,Fragmentation,-,-,50
+250,Ground Strike,Fragmentation,Distortion,-,50
+290,Herculean Slash,Induration,Impaction,Detonation,50
+357,Resolution,Fragmentation,Scission,-,50
