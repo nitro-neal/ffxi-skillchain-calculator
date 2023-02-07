@@ -31,6 +31,7 @@ import jobWeaponCSV from "./skillchain-info/job-weapon.csv";
 // job ws levels
 import warWsCSV from "./skillchain-info/war-ws.csv";
 import thfWsCSV from "./skillchain-info/thf-ws.csv";
+import drkWsCSV from "./skillchain-info/drk-ws.csv";
 
 function App() {
   // CSVs
@@ -56,13 +57,17 @@ function App() {
 
   const [warWsLvl, setWarWsLvl] = useState([]);
   const [thfWsLvl, setThfWsLvl] = useState([]);
+  const [drkWsLvl, setDrkWsLvl] = useState([]);
 
   // UI
   const [partyLevel, setPartyLevel] = useState(10);
+  const [selectedParty, setSelectedParty] = useState([]);
   const [selectedJob1, setJob1] = useState([]);
   const [selectedJob2, setJob2] = useState([]);
   const [selectedWeapon1, setWeapon1] = useState([]);
   const [selectedWeapon2, setWeapon2] = useState([]);
+
+  const [weaponFlip, setWeaponFlip] = useState(true);
 
   useEffect(() => {
     // Parse Weapons
@@ -103,9 +108,6 @@ function App() {
       header: true,
       complete: (results) => {
         setGreatAxeMoves(results.data);
-
-        // TODO: Move this somewhere else
-        setWeapon1(results.data);
       },
     });
 
@@ -162,6 +164,9 @@ function App() {
       header: true,
       complete: (results) => {
         setScytheMoves(results.data);
+
+        // TODO: Move this somewhere else
+        setWeapon1(results.data);
       },
     });
 
@@ -233,71 +238,151 @@ function App() {
         setJob2(results.data);
       },
     });
+
+    Papa.parse(drkWsCSV, {
+      download: true,
+      header: true,
+      complete: (results) => {
+        console.log(results);
+        setDrkWsLvl(results.data);
+      },
+    });
   }, []);
 
+  const setWeapon = (moves, job) => {
+    if (weaponFlip) {
+      console.log("SET 1");
+      setWeapon1(moves);
+      setJob1(job);
+    } else {
+      console.log("SET 2");
+      setWeapon2(moves);
+      setJob2(job);
+    }
+
+    setWeaponFlip(!weaponFlip);
+  };
+
   const moveChanged = (e) => {
-    let weapon = e.target.value.trim();
+    let str = e.target.value.split("_");
+    console.log({ str });
+    let jobName = str[0];
+    let weapon = str[1].trim();
+
+    let job;
+    if (jobName == "warrior") {
+      job = warWsLvl;
+    }
+
+    if (jobName == "thief") {
+      job = thfWsLvl;
+    }
+
+    if (jobName == "dark knight") {
+      job = drkWsLvl;
+    }
 
     if (weapon == "archery") {
-      setWeapon1(archeryMoves);
+      setWeapon(archeryMoves, job);
     }
 
     if (weapon == "axe") {
-      setWeapon1(axeMoves);
+      setWeapon(axeMoves, job);
     }
 
     if (weapon == "club") {
-      setWeapon1(clubMoves);
+      setWeapon(clubMoves, job);
     }
 
     if (weapon == "dagger") {
-      setWeapon1(daggerMoves);
+      setWeapon(daggerMoves, job);
     }
 
     if (weapon == "great axe") {
-      setWeapon1(greatAxeMoves);
+      setWeapon(greatAxeMoves, job);
     }
 
     if (weapon == "great katana") {
-      setWeapon1(greatKatanaMoves);
+      setWeapon(greatKatanaMoves, job);
     }
 
     if (weapon == "great sword") {
-      setWeapon1(greatSwordMoves);
+      setWeapon(greatSwordMoves, job);
     }
 
     if (weapon == "hand to hand") {
-      setWeapon1(handToHandMoves);
+      setWeapon(handToHandMoves, job);
     }
 
     if (weapon == "katana") {
-      setWeapon1(katanaMoves);
+      setWeapon(katanaMoves, job);
     }
 
     if (weapon == "marksmanship") {
-      setWeapon1(marksmanshipMoves);
+      setWeapon(marksmanshipMoves, job);
     }
 
     if (weapon == "polearm") {
-      setWeapon1(polearmMoves);
+      setWeapon(polearmMoves, job);
     }
 
     if (weapon == "scythe") {
-      setWeapon1(scythMoves);
+      setWeapon(scythMoves, job);
     }
 
     if (weapon == "staff") {
-      setWeapon1(staffMoves);
+      setWeapon(staffMoves, job);
     }
 
     if (weapon == "summon") {
-      setWeapon1(summonMoves);
+      setWeapon(summonMoves, job);
     }
 
     if (weapon == "sword") {
-      setWeapon1(swordMoves);
+      setWeapon(swordMoves, job);
     }
   };
+
+  const selectPartyMemeber = (e) => {
+    let party = JSON.parse(JSON.stringify(selectedParty));
+
+    if (e.target.checked == true) {
+      if (party.length >= 2) {
+        return;
+      }
+      console.log("checked");
+      party.push(e.target.value);
+      console.log(party);
+    } else {
+      console.log("unchekced");
+      party = removeItemOnce(party, e.target.value);
+    }
+    console.log(selectedParty);
+    setSelectedParty(party);
+
+    // console.log(selectedParty);
+    // setSelectedParty(selectedParty);
+    // console.log(e.target);
+
+    // if (selectedParty.includes(e.target.value)) {
+    //   // selectPartyMemeber.remove()
+    //   const index = selectedParty.indexOf(e.target.value);
+    //   const x = selectedParty.splice(index, 1);
+    // } else {
+    //   selectedParty.push(e.target);
+    // }
+
+    // console.log(selectedParty);
+    // setSelectedParty(selectedParty);
+  };
+
+  function removeItemOnce(arr, value) {
+    var index = arr.indexOf(value);
+    if (index > -1) {
+      arr.splice(index, 1);
+    }
+    return arr;
+  }
 
   const SkillchainResults = (job1WsLvl, job2WsLvl, weaponOne, weaponTwo) => {
     if (
@@ -368,15 +453,40 @@ function App() {
   return (
     <div className="App">
       <h1>FFXI Skillchain Calculator</h1>
+      <h1>{selectedParty}</h1>
       <hr></hr>
       <MDBContainer>
         <h3>Your Party</h3>
+
         <MDBRow>
           {jobWeapon &&
             jobWeapon.map(function (jw, i) {
               return (
                 <MDBCol size="md">
-                  <JobWeaponSelect jobSelect={jw} moveChanged={moveChanged} />
+                  <p>{jw.name}</p>
+                  <input
+                    type="checkbox"
+                    name={jw.name}
+                    value={jw.name}
+                    onChange={selectPartyMemeber}
+                  />
+                </MDBCol>
+              );
+            })}
+        </MDBRow>
+
+        <hr></hr>
+
+        <MDBRow>
+          {selectedParty &&
+            selectedParty.map(function (sp, i) {
+              return (
+                <MDBCol size="md">
+                  <JobWeaponSelect
+                    jobWeapon={jobWeapon}
+                    selectedPartyMember={sp}
+                    moveChanged={moveChanged}
+                  />
                 </MDBCol>
               );
             })}
@@ -395,7 +505,6 @@ function App() {
       </MDBContainer>
       <hr></hr>
       <h3> Skillchains </h3>
-      <p> Axe moves </p>
 
       <p> Results </p>
       <div>

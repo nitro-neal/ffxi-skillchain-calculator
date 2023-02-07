@@ -1,5 +1,15 @@
 export default function JobWeaponSelect(props) {
-  let selectedJob = props.jobSelect;
+  // let selectedJob = props.jobSelect;
+
+  let selectedJob;
+
+  for (let jw of props.jobWeapon) {
+    // console.log("IN LOOP");
+    // console.log(jw);
+    if (jw.name == props.selectedPartyMember) {
+      selectedJob = jw;
+    }
+  }
 
   let weapons = selectedJob.weapons;
   weapons = weapons.split(",");
@@ -16,7 +26,11 @@ export default function JobWeaponSelect(props) {
       <p>{selectedJob.name}</p>
       <select onChange={(e) => props.moveChanged(e)}>
         {weapons.map((w) => {
-          return <option value={w}> {w} </option>;
+          return (
+            <option name={selectedJob.name} value={selectedJob.name + "_" + w}>
+              {w}
+            </option>
+          );
         })}
       </select>
     </>
