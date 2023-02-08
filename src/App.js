@@ -5,8 +5,7 @@ import JobWeaponSelect from "./components/JobWeaponSelect.js";
 
 import { MDBContainer, MDBRow, MDBCol, MDBInput } from "mdb-react-ui-kit";
 
-// skillchains
-import lvl1skillchainsCSV from "./skillchain-info/lvl1skillchains.csv";
+import * as util from "./Util.js";
 
 // weapon moves
 import archeryCSV from "./skillchain-info/archery.csv";
@@ -32,11 +31,58 @@ import jobWeaponCSV from "./skillchain-info/job-weapon.csv";
 import warWsCSV from "./skillchain-info/war-ws.csv";
 import thfWsCSV from "./skillchain-info/thf-ws.csv";
 import drkWsCSV from "./skillchain-info/drk-ws.csv";
+import pldWsCSV from "./skillchain-info/pld-ws.csv";
+
+// skillchains
+import lvl1skillchainsCSV from "./skillchain-info/lvl1skillchains.csv";
+
+let csvs = [
+  archeryCSV,
+  axeCSV,
+  clubCSV,
+  daggerCSV,
+  greatAxeCSV,
+  greatKatanaCSV,
+  greatSwordCSV,
+  handToHandCSV,
+  katanaCSV,
+  marksmanshipCSV,
+  polearmCSV,
+  scytheCSV,
+  staffCSV,
+  summonCSV,
+  swordCSV,
+  jobWeaponCSV,
+  warWsCSV,
+  thfWsCSV,
+  drkWsCSV,
+  pldWsCSV,
+  lvl1skillchainsCSV,
+];
+
+util.hi();
+
+class Weapon {
+  constructor(name, moves, csv) {
+    this.name = name;
+    this.moves = moves;
+    this.csv = csv;
+  }
+}
+
+class Job {
+  constructor(name, shortName, weapons, wsLevel) {
+    this.name = name;
+    this.shortName = shortName;
+    this.weapons = weapons;
+    this.wsLevel = wsLevel;
+  }
+}
 
 function App() {
-  // CSVs
-  const [lvl1sc, setlvl1sc] = useState([]);
+  const [ffxi, setFFXI] = useState({});
 
+  // CSVs
   const [archeryMoves, setArcheryMoves] = useState([]);
   const [axeMoves, setAxeMoves] = useState([]);
   const [clubMoves, setClubMoves] = useState([]);
@@ -48,351 +94,144 @@ function App() {
   const [katanaMoves, setKatanaMoves] = useState([]);
   const [marksmanshipMoves, setMarksmanshipMoves] = useState([]);
   const [polearmMoves, setPolearmMoves] = useState([]);
-  const [scythMoves, setScytheMoves] = useState([]);
+  const [scytheMoves, setScytheMoves] = useState([]);
   const [staffMoves, setStaffMoves] = useState([]);
   const [summonMoves, setSummonMoves] = useState([]);
   const [swordMoves, setSwordMoves] = useState([]);
 
-  const [jobWeapon, setJobWeapons] = useState([]);
+  const [jobWeaponMapping, setJobWeapons] = useState([]);
 
   const [warWsLvl, setWarWsLvl] = useState([]);
   const [thfWsLvl, setThfWsLvl] = useState([]);
   const [drkWsLvl, setDrkWsLvl] = useState([]);
+  const [pldWsLvl, setPldWsLvl] = useState([]);
+
+  const [lvl1sc, setlvl1sc] = useState([]);
 
   // UI
   const [partyLevel, setPartyLevel] = useState(10);
   const [selectedParty, setSelectedParty] = useState([]);
-  const [selectedJob1, setJob1] = useState([]);
-  const [selectedJob2, setJob2] = useState([]);
+  const [selectedJob1, setJob1] = useState({});
+  const [selectedJob2, setJob2] = useState({});
   const [selectedWeapon1, setWeapon1] = useState([]);
   const [selectedWeapon2, setWeapon2] = useState([]);
 
   const [weaponFlip, setWeaponFlip] = useState(true);
+  const [doneLoading, setDoneLoading] = useState(false);
 
   useEffect(() => {
-    // Parse Weapons
-    Papa.parse(archeryCSV, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        setArcheryMoves(results.data);
-      },
-    });
-
-    Papa.parse(axeCSV, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        setAxeMoves(results.data);
-      },
-    });
-
-    Papa.parse(clubCSV, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        setClubMoves(results.data);
-      },
-    });
-
-    Papa.parse(daggerCSV, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        setDaggerMoves(results.data);
-      },
-    });
-
-    Papa.parse(greatAxeCSV, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        setGreatAxeMoves(results.data);
-      },
-    });
-
-    Papa.parse(greatKatanaCSV, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        setGreatKatanaMoves(results.data);
-      },
-    });
-
-    Papa.parse(greatSwordCSV, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        setGreatSwordMoves(results.data);
-      },
-    });
-
-    Papa.parse(handToHandCSV, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        setHandToHandMoves(results.data);
-      },
-    });
-
-    Papa.parse(katanaCSV, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        setKatanaMoves(results.data);
-      },
-    });
-
-    Papa.parse(marksmanshipCSV, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        setMarksmanshipMoves(results.data);
-      },
-    });
-
-    Papa.parse(polearmCSV, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        setPolearmMoves(results.data);
-      },
-    });
-
-    Papa.parse(scytheCSV, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        setScytheMoves(results.data);
-
-        // TODO: Move this somewhere else
-        setWeapon1(results.data);
-      },
-    });
-
-    Papa.parse(staffCSV, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        setStaffMoves(results.data);
-      },
-    });
-
-    Papa.parse(summonCSV, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        setSummonMoves(results.data);
-      },
-    });
-
-    Papa.parse(swordCSV, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        setSwordMoves(results.data);
-
-        // TODO: Move this somewhere else
-        setWeapon2(results.data);
-      },
-    });
-
-    Papa.parse(lvl1skillchainsCSV, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        setlvl1sc(results.data);
-      },
-    });
-
-    Papa.parse(jobWeaponCSV, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        console.log(results);
-        setJobWeapons(results.data);
-      },
-    });
-
-    Papa.parse(warWsCSV, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        console.log(results.data);
-        console.log(results);
-        setWarWsLvl(results.data);
-
-        // TODO: Move this somewhere else
-        setJob1(results.data);
-      },
-    });
-
-    Papa.parse(thfWsCSV, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        console.log(results);
-        setThfWsLvl(results.data);
-
-        // TODO: Move this somewhere else
-        setJob2(results.data);
-      },
-    });
-
-    Papa.parse(drkWsCSV, {
-      download: true,
-      header: true,
-      complete: (results) => {
-        console.log(results);
-        setDrkWsLvl(results.data);
-      },
-    });
+    Promise.all(
+      csvs.map(
+        (url) =>
+          new Promise((resolve, reject) =>
+            Papa.parse(url, {
+              download: true,
+              header: true,
+              complete: resolve,
+              error: reject,
+            })
+          )
+      )
+    )
+      .then(async function (results) {
+        await setArcheryMoves(results[0].data);
+        await setAxeMoves(results[1].data);
+        await setClubMoves(results[2].data);
+        await setDaggerMoves(results[3].data);
+        await setGreatAxeMoves(results[4].data);
+        await setGreatKatanaMoves(results[5].data);
+        await setGreatSwordMoves(results[6].data);
+        await setHandToHandMoves(results[7].data);
+        await setKatanaMoves(results[8].data);
+        await setMarksmanshipMoves(results[9].data);
+        await setPolearmMoves(results[10].data);
+        await setScytheMoves(results[11].data);
+        await setStaffMoves(results[12].data);
+        await setSummonMoves(results[13].data);
+        await setSwordMoves(results[14].data);
+        await setJobWeapons(results[15].data);
+        await setWarWsLvl(results[16].data);
+        await setThfWsLvl(results[17].data);
+        await setDrkWsLvl(results[18].data);
+        await setPldWsLvl(results[19].data);
+        await setlvl1sc(results[20].data);
+        await setDoneLoading(true);
+      })
+      .catch(
+        //log the error
+        (err) => console.warn("Something went wrong:", err)
+      );
   }, []);
 
-  const setWeapon = (moves, job) => {
-    if (weaponFlip) {
-      console.log("SET 1");
-      setWeapon1(moves);
-      setJob1(job);
-    } else {
-      console.log("SET 2");
-      setWeapon2(moves);
-      setJob2(job);
-    }
+  useEffect(() => {
+    if (doneLoading == true) {
+      let weapons = [];
+      weapons.push(new Weapon("archery", archeryMoves, archeryCSV));
+      weapons.push(new Weapon("axe", axeMoves, axeCSV));
+      weapons.push(new Weapon("club", clubMoves, clubCSV));
+      weapons.push(new Weapon("dagger", daggerMoves, daggerCSV));
+      weapons.push(new Weapon("greatAxe", greatAxeMoves, greatAxeCSV));
+      weapons.push(new Weapon("greatKatana", greatKatanaMoves, greatKatanaCSV));
+      weapons.push(new Weapon("greatSword", greatSwordMoves, greatSwordCSV));
+      weapons.push(new Weapon("handToHand", handToHandMoves, handToHandCSV));
+      weapons.push(new Weapon("katana", katanaMoves, katanaCSV));
+      weapons.push(new Weapon("marksmanship", marksmanshipMoves, marksmanshipCSV));
+      weapons.push(new Weapon("polearm", polearmMoves, polearmCSV));
+      weapons.push(new Weapon("scythe", scytheMoves, scytheCSV));
+      weapons.push(new Weapon("staff", staffMoves, staffCSV));
+      weapons.push(new Weapon("summon", summonMoves, summonCSV));
+      weapons.push(new Weapon("sword", swordMoves, swordCSV));
 
-    setWeaponFlip(!weaponFlip);
-  };
+      let topFFXI = {};
+      topFFXI["war"] = new Job("warrior", "war", util.getWeapons("warrior", weapons, jobWeaponMapping), warWsLvl);
+      topFFXI["thf"] = new Job("thief", "thf", util.getWeapons("thief", weapons, jobWeaponMapping), thfWsLvl);
+      topFFXI["drk"] = new Job("dark knight", "drk", util.getWeapons("dark knight", weapons, jobWeaponMapping), drkWsLvl);
+      topFFXI["pld"] = new Job("paladin", "pld", util.getWeapons("paladin", weapons, jobWeaponMapping), pldWsLvl);
+
+      console.log(topFFXI);
+      setFFXI(topFFXI);
+    }
+  }, [doneLoading]);
 
   const moveChanged = (e) => {
     let str = e.target.value.split("_");
-    console.log({ str });
     let jobName = str[0];
-    let weapon = str[1].trim();
+    let weaponName = str[1].trim();
 
-    let job;
-    if (jobName == "warrior") {
-      job = warWsLvl;
-    }
-
-    if (jobName == "thief") {
-      job = thfWsLvl;
-    }
-
-    if (jobName == "dark knight") {
-      job = drkWsLvl;
-    }
-
-    if (weapon == "archery") {
-      setWeapon(archeryMoves, job);
-    }
-
-    if (weapon == "axe") {
-      setWeapon(axeMoves, job);
-    }
-
-    if (weapon == "club") {
-      setWeapon(clubMoves, job);
-    }
-
-    if (weapon == "dagger") {
-      setWeapon(daggerMoves, job);
-    }
-
-    if (weapon == "great axe") {
-      setWeapon(greatAxeMoves, job);
-    }
-
-    if (weapon == "great katana") {
-      setWeapon(greatKatanaMoves, job);
-    }
-
-    if (weapon == "great sword") {
-      setWeapon(greatSwordMoves, job);
-    }
-
-    if (weapon == "hand to hand") {
-      setWeapon(handToHandMoves, job);
-    }
-
-    if (weapon == "katana") {
-      setWeapon(katanaMoves, job);
-    }
-
-    if (weapon == "marksmanship") {
-      setWeapon(marksmanshipMoves, job);
-    }
-
-    if (weapon == "polearm") {
-      setWeapon(polearmMoves, job);
-    }
-
-    if (weapon == "scythe") {
-      setWeapon(scythMoves, job);
-    }
-
-    if (weapon == "staff") {
-      setWeapon(staffMoves, job);
-    }
-
-    if (weapon == "summon") {
-      setWeapon(summonMoves, job);
-    }
-
-    if (weapon == "sword") {
-      setWeapon(swordMoves, job);
+    if (selectedJob1.name == jobName) {
+      let weapons = selectedJob1.weapons.filter((w) => w.name == weaponName);
+      setWeapon1(weapons[0].moves);
+    } else if (selectedJob2.name == jobName) {
+      let weapons = selectedJob2.weapons.filter((w) => w.name == weaponName);
+      setWeapon2(weapons[0].moves);
     }
   };
 
   const selectPartyMemeber = (e) => {
-    let party = JSON.parse(JSON.stringify(selectedParty));
-
-    if (e.target.checked == true) {
-      if (party.length >= 2) {
-        return;
+    if (e.target.checked) {
+      if (Object.keys(selectedJob1).length == 0) {
+        setJob1(ffxi[e.target.value]);
+        setWeapon1(ffxi[e.target.value].weapons[0].moves);
+      } else if (Object.keys(selectedJob2).length == 0) {
+        setJob2(ffxi[e.target.value]);
+        setWeapon2(ffxi[e.target.value].weapons[0].moves);
       }
-      console.log("checked");
-      party.push(e.target.value);
-      console.log(party);
     } else {
-      console.log("unchekced");
-      party = removeItemOnce(party, e.target.value);
+      if (Object.keys(selectedJob2).length != 0) {
+        setJob2({});
+        setWeapon2([]);
+      } else if (Object.keys(selectedJob1).length != 0) {
+        setJob1({});
+        setWeapon1([]);
+      }
     }
-    console.log(selectedParty);
-    setSelectedParty(party);
-
-    // console.log(selectedParty);
-    // setSelectedParty(selectedParty);
-    // console.log(e.target);
-
-    // if (selectedParty.includes(e.target.value)) {
-    //   // selectPartyMemeber.remove()
-    //   const index = selectedParty.indexOf(e.target.value);
-    //   const x = selectedParty.splice(index, 1);
-    // } else {
-    //   selectedParty.push(e.target);
-    // }
-
-    // console.log(selectedParty);
-    // setSelectedParty(selectedParty);
   };
 
-  function removeItemOnce(arr, value) {
-    var index = arr.indexOf(value);
-    if (index > -1) {
-      arr.splice(index, 1);
-    }
-    return arr;
-  }
+  const SkillchainResults = (job1, job2, weaponOne, weaponTwo) => {
+    let job1WsLvl = job1.wsLevel;
+    let job2WsLvl = job2.wsLevel;
 
-  const SkillchainResults = (job1WsLvl, job2WsLvl, weaponOne, weaponTwo) => {
-    if (
-      !job1WsLvl ||
-      !job2WsLvl ||
-      !weaponOne ||
-      !weaponTwo ||
-      job1WsLvl.length == 0 ||
-      job2WsLvl.length == 0
-    ) {
+    if (!job1WsLvl || !job2WsLvl || !weaponOne || !weaponTwo || job1WsLvl.length == 0 || job2WsLvl.length == 0) {
       return [];
     }
 
@@ -439,9 +278,7 @@ function App() {
         let compare = w1.element1 + " -> " + w2.element1;
         if (lvl1skillchainsMap[compare] != undefined) {
           let names = w1.name + " -> " + w2.name;
-          if (
-            !skillchains.includes(names + " = " + lvl1skillchainsMap[compare])
-          ) {
+          if (!skillchains.includes(names + " = " + lvl1skillchainsMap[compare])) {
             skillchains.push(names + " = " + lvl1skillchainsMap[compare]);
           }
         }
@@ -459,47 +296,34 @@ function App() {
         <h3>Your Party</h3>
 
         <MDBRow>
-          {jobWeapon &&
-            jobWeapon.map(function (jw, i) {
-              return (
-                <MDBCol size="md">
-                  <p>{jw.name}</p>
-                  <input
-                    type="checkbox"
-                    name={jw.name}
-                    value={jw.name}
-                    onChange={selectPartyMemeber}
-                  />
-                </MDBCol>
-              );
-            })}
+          {Object.keys(ffxi).map((shortJob, i) => (
+            <MDBCol size="md">
+              <p>{ffxi[shortJob].name}</p>
+              <input
+                // disabled={Object.keys(selectedJob1).length == 0 && Object.keys(selectedJob2).length == 0}
+                type="checkbox"
+                name={ffxi[shortJob].name}
+                value={shortJob}
+                onChange={selectPartyMemeber}
+              />
+            </MDBCol>
+          ))}
         </MDBRow>
 
         <hr></hr>
 
         <MDBRow>
-          {selectedParty &&
-            selectedParty.map(function (sp, i) {
-              return (
-                <MDBCol size="md">
-                  <JobWeaponSelect
-                    jobWeapon={jobWeapon}
-                    selectedPartyMember={sp}
-                    moveChanged={moveChanged}
-                  />
-                </MDBCol>
-              );
-            })}
+          <MDBCol size="md">
+            <JobWeaponSelect selectedJob={selectedJob1} moveChanged={moveChanged} />
+          </MDBCol>
+          <MDBCol size="md">
+            <JobWeaponSelect selectedJob={selectedJob2} moveChanged={moveChanged} />
+          </MDBCol>
         </MDBRow>
         <hr></hr>
         <MDBRow>
           <div style={{ width: 100, margin: "auto" }}>
-            <MDBInput
-              defaultValue={10}
-              label="level"
-              name="level"
-              onChange={(e) => setPartyLevel(e.target.value)}
-            ></MDBInput>
+            <MDBInput defaultValue={10} label="level" name="level" onChange={(e) => setPartyLevel(e.target.value)}></MDBInput>
           </div>
         </MDBRow>
       </MDBContainer>
@@ -508,13 +332,7 @@ function App() {
 
       <p> Results </p>
       <div>
-        {SkillchainResults(
-          selectedJob1,
-          selectedJob2,
-          selectedWeapon1,
-          selectedWeapon2,
-          lvl1sc
-        ).map(function (sc, i) {
+        {SkillchainResults(selectedJob1, selectedJob2, selectedWeapon1, selectedWeapon2, lvl1sc).map(function (sc, i) {
           return <p>{sc}</p>;
         })}
       </div>
