@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ffxi-skillchain-calculator/static/css/main.4eb3bc61.css",
-    "main.js": "/ffxi-skillchain-calculator/static/js/main.bec7911d.js",
+    "main.js": "/ffxi-skillchain-calculator/static/js/main.16369f83.js",
     "static/js/787.7714a32c.chunk.js": "/ffxi-skillchain-calculator/static/js/787.7714a32c.chunk.js",
     "static/media/fa-solid-900.ttf": "/ffxi-skillchain-calculator/static/media/fa-solid-900.b1a653db79258eeccc5d.ttf",
     "static/media/fa-brands-400.ttf": "/ffxi-skillchain-calculator/static/media/fa-brands-400.450a5c898f0b184b968b.ttf",
@@ -12,6 +12,8 @@
     "static/media/fa-v4compatibility.ttf": "/ffxi-skillchain-calculator/static/media/fa-v4compatibility.e314b618134d5be20996.ttf",
     "static/media/fa-v4compatibility.woff2": "/ffxi-skillchain-calculator/static/media/fa-v4compatibility.4ee7f902d88f819e251c.woff2",
     "static/media/war-ws.csv": "/ffxi-skillchain-calculator/static/media/war-ws.74b63cad590ed4476367.csv",
+    "static/media/drk-ws.csv": "/ffxi-skillchain-calculator/static/media/drk-ws.49b7b98bbdb458f64b92.csv",
+    "static/media/pld-ws.csv": "/ffxi-skillchain-calculator/static/media/pld-ws.18242b7ab844c6a03835.csv",
     "static/media/summon.csv": "/ffxi-skillchain-calculator/static/media/summon.5f83de88e6da3d1c7544.csv",
     "static/media/thf-ws.csv": "/ffxi-skillchain-calculator/static/media/thf-ws.619ad443e70e1f98457b.csv",
     "index.html": "/ffxi-skillchain-calculator/index.html",
@@ -30,13 +32,13 @@
     "static/media/katana.csv": "/ffxi-skillchain-calculator/static/media/katana.64c9e5d3d7823e1d4eb1.csv",
     "static/media/archery.csv": "/ffxi-skillchain-calculator/static/media/archery.4be8f7f332d766475461.csv",
     "static/media/marksmanship.csv": "/ffxi-skillchain-calculator/static/media/marksmanship.8df7422be4cd47b5709a.csv",
-    "static/media/job-weapon.csv": "/ffxi-skillchain-calculator/static/media/job-weapon.c31c5740981d1b26567f.csv",
+    "static/media/job-weapon.csv": "/ffxi-skillchain-calculator/static/media/job-weapon.8b3e3fd385525b17c539.csv",
     "main.4eb3bc61.css.map": "/ffxi-skillchain-calculator/static/css/main.4eb3bc61.css.map",
-    "main.bec7911d.js.map": "/ffxi-skillchain-calculator/static/js/main.bec7911d.js.map",
+    "main.16369f83.js.map": "/ffxi-skillchain-calculator/static/js/main.16369f83.js.map",
     "787.7714a32c.chunk.js.map": "/ffxi-skillchain-calculator/static/js/787.7714a32c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4eb3bc61.css",
-    "static/js/main.bec7911d.js"
+    "static/js/main.16369f83.js"
   ]
 }
