@@ -32,6 +32,14 @@ import warWsCSV from "./skillchain-info/war-ws.csv";
 import thfWsCSV from "./skillchain-info/thf-ws.csv";
 import drkWsCSV from "./skillchain-info/drk-ws.csv";
 import pldWsCSV from "./skillchain-info/pld-ws.csv";
+import bstWsCSV from "./skillchain-info/bst-ws.csv";
+
+import drgWsCSV from "./skillchain-info/drg-ws.csv";
+import mnkWsCSV from "./skillchain-info/mnk-ws.csv";
+import ninWsCSV from "./skillchain-info/nin-ws.csv";
+import rdmWsCSV from "./skillchain-info/rdm-ws.csv";
+import rngWsCSV from "./skillchain-info/rng-ws.csv";
+import samWsCSV from "./skillchain-info/sam-ws.csv";
 
 // skillchains
 import lvl1skillchainsCSV from "./skillchain-info/lvl1skillchains.csv";
@@ -57,6 +65,13 @@ let csvs = [
   thfWsCSV,
   drkWsCSV,
   pldWsCSV,
+  bstWsCSV,
+  drgWsCSV,
+  mnkWsCSV,
+  ninWsCSV,
+  rdmWsCSV,
+  rngWsCSV,
+  samWsCSV,
   lvl1skillchainsCSV,
 ];
 
@@ -105,6 +120,13 @@ function App() {
   const [thfWsLvl, setThfWsLvl] = useState([]);
   const [drkWsLvl, setDrkWsLvl] = useState([]);
   const [pldWsLvl, setPldWsLvl] = useState([]);
+  const [bstWsLvl, setBstWsLvl] = useState([]);
+  const [drgWsLvl, setDrgWsLvl] = useState([]);
+  const [mnkWsLvl, setMnkWsLvl] = useState([]);
+  const [ninWsLvl, setNinWsLvl] = useState([]);
+  const [rdmWsLvl, setRdmWsLvl] = useState([]);
+  const [rngWsLvl, setRngWsLvl] = useState([]);
+  const [samWsLvl, setSamWsLvl] = useState([]);
 
   const [lvl1sc, setlvl1sc] = useState([]);
 
@@ -154,7 +176,16 @@ function App() {
         await setThfWsLvl(results[17].data);
         await setDrkWsLvl(results[18].data);
         await setPldWsLvl(results[19].data);
-        await setlvl1sc(results[20].data);
+        await setBstWsLvl(results[20].data);
+
+        await setDrgWsLvl(results[21].data);
+        await setMnkWsLvl(results[22].data);
+        await setNinWsLvl(results[23].data);
+        await setRdmWsLvl(results[24].data);
+        await setRngWsLvl(results[25].data);
+        await setSamWsLvl(results[26].data);
+
+        await setlvl1sc(results[27].data);
         await setDoneLoading(true);
       })
       .catch(
@@ -187,6 +218,14 @@ function App() {
       topFFXI["thf"] = new Job("thief", "thf", util.getWeapons("thief", weapons, jobWeaponMapping), thfWsLvl);
       topFFXI["drk"] = new Job("dark knight", "drk", util.getWeapons("dark knight", weapons, jobWeaponMapping), drkWsLvl);
       topFFXI["pld"] = new Job("paladin", "pld", util.getWeapons("paladin", weapons, jobWeaponMapping), pldWsLvl);
+      topFFXI["bst"] = new Job("beast master", "bst", util.getWeapons("beast master", weapons, jobWeaponMapping), bstWsLvl);
+
+      topFFXI["drg"] = new Job("dragoon", "drg", util.getWeapons("dragoon", weapons, jobWeaponMapping), drgWsLvl);
+      topFFXI["mnk"] = new Job("monk", "mnk", util.getWeapons("monk", weapons, jobWeaponMapping), mnkWsLvl);
+      topFFXI["nin"] = new Job("ninja", "nin", util.getWeapons("ninja", weapons, jobWeaponMapping), ninWsLvl);
+      topFFXI["rdm"] = new Job("red mage", "rdm", util.getWeapons("red mage", weapons, jobWeaponMapping), rdmWsLvl);
+      topFFXI["rng"] = new Job("ranger", "rng", util.getWeapons("ranger", weapons, jobWeaponMapping), rngWsLvl);
+      topFFXI["sam"] = new Job("samurai", "sam", util.getWeapons("samurai", weapons, jobWeaponMapping), samWsLvl);
 
       console.log(topFFXI);
       setFFXI(topFFXI);
@@ -205,6 +244,17 @@ function App() {
       let weapons = selectedJob2.weapons.filter((w) => w.name == weaponName);
       setWeapon2(weapons[0].moves);
     }
+  };
+
+  const swap = (e) => {
+    let tmpJob = selectedJob1;
+    let tmpWeapon = selectedWeapon1;
+
+    setJob1(selectedJob2);
+    setWeapon1(selectedWeapon2);
+
+    setJob2(tmpJob);
+    setWeapon2(tmpWeapon);
   };
 
   const selectPartyMemeber = (e) => {
@@ -315,6 +365,9 @@ function App() {
         <MDBRow>
           <MDBCol size="md">
             <JobWeaponSelect selectedJob={selectedJob1} moveChanged={moveChanged} />
+          </MDBCol>
+          <MDBCol size="md">
+            <button onClick={swap}> {"<-swap->"} </button>
           </MDBCol>
           <MDBCol size="md">
             <JobWeaponSelect selectedJob={selectedJob2} moveChanged={moveChanged} />
