@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/ffxi-skillchain-calculator/static/css/main.4eb3bc61.css",
-    "main.js": "/ffxi-skillchain-calculator/static/js/main.16369f83.js",
+    "main.js": "/ffxi-skillchain-calculator/static/js/main.3959aeb4.js",
     "static/js/787.7714a32c.chunk.js": "/ffxi-skillchain-calculator/static/js/787.7714a32c.chunk.js",
     "static/media/fa-solid-900.ttf": "/ffxi-skillchain-calculator/static/media/fa-solid-900.b1a653db79258eeccc5d.ttf",
     "static/media/fa-brands-400.ttf": "/ffxi-skillchain-calculator/static/media/fa-brands-400.450a5c898f0b184b968b.ttf",
@@ -14,15 +14,23 @@
     "static/media/war-ws.csv": "/ffxi-skillchain-calculator/static/media/war-ws.74b63cad590ed4476367.csv",
     "static/media/drk-ws.csv": "/ffxi-skillchain-calculator/static/media/drk-ws.49b7b98bbdb458f64b92.csv",
     "static/media/pld-ws.csv": "/ffxi-skillchain-calculator/static/media/pld-ws.18242b7ab844c6a03835.csv",
+    "static/media/rng-ws.csv": "/ffxi-skillchain-calculator/static/media/rng-ws.901ca33bbbf3386fecec.csv",
+    "static/media/nin-ws.csv": "/ffxi-skillchain-calculator/static/media/nin-ws.fea2b2a9afa82e936015.csv",
     "static/media/summon.csv": "/ffxi-skillchain-calculator/static/media/summon.5f83de88e6da3d1c7544.csv",
     "static/media/thf-ws.csv": "/ffxi-skillchain-calculator/static/media/thf-ws.619ad443e70e1f98457b.csv",
+    "static/media/sam-ws.csv": "/ffxi-skillchain-calculator/static/media/sam-ws.a83332a159029b5f1e9f.csv",
+    "static/media/drg-ws.csv": "/ffxi-skillchain-calculator/static/media/drg-ws.3b4da072796b73124e19.csv",
     "index.html": "/ffxi-skillchain-calculator/index.html",
+    "static/media/bst-ws.csv": "/ffxi-skillchain-calculator/static/media/bst-ws.925c1d1a4a7e43a47642.csv",
+    "static/media/rdm-ws.csv": "/ffxi-skillchain-calculator/static/media/rdm-ws.a8f17843a8278353520f.csv",
+    "static/media/mnk-ws.csv": "/ffxi-skillchain-calculator/static/media/mnk-ws.b4ec8d246ccd79b6ad75.csv",
     "static/media/lvl1skillchains.csv": "/ffxi-skillchain-calculator/static/media/lvl1skillchains.b599a18e0fd514ed85c0.csv",
     "static/media/sword.csv": "/ffxi-skillchain-calculator/static/media/sword.f2c9af92f00aef539eb0.csv",
     "static/media/great-katana.csv": "/ffxi-skillchain-calculator/static/media/great-katana.aa2b88ee2462120d05b6.csv",
     "static/media/hand-to-hand.csv": "/ffxi-skillchain-calculator/static/media/hand-to-hand.9b282ea7d60e4b522691.csv",
     "static/media/scythe.csv": "/ffxi-skillchain-calculator/static/media/scythe.9839b940b10e9286577d.csv",
     "static/media/polearm.csv": "/ffxi-skillchain-calculator/static/media/polearm.74a19b2e2ee45e8e1067.csv",
+    "static/media/job-weapon.csv": "/ffxi-skillchain-calculator/static/media/job-weapon.59ca75938020556ee73e.csv",
     "static/media/dagger.csv": "/ffxi-skillchain-calculator/static/media/dagger.39969e0573d20ce13cac.csv",
     "static/media/staff.csv": "/ffxi-skillchain-calculator/static/media/staff.50237e712759dedb92c8.csv",
     "static/media/great-sword.csv": "/ffxi-skillchain-calculator/static/media/great-sword.4c4f33632fbac7110c4c.csv",
@@ -32,13 +40,12 @@
     "static/media/katana.csv": "/ffxi-skillchain-calculator/static/media/katana.64c9e5d3d7823e1d4eb1.csv",
     "static/media/archery.csv": "/ffxi-skillchain-calculator/static/media/archery.4be8f7f332d766475461.csv",
     "static/media/marksmanship.csv": "/ffxi-skillchain-calculator/static/media/marksmanship.8df7422be4cd47b5709a.csv",
-    "static/media/job-weapon.csv": "/ffxi-skillchain-calculator/static/media/job-weapon.8b3e3fd385525b17c539.csv",
     "main.4eb3bc61.css.map": "/ffxi-skillchain-calculator/static/css/main.4eb3bc61.css.map",
-    "main.16369f83.js.map": "/ffxi-skillchain-calculator/static/js/main.16369f83.js.map",
+    "main.3959aeb4.js.map": "/ffxi-skillchain-calculator/static/js/main.3959aeb4.js.map",
     "787.7714a32c.chunk.js.map": "/ffxi-skillchain-calculator/static/js/787.7714a32c.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.4eb3bc61.css",
-    "static/js/main.16369f83.js"
+    "static/js/main.3959aeb4.js"
   ]
 }
