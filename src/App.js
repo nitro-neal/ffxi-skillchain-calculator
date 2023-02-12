@@ -23,6 +23,7 @@ import scytheCSV from "./skillchain-info/scythe.csv";
 import staffCSV from "./skillchain-info/staff.csv";
 import summonCSV from "./skillchain-info/summon.csv";
 import swordCSV from "./skillchain-info/sword.csv";
+// import bloodPactCSV from "./skillchain-info/blood-pact.csv";
 
 // job weapon mapping
 import jobWeaponCSV from "./skillchain-info/job-weapon.csv";
@@ -33,16 +34,18 @@ import thfWsCSV from "./skillchain-info/thf-ws.csv";
 import drkWsCSV from "./skillchain-info/drk-ws.csv";
 import pldWsCSV from "./skillchain-info/pld-ws.csv";
 import bstWsCSV from "./skillchain-info/bst-ws.csv";
-
 import drgWsCSV from "./skillchain-info/drg-ws.csv";
 import mnkWsCSV from "./skillchain-info/mnk-ws.csv";
 import ninWsCSV from "./skillchain-info/nin-ws.csv";
 import rdmWsCSV from "./skillchain-info/rdm-ws.csv";
 import rngWsCSV from "./skillchain-info/rng-ws.csv";
 import samWsCSV from "./skillchain-info/sam-ws.csv";
+import smnWsCSV from "./skillchain-info/smn-ws.csv";
 
 // skillchains
 import lvl1skillchainsCSV from "./skillchain-info/lvl1skillchains.csv";
+import lvl2skillchainsCSV from "./skillchain-info/lvl2skillchains.csv";
+import lvl3skillchainsCSV from "./skillchain-info/lvl3skillchains.csv";
 
 let csvs = [
   archeryCSV,
@@ -72,7 +75,10 @@ let csvs = [
   rdmWsCSV,
   rngWsCSV,
   samWsCSV,
+  smnWsCSV,
   lvl1skillchainsCSV,
+  lvl2skillchainsCSV,
+  lvl3skillchainsCSV,
 ];
 
 util.hi();
@@ -127,8 +133,11 @@ function App() {
   const [rdmWsLvl, setRdmWsLvl] = useState([]);
   const [rngWsLvl, setRngWsLvl] = useState([]);
   const [samWsLvl, setSamWsLvl] = useState([]);
+  const [smnWsLvl, setSmnWsLvl] = useState([]);
 
   const [lvl1sc, setlvl1sc] = useState([]);
+  const [lvl2sc, setlvl2sc] = useState([]);
+  const [lvl3sc, setlvl3sc] = useState([]);
 
   // UI
   const [partyLevel, setPartyLevel] = useState(10);
@@ -184,8 +193,12 @@ function App() {
         await setRdmWsLvl(results[24].data);
         await setRngWsLvl(results[25].data);
         await setSamWsLvl(results[26].data);
+        await setSmnWsLvl(results[27].data);
 
-        await setlvl1sc(results[27].data);
+        await setlvl1sc(results[28].data);
+        await setlvl2sc(results[29].data);
+        await setlvl3sc(results[30].data);
+
         await setDoneLoading(true);
       })
       .catch(
@@ -227,6 +240,8 @@ function App() {
       topFFXI["rng"] = new Job("ranger", "rng", util.getWeapons("ranger", weapons, jobWeaponMapping), rngWsLvl);
       topFFXI["sam"] = new Job("samurai", "sam", util.getWeapons("samurai", weapons, jobWeaponMapping), samWsLvl);
 
+      topFFXI["smn"] = new Job("summoner", "snm", util.getWeapons("summoner", weapons, jobWeaponMapping), smnWsLvl);
+
       console.log(topFFXI);
       setFFXI(topFFXI);
     }
@@ -244,17 +259,6 @@ function App() {
       let weapons = selectedJob2.weapons.filter((w) => w.name == weaponName);
       setWeapon2(weapons[0].moves);
     }
-  };
-
-  const swap = (e) => {
-    let tmpJob = selectedJob1;
-    let tmpWeapon = selectedWeapon1;
-
-    setJob1(selectedJob2);
-    setWeapon1(selectedWeapon2);
-
-    setJob2(tmpJob);
-    setWeapon2(tmpWeapon);
   };
 
   const selectPartyMemeber = (e) => {
@@ -277,64 +281,86 @@ function App() {
     }
   };
 
-  const SkillchainResults = (job1, job2, weaponOne, weaponTwo) => {
-    let job1WsLvl = job1.wsLevel;
-    let job2WsLvl = job2.wsLevel;
-
-    if (!job1WsLvl || !job2WsLvl || !weaponOne || !weaponTwo || job1WsLvl.length == 0 || job2WsLvl.length == 0) {
+  const normalizeWeaponsSkillName = (wsName) => {
+    wsName = wsName.replace("*", "");
+    wsName = wsName.toLowerCase();
+    wsName = wsName.trim();
+    wsName = wsName.replace(" ", "-");
+    return wsName;
+  };
+  const SkillchainResultsNew = (job1, job2, weapons1, weapons2) => {
+    if (!job1.wsLevel || !job2.wsLevel || !weapons1 || !weapons2 || job1.wsLevel.length == 0 || job2.wsLevel.length == 0) {
       return [];
     }
 
-    let lvl1skillchainsMap = {};
+    let skillchainsMap = {};
 
     for (let sc of lvl1sc) {
-      lvl1skillchainsMap[sc.ws1 + " -> " + sc.ws2] = sc.result;
+      skillchainsMap[sc.ws1 + " -> " + sc.ws2] = sc.result;
     }
+
+    for (let sc of lvl2sc) {
+      skillchainsMap[sc.ws1 + " -> " + sc.ws2] = sc.result;
+    }
+
+    for (let sc of lvl3sc) {
+      skillchainsMap[sc.ws1 + " -> " + sc.ws2] = sc.result;
+    }
+
+    const weaponsSkillInfoJob1 = GetWeaponSkillInfoAtLevelForJob(job1, weapons1);
+    console.log({ weaponsSkillInfoJob1 });
+
+    const weaponsSkillInfoJob2 = GetWeaponSkillInfoAtLevelForJob(job2, weapons2);
+    console.log({ weaponsSkillInfoJob2 });
 
     let skillchains = [];
 
-    let selectJob1WsAtLvl = {};
-    for (let i = 0; i < partyLevel; i++) {
-      let wsAtLvl = job1WsLvl[i].ws;
-      if (wsAtLvl.length > 0) {
-        let wsAtLvlArr = wsAtLvl.split(",");
+    for (const [key1, value1] of Object.entries(weaponsSkillInfoJob1)) {
+      for (const [key2, value2] of Object.entries(weaponsSkillInfoJob2)) {
+        let found = false;
+        for (let i = 1; i <= 3; i++) {
+          for (let j = 1; j <= 3; j++) {
+            if (!found) {
+              let elementKeyValue1 = "element" + i;
+              let elementKeyValue2 = "element" + j;
 
-        wsAtLvlArr = wsAtLvlArr.map((ws) => ws.replace("*", ""));
-        wsAtLvlArr = wsAtLvlArr.map((ws) => ws.toLowerCase());
-        wsAtLvlArr = wsAtLvlArr.map((ws) => ws.trim());
-        wsAtLvlArr = wsAtLvlArr.map((ws) => ws.replace(" ", "-"));
-
-        for (let ws of wsAtLvlArr) {
-          selectJob1WsAtLvl[ws] = true;
-        }
-      }
-    }
-
-    let weaponOneAtLvl = [];
-    for (let w1 of weaponOne) {
-      let w1NameFixed = w1.name;
-      w1NameFixed = w1NameFixed.replace("*", "");
-      w1NameFixed = w1NameFixed.toLowerCase();
-      w1NameFixed = w1NameFixed.trim();
-      w1NameFixed = w1NameFixed.replace(" ", "-");
-
-      if (selectJob1WsAtLvl[w1NameFixed] == true) {
-        weaponOneAtLvl.push(w1);
-      }
-    }
-
-    for (let w1 of weaponOneAtLvl) {
-      for (let w2 of weaponTwo) {
-        let compare = w1.element1 + " -> " + w2.element1;
-        if (lvl1skillchainsMap[compare] != undefined) {
-          let names = w1.name + " -> " + w2.name;
-          if (!skillchains.includes(names + " = " + lvl1skillchainsMap[compare])) {
-            skillchains.push(names + " = " + lvl1skillchainsMap[compare]);
+              let compare = value1[elementKeyValue1] + " -> " + value2[elementKeyValue2];
+              if (skillchainsMap[compare] != undefined) {
+                skillchains.push(key1 + " -> " + key2 + " = " + skillchainsMap[compare]);
+                found = true;
+              }
+            }
           }
         }
       }
     }
     return skillchains;
+  };
+
+  const GetWeaponSkillInfoAtLevelForJob = (job, weapon) => {
+    let selectJob1WsAtLvl = {};
+
+    for (let i = 0; i < partyLevel; i++) {
+      let wsAtLvl = job.wsLevel[i].ws;
+      if (wsAtLvl.length > 0) {
+        let wsAtLvlArr = wsAtLvl.split(",");
+        wsAtLvlArr = wsAtLvlArr.map((ws) => normalizeWeaponsSkillName(ws));
+
+        for (let ws of wsAtLvlArr) {
+          let w1Elements = weapon.filter((w) => {
+            let normalizedName = normalizeWeaponsSkillName(w.name);
+            return normalizedName == ws;
+          });
+          let w1Element = w1Elements[0];
+
+          if (w1Elements.length > 0) {
+            selectJob1WsAtLvl[ws] = { exists: true, element1: w1Element.element1, element2: w1Element.element2, element3: w1Element.element3 };
+          }
+        }
+      }
+    }
+
+    return selectJob1WsAtLvl;
   };
 
   return (
@@ -356,6 +382,14 @@ function App() {
                 value={shortJob}
                 onChange={selectPartyMemeber}
               />
+
+              <input
+                // disabled={Object.keys(selectedJob1).length == 0 && Object.keys(selectedJob2).length == 0}
+                type="checkbox"
+                name={ffxi[shortJob].name}
+                value={shortJob}
+                onChange={selectPartyMemeber}
+              />
             </MDBCol>
           ))}
         </MDBRow>
@@ -366,9 +400,7 @@ function App() {
           <MDBCol size="md">
             <JobWeaponSelect selectedJob={selectedJob1} moveChanged={moveChanged} />
           </MDBCol>
-          <MDBCol size="md">
-            <button onClick={swap}> {"<-swap->"} </button>
-          </MDBCol>
+
           <MDBCol size="md">
             <JobWeaponSelect selectedJob={selectedJob2} moveChanged={moveChanged} />
           </MDBCol>
@@ -383,9 +415,18 @@ function App() {
       <hr></hr>
       <h3> Skillchains </h3>
 
-      <p> Results </p>
+      <hr />
+
       <div>
-        {SkillchainResults(selectedJob1, selectedJob2, selectedWeapon1, selectedWeapon2, lvl1sc).map(function (sc, i) {
+        <h5 style={{ paddingTop: 30 }}>{selectedJob1.name && selectedJob2.name && selectedJob1.name + " -> " + selectedJob2.name}</h5>
+
+        {SkillchainResultsNew(selectedJob1, selectedJob2, selectedWeapon1, selectedWeapon2).map(function (sc, i) {
+          return <p>{sc}</p>;
+        })}
+
+        <h5 style={{ paddingTop: 30 }}>{selectedJob1.name && selectedJob2.name && selectedJob2.name + " -> " + selectedJob1.name}</h5>
+
+        {SkillchainResultsNew(selectedJob2, selectedJob1, selectedWeapon2, selectedWeapon1).map(function (sc, i) {
           return <p>{sc}</p>;
         })}
       </div>

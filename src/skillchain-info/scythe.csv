@@ -1,6 +1,6 @@
-lvl,name,element1,element12,element3,power
+lvl,name,element1,element2,element3,power
 5,Slice,Scission,-,-,60
-30,Dark Harvest,Reverberation,-,-,50
+30,Dark Harvest,Compression,-,-,50
 70,Shadow of Death,Induration,Reverberation,-,50
 100,Nightmare Scythe,Compression,Scission,-,50
 125,Spinning Scythe,Reverberation,Scission,-,50

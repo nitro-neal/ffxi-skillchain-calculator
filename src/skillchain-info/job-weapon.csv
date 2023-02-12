@@ -1,6 +1,6 @@
 name,weapons
 warrior,"great axe, axe, polearm, great sword, sword, scythe"
-thief,"sword, dagger, handtohand"
+thief,"dagger, sword, handtohand"
 dark knight,"scythe, great sword"
 paladin,"sword, club, great sword, dagger, polearm"
 beast master,"axe, scythe, dagger, club, sword"
@@ -10,3 +10,4 @@ ninja,"katana, sword, dagger, great katana"
 red mage,"sword, dagger, club, archery"
 ranger,"archery, marksmanship, axe, dagger, sword"
 samurai,"great katana, polearm, sword, archery"
+summoner,"summon, staff, club"
