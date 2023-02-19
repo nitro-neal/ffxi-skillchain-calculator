@@ -1,9 +1,10 @@
 import "./App.css";
+import "./Orb.css";
 import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
 import JobWeaponSelect from "./components/JobWeaponSelect.js";
 
-import { MDBContainer, MDBRow, MDBCol, MDBInput } from "mdb-react-ui-kit";
+import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardHeader, MDBBtn, MDBCardFooter } from "mdb-react-ui-kit";
 
 import * as util from "./Util.js";
 
@@ -101,6 +102,8 @@ class Job {
 }
 
 function App() {
+  const scMap = { Scission: "🟤", Detonation: "🟢", Impaction: "🟣", Reverberation: "🔵", Induration: "🧊", Compression: "⚫", Liquefaction: "🔴", Transfixion: "⚪", Distortion: "🔵🧊", Fusion: "🔴⚪", Fragmentation: "🟣🟢", Gravitation: "⚫🟤" };
+
   const [ffxi, setFFXI] = useState({});
 
   // CSVs
@@ -314,6 +317,7 @@ function App() {
     console.log({ weaponsSkillInfoJob2 });
 
     let skillchains = [];
+    let skillChainsFormatted = {};
 
     for (const [key1, value1] of Object.entries(weaponsSkillInfoJob1)) {
       for (const [key2, value2] of Object.entries(weaponsSkillInfoJob2)) {
@@ -326,7 +330,18 @@ function App() {
 
               let compare = value1[elementKeyValue1] + " -> " + value2[elementKeyValue2];
               if (skillchainsMap[compare] != undefined) {
+                let element = skillchainsMap[compare];
                 skillchains.push(key1 + " -> " + key2 + " = " + skillchainsMap[compare]);
+
+                if (!skillChainsFormatted[element]) {
+                  skillChainsFormatted[element] = [];
+                }
+
+                let newSC = { firstWs: key1, secondWs: key2, wsString: key1 + " -> " + key2 + " = " + skillchainsMap[compare] };
+                let currentSCs = skillChainsFormatted[element];
+                currentSCs.push(newSC);
+                skillChainsFormatted[element] = currentSCs;
+
                 found = true;
               }
             }
@@ -334,7 +349,8 @@ function App() {
         }
       }
     }
-    return skillchains;
+
+    return skillChainsFormatted;
   };
 
   const GetWeaponSkillInfoAtLevelForJob = (job, weapon) => {
@@ -363,8 +379,76 @@ function App() {
     return selectJob1WsAtLvl;
   };
 
+  let sc = SkillchainResultsNew(selectedJob1, selectedJob2, selectedWeapon1, selectedWeapon2);
+
+  let cards = [];
+
+  for (const [key, value] of Object.entries(sc)) {
+    let card = (
+      <MDBContainer>
+        <MDBRow>
+          <MDBCol size="col-md-1"></MDBCol>
+          <MDBCol size="col-md-10">
+            <MDBCard alignment="center">
+              <MDBCardBody>
+                <MDBCardTitle>
+                  <p>
+                    {key} {scMap[key]}
+                    {/* <div class="orb"></div> */}
+                  </p>
+                </MDBCardTitle>
+
+                {value.map((v) => {
+                  return <MDBCardText>{v.wsString}</MDBCardText>;
+                })}
+              </MDBCardBody>
+            </MDBCard>
+          </MDBCol>
+          <MDBCol size="col-md-1"></MDBCol>
+        </MDBRow>
+      </MDBContainer>
+    );
+    cards.push(card);
+  }
+
+  let scOtherWay = SkillchainResultsNew(selectedJob2, selectedJob1, selectedWeapon2, selectedWeapon1);
+
+  let cardsOtherWay = [];
+
+  for (const [key, value] of Object.entries(scOtherWay)) {
+    let card = (
+      <MDBContainer>
+        <MDBRow>
+          <MDBCol size="col-md-1"></MDBCol>
+          <MDBCol size="col-md-10">
+            <MDBCard alignment="center">
+              <MDBCardBody>
+                <MDBCardTitle>
+                  <p>
+                    {key} {scMap[key]}
+                    {/* <div class="orb"></div> */}
+                  </p>
+                </MDBCardTitle>
+
+                {value.map((v) => {
+                  return <MDBCardText>{v.wsString}</MDBCardText>;
+                })}
+              </MDBCardBody>
+            </MDBCard>
+          </MDBCol>
+          <MDBCol size="col-md-1"></MDBCol>
+        </MDBRow>
+      </MDBContainer>
+    );
+    cardsOtherWay.push(card);
+  }
+
   return (
     <div className="App">
+      {/* <video autoplay muted id="myVideo">
+        <source src="http://gdl.square-enix.com/ffxi/ffxi_bg_video/Tulia.mp4" type="video/mp4" />
+      </video> */}
+
       <h1>FFXI Skillchain Calculator</h1>
       <h1>{selectedParty}</h1>
       <hr></hr>
@@ -419,16 +503,11 @@ function App() {
 
       <div>
         <h5 style={{ paddingTop: 30 }}>{selectedJob1.name && selectedJob2.name && selectedJob1.name + " -> " + selectedJob2.name}</h5>
-
-        {SkillchainResultsNew(selectedJob1, selectedJob2, selectedWeapon1, selectedWeapon2).map(function (sc, i) {
-          return <p>{sc}</p>;
-        })}
+        <div style={{ paddingTop: 20 }} />
+        <>{cards}</>
 
         <h5 style={{ paddingTop: 30 }}>{selectedJob1.name && selectedJob2.name && selectedJob2.name + " -> " + selectedJob1.name}</h5>
-
-        {SkillchainResultsNew(selectedJob2, selectedJob1, selectedWeapon2, selectedWeapon1).map(function (sc, i) {
-          return <p>{sc}</p>;
-        })}
+        <>{cardsOtherWay}</>
       </div>
     </div>
   );

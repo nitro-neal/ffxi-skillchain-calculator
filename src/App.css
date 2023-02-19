@@ -2,6 +2,16 @@ body {
   font-family: Roboto, Helvetica, Arial, sans-serif;
 }
 
+#myVideo {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  z-index: -1;
+}
+
+
 .App {
   text-align: center;
 }
@@ -18,7 +28,7 @@ body {
 }
 
 .App-header {
-  background-color: #282c34;
+  /* background-color: #282c34; */
   min-height: 100vh;
   display: flex;
   flex-direction: column;
