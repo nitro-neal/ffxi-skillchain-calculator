@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/ffxi-skillchain-calculator/static/css/main.4eb3bc61.css",
-    "main.js": "/ffxi-skillchain-calculator/static/js/main.44e6523a.js",
+    "main.css": "/ffxi-skillchain-calculator/static/css/main.c911aa14.css",
+    "main.js": "/ffxi-skillchain-calculator/static/js/main.dcf28426.js",
     "static/js/787.7714a32c.chunk.js": "/ffxi-skillchain-calculator/static/js/787.7714a32c.chunk.js",
     "static/media/fa-solid-900.ttf": "/ffxi-skillchain-calculator/static/media/fa-solid-900.b1a653db79258eeccc5d.ttf",
     "static/media/fa-brands-400.ttf": "/ffxi-skillchain-calculator/static/media/fa-brands-400.450a5c898f0b184b968b.ttf",
@@ -43,12 +43,12 @@
     "static/media/marksmanship.csv": "/ffxi-skillchain-calculator/static/media/marksmanship.60c7730e3d07e0d26ffc.csv",
     "static/media/lvl2skillchains.csv": "/ffxi-skillchain-calculator/static/media/lvl2skillchains.0a5e72ebe1f1c9de86ac.csv",
     "static/media/lvl3skillchains.csv": "/ffxi-skillchain-calculator/static/media/lvl3skillchains.89b1177febde249d97c4.csv",
-    "main.4eb3bc61.css.map": "/ffxi-skillchain-calculator/static/css/main.4eb3bc61.css.map",
-    "main.44e6523a.js.map": "/ffxi-skillchain-calculator/static/js/main.44e6523a.js.map",
+    "main.c911aa14.css.map": "/ffxi-skillchain-calculator/static/css/main.c911aa14.css.map",
+    "main.dcf28426.js.map": "/ffxi-skillchain-calculator/static/js/main.dcf28426.js.map",
     "787.7714a32c.chunk.js.map": "/ffxi-skillchain-calculator/static/js/787.7714a32c.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.4eb3bc61.css",
-    "static/js/main.44e6523a.js"
+    "static/css/main.c911aa14.css",
+    "static/js/main.dcf28426.js"
   ]
 }
