@@ -4,7 +4,19 @@ import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
 import JobWeaponSelect from "./components/JobWeaponSelect.js";
 
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardHeader, MDBBtn, MDBCardFooter } from "mdb-react-ui-kit";
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBInput,
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+  MDBCardHeader,
+  MDBBtn,
+  MDBCardFooter,
+} from "mdb-react-ui-kit";
 
 import * as util from "./Util.js";
 
@@ -102,7 +114,20 @@ class Job {
 }
 
 function App() {
-  const scMap = { Scission: "🟤", Detonation: "🟢", Impaction: "🟣", Reverberation: "🔵", Induration: "🧊", Compression: "⚫", Liquefaction: "🔴", Transfixion: "⚪", Distortion: "🔵🧊", Fusion: "🔴⚪", Fragmentation: "🟣🟢", Gravitation: "⚫🟤" };
+  const scMap = {
+    Scission: "🟤",
+    Detonation: "🟢",
+    Impaction: "🟣",
+    Reverberation: "🔵",
+    Induration: "🧊",
+    Compression: "⚫",
+    Liquefaction: "🔴",
+    Transfixion: "⚪",
+    Distortion: "🔵🧊",
+    Fusion: "🔴⚪",
+    Fragmentation: "🟣🟢",
+    Gravitation: "⚫🟤",
+  };
 
   const [ffxi, setFFXI] = useState({});
 
@@ -222,7 +247,9 @@ function App() {
       weapons.push(new Weapon("greatSword", greatSwordMoves, greatSwordCSV));
       weapons.push(new Weapon("handToHand", handToHandMoves, handToHandCSV));
       weapons.push(new Weapon("katana", katanaMoves, katanaCSV));
-      weapons.push(new Weapon("marksmanship", marksmanshipMoves, marksmanshipCSV));
+      weapons.push(
+        new Weapon("marksmanship", marksmanshipMoves, marksmanshipCSV)
+      );
       weapons.push(new Weapon("polearm", polearmMoves, polearmCSV));
       weapons.push(new Weapon("scythe", scytheMoves, scytheCSV));
       weapons.push(new Weapon("staff", staffMoves, staffCSV));
@@ -230,20 +257,80 @@ function App() {
       weapons.push(new Weapon("sword", swordMoves, swordCSV));
 
       let topFFXI = {};
-      topFFXI["war"] = new Job("warrior", "war", util.getWeapons("warrior", weapons, jobWeaponMapping), warWsLvl);
-      topFFXI["thf"] = new Job("thief", "thf", util.getWeapons("thief", weapons, jobWeaponMapping), thfWsLvl);
-      topFFXI["drk"] = new Job("dark knight", "drk", util.getWeapons("dark knight", weapons, jobWeaponMapping), drkWsLvl);
-      topFFXI["pld"] = new Job("paladin", "pld", util.getWeapons("paladin", weapons, jobWeaponMapping), pldWsLvl);
-      topFFXI["bst"] = new Job("beast master", "bst", util.getWeapons("beast master", weapons, jobWeaponMapping), bstWsLvl);
+      topFFXI["war"] = new Job(
+        "warrior",
+        "war",
+        util.getWeapons("warrior", weapons, jobWeaponMapping),
+        warWsLvl
+      );
+      topFFXI["thf"] = new Job(
+        "thief",
+        "thf",
+        util.getWeapons("thief", weapons, jobWeaponMapping),
+        thfWsLvl
+      );
+      topFFXI["drk"] = new Job(
+        "dark knight",
+        "drk",
+        util.getWeapons("dark knight", weapons, jobWeaponMapping),
+        drkWsLvl
+      );
+      topFFXI["pld"] = new Job(
+        "paladin",
+        "pld",
+        util.getWeapons("paladin", weapons, jobWeaponMapping),
+        pldWsLvl
+      );
+      topFFXI["bst"] = new Job(
+        "beast master",
+        "bst",
+        util.getWeapons("beast master", weapons, jobWeaponMapping),
+        bstWsLvl
+      );
 
-      topFFXI["drg"] = new Job("dragoon", "drg", util.getWeapons("dragoon", weapons, jobWeaponMapping), drgWsLvl);
-      topFFXI["mnk"] = new Job("monk", "mnk", util.getWeapons("monk", weapons, jobWeaponMapping), mnkWsLvl);
-      topFFXI["nin"] = new Job("ninja", "nin", util.getWeapons("ninja", weapons, jobWeaponMapping), ninWsLvl);
-      topFFXI["rdm"] = new Job("red mage", "rdm", util.getWeapons("red mage", weapons, jobWeaponMapping), rdmWsLvl);
-      topFFXI["rng"] = new Job("ranger", "rng", util.getWeapons("ranger", weapons, jobWeaponMapping), rngWsLvl);
-      topFFXI["sam"] = new Job("samurai", "sam", util.getWeapons("samurai", weapons, jobWeaponMapping), samWsLvl);
+      topFFXI["drg"] = new Job(
+        "dragoon",
+        "drg",
+        util.getWeapons("dragoon", weapons, jobWeaponMapping),
+        drgWsLvl
+      );
+      topFFXI["mnk"] = new Job(
+        "monk",
+        "mnk",
+        util.getWeapons("monk", weapons, jobWeaponMapping),
+        mnkWsLvl
+      );
+      topFFXI["nin"] = new Job(
+        "ninja",
+        "nin",
+        util.getWeapons("ninja", weapons, jobWeaponMapping),
+        ninWsLvl
+      );
+      topFFXI["rdm"] = new Job(
+        "red mage",
+        "rdm",
+        util.getWeapons("red mage", weapons, jobWeaponMapping),
+        rdmWsLvl
+      );
+      topFFXI["rng"] = new Job(
+        "ranger",
+        "rng",
+        util.getWeapons("ranger", weapons, jobWeaponMapping),
+        rngWsLvl
+      );
+      topFFXI["sam"] = new Job(
+        "samurai",
+        "sam",
+        util.getWeapons("samurai", weapons, jobWeaponMapping),
+        samWsLvl
+      );
 
-      topFFXI["smn"] = new Job("summoner", "snm", util.getWeapons("summoner", weapons, jobWeaponMapping), smnWsLvl);
+      topFFXI["smn"] = new Job(
+        "summoner",
+        "snm",
+        util.getWeapons("summoner", weapons, jobWeaponMapping),
+        smnWsLvl
+      );
 
       console.log(topFFXI);
       setFFXI(topFFXI);
@@ -292,7 +379,14 @@ function App() {
     return wsName;
   };
   const SkillchainResultsNew = (job1, job2, weapons1, weapons2) => {
-    if (!job1.wsLevel || !job2.wsLevel || !weapons1 || !weapons2 || job1.wsLevel.length == 0 || job2.wsLevel.length == 0) {
+    if (
+      !job1.wsLevel ||
+      !job2.wsLevel ||
+      !weapons1 ||
+      !weapons2 ||
+      job1.wsLevel.length == 0 ||
+      job2.wsLevel.length == 0
+    ) {
       return [];
     }
 
@@ -310,10 +404,16 @@ function App() {
       skillchainsMap[sc.ws1 + " -> " + sc.ws2] = sc.result;
     }
 
-    const weaponsSkillInfoJob1 = GetWeaponSkillInfoAtLevelForJob(job1, weapons1);
+    const weaponsSkillInfoJob1 = GetWeaponSkillInfoAtLevelForJob(
+      job1,
+      weapons1
+    );
     console.log({ weaponsSkillInfoJob1 });
 
-    const weaponsSkillInfoJob2 = GetWeaponSkillInfoAtLevelForJob(job2, weapons2);
+    const weaponsSkillInfoJob2 = GetWeaponSkillInfoAtLevelForJob(
+      job2,
+      weapons2
+    );
     console.log({ weaponsSkillInfoJob2 });
 
     let skillchains = [];
@@ -328,16 +428,24 @@ function App() {
               let elementKeyValue1 = "element" + i;
               let elementKeyValue2 = "element" + j;
 
-              let compare = value1[elementKeyValue1] + " -> " + value2[elementKeyValue2];
+              let compare =
+                value1[elementKeyValue1] + " -> " + value2[elementKeyValue2];
               if (skillchainsMap[compare] != undefined) {
                 let element = skillchainsMap[compare];
-                skillchains.push(key1 + " -> " + key2 + " = " + skillchainsMap[compare]);
+                skillchains.push(
+                  key1 + " -> " + key2 + " = " + skillchainsMap[compare]
+                );
 
                 if (!skillChainsFormatted[element]) {
                   skillChainsFormatted[element] = [];
                 }
 
-                let newSC = { firstWs: key1, secondWs: key2, wsString: key1 + " -> " + key2 + " = " + skillchainsMap[compare] };
+                let newSC = {
+                  firstWs: key1,
+                  secondWs: key2,
+                  wsString:
+                    key1 + " -> " + key2 + " = " + skillchainsMap[compare],
+                };
                 let currentSCs = skillChainsFormatted[element];
                 currentSCs.push(newSC);
                 skillChainsFormatted[element] = currentSCs;
@@ -349,6 +457,7 @@ function App() {
         }
       }
     }
+    //new comment
 
     return skillChainsFormatted;
   };
@@ -370,7 +479,12 @@ function App() {
           let w1Element = w1Elements[0];
 
           if (w1Elements.length > 0) {
-            selectJob1WsAtLvl[ws] = { exists: true, element1: w1Element.element1, element2: w1Element.element2, element3: w1Element.element3 };
+            selectJob1WsAtLvl[ws] = {
+              exists: true,
+              element1: w1Element.element1,
+              element2: w1Element.element2,
+              element3: w1Element.element3,
+            };
           }
         }
       }
@@ -379,7 +493,12 @@ function App() {
     return selectJob1WsAtLvl;
   };
 
-  let sc = SkillchainResultsNew(selectedJob1, selectedJob2, selectedWeapon1, selectedWeapon2);
+  let sc = SkillchainResultsNew(
+    selectedJob1,
+    selectedJob2,
+    selectedWeapon1,
+    selectedWeapon2
+  );
 
   let cards = [];
 
@@ -390,7 +509,7 @@ function App() {
           <MDBCol size="col-md-1"></MDBCol>
           <MDBCol size="col-md-10">
             <MDBCard alignment="center">
-              <MDBCardBody>
+              <MDBCardBody className="p-3 mb-2 bg-secondary bg-gradient text-white">
                 <MDBCardTitle>
                   <p>
                     {key} {scMap[key]}
@@ -411,7 +530,12 @@ function App() {
     cards.push(card);
   }
 
-  let scOtherWay = SkillchainResultsNew(selectedJob2, selectedJob1, selectedWeapon2, selectedWeapon1);
+  let scOtherWay = SkillchainResultsNew(
+    selectedJob2,
+    selectedJob1,
+    selectedWeapon2,
+    selectedWeapon1
+  );
 
   let cardsOtherWay = [];
 
@@ -482,18 +606,29 @@ function App() {
 
         <MDBRow>
           <MDBCol size="md">
-            <JobWeaponSelect selectedJob={selectedJob1} moveChanged={moveChanged} />
+            <JobWeaponSelect
+              selectedJob={selectedJob1}
+              moveChanged={moveChanged}
+            />
           </MDBCol>
 
           <MDBCol size="md">
-            <JobWeaponSelect selectedJob={selectedJob2} moveChanged={moveChanged} />
+            <div style={{ width: 100, margin: "auto", padding: 20 }}>
+              <MDBInput
+                defaultValue={10}
+                label="level"
+                name="level"
+                onChange={(e) => setPartyLevel(e.target.value)}
+              ></MDBInput>
+            </div>
           </MDBCol>
-        </MDBRow>
-        <hr></hr>
-        <MDBRow>
-          <div style={{ width: 100, margin: "auto" }}>
-            <MDBInput defaultValue={10} label="level" name="level" onChange={(e) => setPartyLevel(e.target.value)}></MDBInput>
-          </div>
+
+          <MDBCol size="md">
+            <JobWeaponSelect
+              selectedJob={selectedJob2}
+              moveChanged={moveChanged}
+            />
+          </MDBCol>
         </MDBRow>
       </MDBContainer>
       <hr></hr>
@@ -501,13 +636,24 @@ function App() {
 
       <hr />
 
-      <div>
-        <h5 style={{ paddingTop: 30 }}>{selectedJob1.name && selectedJob2.name && selectedJob1.name + " -> " + selectedJob2.name}</h5>
-        <div style={{ paddingTop: 20 }} />
-        <>{cards}</>
-
-        <h5 style={{ paddingTop: 30 }}>{selectedJob1.name && selectedJob2.name && selectedJob2.name + " -> " + selectedJob1.name}</h5>
-        <>{cardsOtherWay}</>
+      <div className="row">
+        <div className="col-md-6">
+          <h5 style={{ paddingTop: 30 }}>
+            {selectedJob1.name &&
+              selectedJob2.name &&
+              selectedJob1.name + " -> " + selectedJob2.name}
+          </h5>
+          <div style={{ paddingTop: 20 }} />
+          <>{cards}</>
+        </div>
+        <div className="col-md-6">
+          <h5 style={{ paddingTop: 30 }}>
+            {selectedJob1.name &&
+              selectedJob2.name &&
+              selectedJob2.name + " -> " + selectedJob1.name}
+          </h5>
+          <>{cardsOtherWay}</>
+        </div>
       </div>
     </div>
   );
