@@ -457,6 +457,7 @@ function App() {
         }
       }
     }
+    //new comment
 
     return skillChainsFormatted;
   };
