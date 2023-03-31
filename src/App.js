@@ -3,6 +3,7 @@ import "./Orb.css";
 import React, { useState, useEffect } from "react";
 import Papa from "papaparse";
 import JobWeaponSelect from "./components/JobWeaponSelect.js";
+import CharacterTiles from "./components/CharacterTiles.js";
 
 import {
   MDBContainer,
@@ -166,6 +167,8 @@ function App() {
   const [lvl1sc, setlvl1sc] = useState([]);
   const [lvl2sc, setlvl2sc] = useState([]);
   const [lvl3sc, setlvl3sc] = useState([]);
+  let [selectedCharacters, setSelectedCharacters] = useState([]);
+  let [leftrighttoggle, setleftrighttoggle] = useState("left");
 
   // UI
   const [partyLevel, setPartyLevel] = useState(10);
@@ -233,6 +236,107 @@ function App() {
         //log the error
         (err) => console.warn("Something went wrong:", err)
       );
+
+    //New Select Charcter functions
+
+    const jobtiles = document.querySelectorAll(".jobtile");
+    const dropzones = document.querySelectorAll(".dropzone");
+
+    jobtiles.forEach((jobtile) => {
+      jobtile.addEventListener("dblclick", () => {
+        jobtile.classList.add("lastclicked");
+        const lastclicked = document.querySelector(".lastclicked");
+        handleCharacterSelect(lastclicked, leftrighttoggle);
+      });
+
+      jobtile.addEventListener("dragstart", () => {
+        jobtile.classList.add("dragging");
+      });
+
+      jobtile.addEventListener("dragend", () => {
+        jobtile.classList.remove("dragging");
+      });
+    });
+
+    dropzones.forEach((dropzone) => {
+      dropzone.addEventListener("dragover", (e) => {
+        e.preventDefault();
+      });
+
+      dropzone.addEventListener("drop", (event) => {
+        const draggable = document.querySelector(".dragging");
+        let position = "string";
+        const targetID = event.target.id;
+
+        if (targetID === "chara" || targetID === "charaobj") {
+          position = "left";
+        } else {
+          position = "right";
+        }
+
+        handleCharacterSelect(draggable, position);
+      });
+    });
+
+    // //drag and drop functions
+    // const draggables = document.querySelectorAll(".jobtile");
+    // const dropzones = document.querySelectorAll(".dropzone");
+
+    // draggables.forEach((draggable) => {
+    //   draggable.addEventListener("dragstart", () => {
+    //     draggable.classList.add("dragging");
+    //   });
+
+    //   draggable.addEventListener("dragend", () => {
+    //     draggable.classList.remove("dragging");
+    //   });
+
+    //   draggable.addEventListener("dblclick", (e) => {
+    //     draggable.classList.add("selected");
+    //     const clone = draggable.cloneNode(true);
+    //     clone.classList.remove("selected");
+
+    //     console.log(
+    //       "CharA:",
+    //       dropzones[0].firstElementChild.className === "jobtile",
+    //       "CharB:",
+    //       dropzones[1].childNodes.length
+    //     );
+
+    //     if (
+    //       dropzones[0].firstElementChild.className === "jobtile" &&
+    //       dropzones[1].firstElementChild.className !== "jobtile"
+
+    //       // dropzones[0].childNodes.length > 0 &&
+    //       // dropzones[1].childNodes.length < 2
+    //     ) {
+    //       dropzones[1].appendChild(clone);
+    //       dropzones[1].removeChild(dropzones[1].firstChild);
+    //     } else {
+    //       dropzones[0].appendChild(clone);
+    //       dropzones[0].removeChild(dropzones[0].firstChild);
+    //     }
+    //   });
+    // });
+
+    // dropzones.forEach((dropzone) => {
+    //   dropzone.addEventListener("dragover", (e) => {
+    //     e.preventDefault();
+    //   });
+
+    //   dropzone.addEventListener("drop", (e) => {
+    //     const draggable = document.querySelector(".dragging");
+    //     const clone = draggable.cloneNode(true);
+    //     clone.classList.remove("dragging");
+    //     console.log("appendchild", dropzone.childNodes.length);
+    //     dropzone.appendChild(clone);
+
+    //     if (dropzone.childNodes.length > 1) {
+    //       console.log("removechild", dropzone.childNodes.length);
+    //       dropzone.removeChild(dropzone.firstChild);
+    //     }
+    //   });
+    // });
   }, []);
 
   useEffect(() => {
@@ -354,9 +458,12 @@ function App() {
   const selectPartyMemeber = (e) => {
     if (e.target.checked) {
       if (Object.keys(selectedJob1).length == 0) {
+        console.log(e.target.value);
         setJob1(ffxi[e.target.value]);
+        console.log(ffxi["pld"].weapons[0].moves);
         setWeapon1(ffxi[e.target.value].weapons[0].moves);
       } else if (Object.keys(selectedJob2).length == 0) {
+        console.log(e.target.value);
         setJob2(ffxi[e.target.value]);
         setWeapon2(ffxi[e.target.value].weapons[0].moves);
       }
@@ -567,6 +674,64 @@ function App() {
     cardsOtherWay.push(card);
   }
 
+  const handleCharacterSelect = (character, position) => {
+    const clonedCharacterDiv = character.cloneNode(true);
+    character.classList.remove("lastclicked");
+    clonedCharacterDiv.classList.remove("lastclicked");
+    clonedCharacterDiv.classList.remove("dragging");
+    //clonedCharacterDiv.classList.remove("jobtile");
+
+    leftrighttoggle = position;
+
+    if (leftrighttoggle === "left") {
+      let dropzone = document.querySelector(".chara");
+      if (dropzone.hasChildNodes()) {
+        dropzone.removeChild(dropzone.firstChild);
+      }
+      dropzone.appendChild(clonedCharacterDiv);
+      // console.log(clonedCharacterDiv.id);
+      // setJob1(ffxi[clonedCharacterDiv.id]);
+      // setWeapon1(ffxi[clonedCharacterDiv.id].weapons[0].moves);
+      clonedCharacterDiv.id = "charaobj";
+      leftrighttoggle = "right";
+    } else {
+      let dropzone = document.querySelector(".charb");
+      if (dropzone.hasChildNodes()) {
+        dropzone.removeChild(dropzone.firstChild);
+      }
+      dropzone.appendChild(clonedCharacterDiv);
+      // console.log(clonedCharacterDiv.id);
+      // setJob2(ffxi[clonedCharacterDiv.id]);
+      // setWeapon2(ffxi[clonedCharacterDiv.id].weapons[0].moves);
+      leftrighttoggle = "left";
+    }
+    highlightTiles();
+  };
+
+  const highlightTiles = () => {
+    const jobtiles = document.querySelectorAll(".jobtile");
+    const dropzones = document.querySelectorAll(".dropzone");
+    console.log(dropzones);
+    var dropzoneValues = [];
+    dropzones.forEach((dropzone) => {
+      dropzoneValues.push(dropzone.firstChild.getAttribute("title"));
+      console.log(dropzone.firstChild.getAttribute("title"));
+    });
+
+    hasDuplicates(jobtiles);
+    function hasDuplicates(array) {
+      for (var i = 0; i < array.length; i++) {
+        var value = array[i].getAttribute("title");
+        //console.log("Value:", value);
+        //console.log("valuesSoFar", valuesSoFar);
+        if (dropzoneValues.indexOf(value) !== -1) {
+          //console.log("true");
+          array[i].classList.add("selected");
+        } else array[i].classList.remove("selected");
+      }
+    }
+  };
+
   return (
     <div className="App">
       {/* <video autoplay muted id="myVideo">
@@ -601,6 +766,18 @@ function App() {
             </MDBCol>
           ))}
         </MDBRow>
+        <MDBRow>
+          <CharacterTiles />
+        </MDBRow>
+
+        <div className="row gx-5 justify-content-center">
+          <div className="dropzone col-6 chara" droppable="true" id="chara">
+            Character A
+          </div>
+          <div className="dropzone col-6 charb" droppable="true" id="charb">
+            Character B
+          </div>
+        </div>
 
         <hr></hr>
 
