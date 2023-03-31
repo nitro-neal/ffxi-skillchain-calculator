@@ -11,6 +11,40 @@ body {
   z-index: -1;
 }
 
+.selected {
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.05) inset,
+    0px 0px 30px rgba(0, 145, 255, 0.6);
+}
+
+.jobtile {
+  min-width: 10em;
+  min-height: 10em;
+  border: 3px solid black;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  margin: 5px;
+  border-radius: 10px;
+  cursor: move;
+  background-color: white;
+}
+
+.dropzone {
+  min-width: 10em;
+  min-height: 25em;
+  max-width: 20em;
+  border: 3px solid black;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  border-radius: 10px;
+  margin: 5px;
+  background-color: whitesmoke;
+}
+
+.dragging {
+  opacity: 0.5;
+}
 
 .App {
   text-align: center;
