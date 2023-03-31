@@ -5,19 +5,7 @@ import Papa from "papaparse";
 import JobWeaponSelect from "./components/JobWeaponSelect.js";
 import CharacterTiles from "./components/CharacterTiles.js";
 
-import {
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBInput,
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-  MDBCardHeader,
-  MDBBtn,
-  MDBCardFooter,
-} from "mdb-react-ui-kit";
+import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardHeader, MDBBtn, MDBCardFooter } from "mdb-react-ui-kit";
 
 import * as util from "./Util.js";
 
@@ -237,47 +225,6 @@ function App() {
         (err) => console.warn("Something went wrong:", err)
       );
 
-    //New Select Charcter functions
-
-    const jobtiles = document.querySelectorAll(".jobtile");
-    const dropzones = document.querySelectorAll(".dropzone");
-
-    jobtiles.forEach((jobtile) => {
-      jobtile.addEventListener("dblclick", () => {
-        jobtile.classList.add("lastclicked");
-        const lastclicked = document.querySelector(".lastclicked");
-        handleCharacterSelect(lastclicked, leftrighttoggle);
-      });
-
-      jobtile.addEventListener("dragstart", () => {
-        jobtile.classList.add("dragging");
-      });
-
-      jobtile.addEventListener("dragend", () => {
-        jobtile.classList.remove("dragging");
-      });
-    });
-
-    dropzones.forEach((dropzone) => {
-      dropzone.addEventListener("dragover", (e) => {
-        e.preventDefault();
-      });
-
-      dropzone.addEventListener("drop", (event) => {
-        const draggable = document.querySelector(".dragging");
-        let position = "string";
-        const targetID = event.target.id;
-
-        if (targetID === "chara" || targetID === "charaobj") {
-          position = "left";
-        } else {
-          position = "right";
-        }
-
-        handleCharacterSelect(draggable, position);
-      });
-    });
-
     // //drag and drop functions
     // const draggables = document.querySelectorAll(".jobtile");
     // const dropzones = document.querySelectorAll(".dropzone");
@@ -351,9 +298,7 @@ function App() {
       weapons.push(new Weapon("greatSword", greatSwordMoves, greatSwordCSV));
       weapons.push(new Weapon("handToHand", handToHandMoves, handToHandCSV));
       weapons.push(new Weapon("katana", katanaMoves, katanaCSV));
-      weapons.push(
-        new Weapon("marksmanship", marksmanshipMoves, marksmanshipCSV)
-      );
+      weapons.push(new Weapon("marksmanship", marksmanshipMoves, marksmanshipCSV));
       weapons.push(new Weapon("polearm", polearmMoves, polearmCSV));
       weapons.push(new Weapon("scythe", scytheMoves, scytheCSV));
       weapons.push(new Weapon("staff", staffMoves, staffCSV));
@@ -361,83 +306,64 @@ function App() {
       weapons.push(new Weapon("sword", swordMoves, swordCSV));
 
       let topFFXI = {};
-      topFFXI["war"] = new Job(
-        "warrior",
-        "war",
-        util.getWeapons("warrior", weapons, jobWeaponMapping),
-        warWsLvl
-      );
-      topFFXI["thf"] = new Job(
-        "thief",
-        "thf",
-        util.getWeapons("thief", weapons, jobWeaponMapping),
-        thfWsLvl
-      );
-      topFFXI["drk"] = new Job(
-        "dark knight",
-        "drk",
-        util.getWeapons("dark knight", weapons, jobWeaponMapping),
-        drkWsLvl
-      );
-      topFFXI["pld"] = new Job(
-        "paladin",
-        "pld",
-        util.getWeapons("paladin", weapons, jobWeaponMapping),
-        pldWsLvl
-      );
-      topFFXI["bst"] = new Job(
-        "beast master",
-        "bst",
-        util.getWeapons("beast master", weapons, jobWeaponMapping),
-        bstWsLvl
-      );
+      topFFXI["war"] = new Job("warrior", "war", util.getWeapons("warrior", weapons, jobWeaponMapping), warWsLvl);
+      topFFXI["thf"] = new Job("thief", "thf", util.getWeapons("thief", weapons, jobWeaponMapping), thfWsLvl);
+      topFFXI["drk"] = new Job("dark knight", "drk", util.getWeapons("dark knight", weapons, jobWeaponMapping), drkWsLvl);
+      topFFXI["pld"] = new Job("paladin", "pld", util.getWeapons("paladin", weapons, jobWeaponMapping), pldWsLvl);
+      topFFXI["bst"] = new Job("beast master", "bst", util.getWeapons("beast master", weapons, jobWeaponMapping), bstWsLvl);
 
-      topFFXI["drg"] = new Job(
-        "dragoon",
-        "drg",
-        util.getWeapons("dragoon", weapons, jobWeaponMapping),
-        drgWsLvl
-      );
-      topFFXI["mnk"] = new Job(
-        "monk",
-        "mnk",
-        util.getWeapons("monk", weapons, jobWeaponMapping),
-        mnkWsLvl
-      );
-      topFFXI["nin"] = new Job(
-        "ninja",
-        "nin",
-        util.getWeapons("ninja", weapons, jobWeaponMapping),
-        ninWsLvl
-      );
-      topFFXI["rdm"] = new Job(
-        "red mage",
-        "rdm",
-        util.getWeapons("red mage", weapons, jobWeaponMapping),
-        rdmWsLvl
-      );
-      topFFXI["rng"] = new Job(
-        "ranger",
-        "rng",
-        util.getWeapons("ranger", weapons, jobWeaponMapping),
-        rngWsLvl
-      );
-      topFFXI["sam"] = new Job(
-        "samurai",
-        "sam",
-        util.getWeapons("samurai", weapons, jobWeaponMapping),
-        samWsLvl
-      );
+      topFFXI["drg"] = new Job("dragoon", "drg", util.getWeapons("dragoon", weapons, jobWeaponMapping), drgWsLvl);
+      topFFXI["mnk"] = new Job("monk", "mnk", util.getWeapons("monk", weapons, jobWeaponMapping), mnkWsLvl);
+      topFFXI["nin"] = new Job("ninja", "nin", util.getWeapons("ninja", weapons, jobWeaponMapping), ninWsLvl);
+      topFFXI["rdm"] = new Job("red mage", "rdm", util.getWeapons("red mage", weapons, jobWeaponMapping), rdmWsLvl);
+      topFFXI["rng"] = new Job("ranger", "rng", util.getWeapons("ranger", weapons, jobWeaponMapping), rngWsLvl);
+      topFFXI["sam"] = new Job("samurai", "sam", util.getWeapons("samurai", weapons, jobWeaponMapping), samWsLvl);
 
-      topFFXI["smn"] = new Job(
-        "summoner",
-        "snm",
-        util.getWeapons("summoner", weapons, jobWeaponMapping),
-        smnWsLvl
-      );
+      topFFXI["smn"] = new Job("summoner", "snm", util.getWeapons("summoner", weapons, jobWeaponMapping), smnWsLvl);
 
       console.log(topFFXI);
       setFFXI(topFFXI);
+
+      //New Select Charcter functions
+
+      const jobtiles = document.querySelectorAll(".jobtile");
+      const dropzones = document.querySelectorAll(".dropzone");
+
+      jobtiles.forEach((jobtile) => {
+        jobtile.addEventListener("dblclick", () => {
+          jobtile.classList.add("lastclicked");
+          const lastclicked = document.querySelector(".lastclicked");
+          handleCharacterSelect(lastclicked, leftrighttoggle);
+        });
+
+        jobtile.addEventListener("dragstart", () => {
+          jobtile.classList.add("dragging");
+        });
+
+        jobtile.addEventListener("dragend", () => {
+          jobtile.classList.remove("dragging");
+        });
+      });
+
+      dropzones.forEach((dropzone) => {
+        dropzone.addEventListener("dragover", (e) => {
+          e.preventDefault();
+        });
+
+        dropzone.addEventListener("drop", (event) => {
+          const draggable = document.querySelector(".dragging");
+          let position = "string";
+          const targetID = event.target.id;
+
+          if (targetID === "chara" || targetID === "charaobj") {
+            position = "left";
+          } else {
+            position = "right";
+          }
+
+          handleCharacterSelect(draggable, position, topFFXI);
+        });
+      });
     }
   }, [doneLoading]);
 
@@ -486,14 +412,7 @@ function App() {
     return wsName;
   };
   const SkillchainResultsNew = (job1, job2, weapons1, weapons2) => {
-    if (
-      !job1.wsLevel ||
-      !job2.wsLevel ||
-      !weapons1 ||
-      !weapons2 ||
-      job1.wsLevel.length == 0 ||
-      job2.wsLevel.length == 0
-    ) {
+    if (!job1.wsLevel || !job2.wsLevel || !weapons1 || !weapons2 || job1.wsLevel.length == 0 || job2.wsLevel.length == 0) {
       return [];
     }
 
@@ -511,16 +430,10 @@ function App() {
       skillchainsMap[sc.ws1 + " -> " + sc.ws2] = sc.result;
     }
 
-    const weaponsSkillInfoJob1 = GetWeaponSkillInfoAtLevelForJob(
-      job1,
-      weapons1
-    );
+    const weaponsSkillInfoJob1 = GetWeaponSkillInfoAtLevelForJob(job1, weapons1);
     console.log({ weaponsSkillInfoJob1 });
 
-    const weaponsSkillInfoJob2 = GetWeaponSkillInfoAtLevelForJob(
-      job2,
-      weapons2
-    );
+    const weaponsSkillInfoJob2 = GetWeaponSkillInfoAtLevelForJob(job2, weapons2);
     console.log({ weaponsSkillInfoJob2 });
 
     let skillchains = [];
@@ -535,13 +448,10 @@ function App() {
               let elementKeyValue1 = "element" + i;
               let elementKeyValue2 = "element" + j;
 
-              let compare =
-                value1[elementKeyValue1] + " -> " + value2[elementKeyValue2];
+              let compare = value1[elementKeyValue1] + " -> " + value2[elementKeyValue2];
               if (skillchainsMap[compare] != undefined) {
                 let element = skillchainsMap[compare];
-                skillchains.push(
-                  key1 + " -> " + key2 + " = " + skillchainsMap[compare]
-                );
+                skillchains.push(key1 + " -> " + key2 + " = " + skillchainsMap[compare]);
 
                 if (!skillChainsFormatted[element]) {
                   skillChainsFormatted[element] = [];
@@ -550,8 +460,7 @@ function App() {
                 let newSC = {
                   firstWs: key1,
                   secondWs: key2,
-                  wsString:
-                    key1 + " -> " + key2 + " = " + skillchainsMap[compare],
+                  wsString: key1 + " -> " + key2 + " = " + skillchainsMap[compare],
                 };
                 let currentSCs = skillChainsFormatted[element];
                 currentSCs.push(newSC);
@@ -600,12 +509,7 @@ function App() {
     return selectJob1WsAtLvl;
   };
 
-  let sc = SkillchainResultsNew(
-    selectedJob1,
-    selectedJob2,
-    selectedWeapon1,
-    selectedWeapon2
-  );
+  let sc = SkillchainResultsNew(selectedJob1, selectedJob2, selectedWeapon1, selectedWeapon2);
 
   let cards = [];
 
@@ -637,12 +541,7 @@ function App() {
     cards.push(card);
   }
 
-  let scOtherWay = SkillchainResultsNew(
-    selectedJob2,
-    selectedJob1,
-    selectedWeapon2,
-    selectedWeapon1
-  );
+  let scOtherWay = SkillchainResultsNew(selectedJob2, selectedJob1, selectedWeapon2, selectedWeapon1);
 
   let cardsOtherWay = [];
 
@@ -674,7 +573,7 @@ function App() {
     cardsOtherWay.push(card);
   }
 
-  const handleCharacterSelect = (character, position) => {
+  const handleCharacterSelect = (character, position, topFFXI) => {
     const clonedCharacterDiv = character.cloneNode(true);
     character.classList.remove("lastclicked");
     clonedCharacterDiv.classList.remove("lastclicked");
@@ -689,7 +588,12 @@ function App() {
         dropzone.removeChild(dropzone.firstChild);
       }
       dropzone.appendChild(clonedCharacterDiv);
-      // console.log(clonedCharacterDiv.id);
+      console.log("DROPPED!");
+      console.log(clonedCharacterDiv.id);
+
+      setJob1(topFFXI[clonedCharacterDiv.id]);
+      setWeapon1(topFFXI[clonedCharacterDiv.id].weapons[0].moves);
+
       // setJob1(ffxi[clonedCharacterDiv.id]);
       // setWeapon1(ffxi[clonedCharacterDiv.id].weapons[0].moves);
       clonedCharacterDiv.id = "charaobj";
@@ -700,6 +604,10 @@ function App() {
         dropzone.removeChild(dropzone.firstChild);
       }
       dropzone.appendChild(clonedCharacterDiv);
+
+      setJob2(topFFXI[clonedCharacterDiv.id]);
+      setWeapon2(topFFXI[clonedCharacterDiv.id].weapons[0].moves);
+
       // console.log(clonedCharacterDiv.id);
       // setJob2(ffxi[clonedCharacterDiv.id]);
       // setWeapon2(ffxi[clonedCharacterDiv.id].weapons[0].moves);
@@ -744,7 +652,7 @@ function App() {
       <MDBContainer>
         <h3>Your Party</h3>
 
-        <MDBRow>
+        {/* <MDBRow>
           {Object.keys(ffxi).map((shortJob, i) => (
             <MDBCol size="md">
               <p>{ffxi[shortJob].name}</p>
@@ -765,7 +673,8 @@ function App() {
               />
             </MDBCol>
           ))}
-        </MDBRow>
+        </MDBRow> */}
+
         <MDBRow>
           <CharacterTiles />
         </MDBRow>
@@ -783,28 +692,17 @@ function App() {
 
         <MDBRow>
           <MDBCol size="md">
-            <JobWeaponSelect
-              selectedJob={selectedJob1}
-              moveChanged={moveChanged}
-            />
+            <JobWeaponSelect selectedJob={selectedJob1} moveChanged={moveChanged} />
           </MDBCol>
 
           <MDBCol size="md">
             <div style={{ width: 100, margin: "auto", padding: 20 }}>
-              <MDBInput
-                defaultValue={10}
-                label="level"
-                name="level"
-                onChange={(e) => setPartyLevel(e.target.value)}
-              ></MDBInput>
+              <MDBInput defaultValue={10} label="level" name="level" onChange={(e) => setPartyLevel(e.target.value)}></MDBInput>
             </div>
           </MDBCol>
 
           <MDBCol size="md">
-            <JobWeaponSelect
-              selectedJob={selectedJob2}
-              moveChanged={moveChanged}
-            />
+            <JobWeaponSelect selectedJob={selectedJob2} moveChanged={moveChanged} />
           </MDBCol>
         </MDBRow>
       </MDBContainer>
@@ -815,20 +713,12 @@ function App() {
 
       <div className="row">
         <div className="col-md-6">
-          <h5 style={{ paddingTop: 30 }}>
-            {selectedJob1.name &&
-              selectedJob2.name &&
-              selectedJob1.name + " -> " + selectedJob2.name}
-          </h5>
+          <h5 style={{ paddingTop: 30 }}>{selectedJob1.name && selectedJob2.name && selectedJob1.name + " -> " + selectedJob2.name}</h5>
           <div style={{ paddingTop: 20 }} />
           <>{cards}</>
         </div>
         <div className="col-md-6">
-          <h5 style={{ paddingTop: 30 }}>
-            {selectedJob1.name &&
-              selectedJob2.name &&
-              selectedJob2.name + " -> " + selectedJob1.name}
-          </h5>
+          <h5 style={{ paddingTop: 30 }}>{selectedJob1.name && selectedJob2.name && selectedJob2.name + " -> " + selectedJob1.name}</h5>
           <>{cardsOtherWay}</>
         </div>
       </div>

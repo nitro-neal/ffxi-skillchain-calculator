@@ -1,10 +1,4 @@
-import React, {
-  Fragment,
-  ReactDOM,
-  ReactMotion,
-  useState,
-  useEffect,
-} from "react";
+import React, { Fragment, ReactDOM, ReactMotion, useState, useEffect } from "react";
 import "../App.css";
 
 function CharacterTiles() {
@@ -12,7 +6,7 @@ function CharacterTiles() {
     { Name: "Warrior", id: "war", value: "war" },
     { Name: "Thief", id: "thf", value: "thf" },
     { Name: "Dark Knight", id: "drk", value: "drk" },
-    { Name: "Paladin", id: "pal", value: "pal" },
+    { Name: "Paladin", id: "pld", value: "pld" },
     { Name: "Beast Master", id: "bst", value: "bst" },
     { Name: "Dragoon", id: "drg", value: "drg" },
     { Name: "Monk", id: "mnk", value: "mnk" },
