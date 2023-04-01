@@ -18,7 +18,7 @@ import * as util from "./Util.js";
 import * as scCalc from "./SkillchainCalc.js";
 
 function App() {
-  // Globals
+  // Globalsz
   const [ffxi, setFFXI] = useState({});
   const [lvl1sc, setlvl1sc] = useState([]);
   const [lvl2sc, setlvl2sc] = useState([]);
