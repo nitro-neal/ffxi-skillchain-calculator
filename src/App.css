@@ -26,6 +26,10 @@ body {
   filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#A9E4FF", endColorstr="#FFFFFF", GradientType=1 );
 }
 
+.ffxi-font {
+  font-family: 'Averia Serif Libre', cursive;
+}
+
 #myVideo {
   position: fixed;
   right: 0;

@@ -1,38 +1,23 @@
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
+
 import "./App.css";
 import React, { useState, useEffect } from "react";
+import Slide from "@mui/material/Slide";
 
+import Box from "@mui/material/Box";
 import JobWeaponSelect from "./components/JobWeaponSelect.js";
 import CharacterTiles from "./components/CharacterTiles.js";
+import SkillchainResults from "./components/SkillchainResults.js";
 
-import {
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBInput,
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-} from "mdb-react-ui-kit";
+import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText } from "mdb-react-ui-kit";
 
 import * as util from "./Util.js";
+import * as scCalc from "./SkillchainCalc.js";
 
 function App() {
-  const scMap = {
-    Scission: "🟤",
-    Detonation: "🟢",
-    Impaction: "🟣",
-    Reverberation: "🔵",
-    Induration: "🧊",
-    Compression: "⚫",
-    Liquefaction: "🔴",
-    Transfixion: "⚪",
-    Distortion: "🔵🧊",
-    Fusion: "🔴⚪",
-    Fragmentation: "🟣🟢",
-    Gravitation: "⚫🟤",
-  };
-
   // Globals
   const [ffxi, setFFXI] = useState({});
   const [lvl1sc, setlvl1sc] = useState([]);
@@ -56,14 +41,7 @@ function App() {
       console.log({ ffix: retObj });
 
       // Select Charcter functions
-      util.initDroppable(
-        retObj.topFFXI,
-        leftrighttoggle,
-        setJob1,
-        setJob2,
-        setWeapon1,
-        setWeapon2
-      );
+      util.initDroppable(retObj.topFFXI, leftrighttoggle, setJob1, setJob2, setWeapon1, setWeapon2);
 
       setFFXI(retObj.topFFXI);
       setlvl1sc(retObj.lvl1sc);
@@ -88,286 +66,59 @@ function App() {
     }
   };
 
-  const normalizeWeaponsSkillName = (wsName) => {
-    wsName = wsName.replace("*", "");
-    wsName = wsName.toLowerCase();
-    wsName = wsName.trim();
-    wsName = wsName.replace(" ", "-");
-    return wsName;
-  };
-
-  const SkillchainResultsNew = (job1, job2, weapons1, weapons2) => {
-    console.log("SkillchainResultsNew CALLED");
-    console.log(job1);
-    console.log(job2);
-    console.log(weapons1);
-    console.log(weapons2);
-
-    if (
-      !job1.wsLevel ||
-      !job2.wsLevel ||
-      !weapons1 ||
-      !weapons2 ||
-      job1.wsLevel.length == 0 ||
-      job2.wsLevel.length == 0
-    ) {
-      return [];
-    }
-
-    let skillchainsMap = {};
-
-    for (let sc of lvl1sc) {
-      skillchainsMap[sc.ws1 + " -> " + sc.ws2] = sc.result;
-    }
-
-    for (let sc of lvl2sc) {
-      skillchainsMap[sc.ws1 + " -> " + sc.ws2] = sc.result;
-    }
-
-    for (let sc of lvl3sc) {
-      skillchainsMap[sc.ws1 + " -> " + sc.ws2] = sc.result;
-    }
-
-    const weaponsSkillInfoJob1 = GetWeaponSkillInfoAtLevelForJob(
-      job1,
-      weapons1
-    );
-    console.log({ weaponsSkillInfoJob1 });
-
-    const weaponsSkillInfoJob2 = GetWeaponSkillInfoAtLevelForJob(
-      job2,
-      weapons2
-    );
-    console.log({ weaponsSkillInfoJob2 });
-
-    let skillchains = [];
-    let skillChainsFormatted = {};
-
-    for (const [key1, value1] of Object.entries(weaponsSkillInfoJob1)) {
-      for (const [key2, value2] of Object.entries(weaponsSkillInfoJob2)) {
-        let found = false;
-        for (let i = 1; i <= 3; i++) {
-          for (let j = 1; j <= 3; j++) {
-            if (!found) {
-              let elementKeyValue1 = "element" + i;
-              let elementKeyValue2 = "element" + j;
-
-              let compare =
-                value1[elementKeyValue1] + " -> " + value2[elementKeyValue2];
-              if (skillchainsMap[compare] != undefined) {
-                let element = skillchainsMap[compare];
-                skillchains.push(
-                  key1 + " -> " + key2 + " = " + skillchainsMap[compare]
-                );
-
-                if (!skillChainsFormatted[element]) {
-                  skillChainsFormatted[element] = [];
-                }
-
-                let newSC = {
-                  firstWs: key1,
-                  secondWs: key2,
-                  wsString:
-                    key1 + " -> " + key2 + " = " + skillchainsMap[compare],
-                };
-                let currentSCs = skillChainsFormatted[element];
-                currentSCs.push(newSC);
-                skillChainsFormatted[element] = currentSCs;
-
-                found = true;
-              }
-            }
-          }
-        }
-      }
-    }
-
-    return skillChainsFormatted;
-  };
-
-  const GetWeaponSkillInfoAtLevelForJob = (job, weapon) => {
-    let selectJob1WsAtLvl = {};
-
-    for (let i = 0; i < partyLevel; i++) {
-      let wsAtLvl = job.wsLevel[i].ws;
-      if (wsAtLvl.length > 0) {
-        let wsAtLvlArr = wsAtLvl.split(",");
-        wsAtLvlArr = wsAtLvlArr.map((ws) => normalizeWeaponsSkillName(ws));
-
-        for (let ws of wsAtLvlArr) {
-          let w1Elements = weapon.filter((w) => {
-            let normalizedName = normalizeWeaponsSkillName(w.name);
-            return normalizedName == ws;
-          });
-          let w1Element = w1Elements[0];
-
-          if (w1Elements.length > 0) {
-            selectJob1WsAtLvl[ws] = {
-              exists: true,
-              element1: w1Element.element1,
-              element2: w1Element.element2,
-              element3: w1Element.element3,
-            };
-          }
-        }
-      }
-    }
-
-    return selectJob1WsAtLvl;
-  };
-
-  let sc = SkillchainResultsNew(
-    selectedJob1,
-    selectedJob2,
-    selectedWeapon1,
-    selectedWeapon2
-  );
-
-  let cards = [];
-
-  for (const [key, value] of Object.entries(sc)) {
-    let card = (
-      <MDBContainer>
-        <MDBRow>
-          <MDBCol size="col-md-1"></MDBCol>
-          <MDBCol size="col-md-10">
-            <MDBCard alignment="center">
-              <MDBCardBody className="p-3 mb-2 bg-secondary bg-gradient text-white">
-                <MDBCardTitle>
-                  <p>
-                    {key} {scMap[key]}
-                  </p>
-                </MDBCardTitle>
-
-                {value.map((v) => {
-                  return <MDBCardText>{v.wsString}</MDBCardText>;
-                })}
-              </MDBCardBody>
-            </MDBCard>
-          </MDBCol>
-          <MDBCol size="col-md-1"></MDBCol>
-        </MDBRow>
-      </MDBContainer>
-    );
-    cards.push(card);
-  }
-
-  let scOtherWay = SkillchainResultsNew(
-    selectedJob2,
-    selectedJob1,
-    selectedWeapon2,
-    selectedWeapon1
-  );
-
-  let cardsOtherWay = [];
-
-  for (const [key, value] of Object.entries(scOtherWay)) {
-    let card = (
-      <MDBContainer>
-        <MDBRow>
-          <MDBCol size="col-md-1"></MDBCol>
-          <MDBCol size="col-md-10">
-            <MDBCard alignment="center">
-              <MDBCardBody>
-                <MDBCardTitle>
-                  <p>
-                    {key} {scMap[key]}
-                  </p>
-                </MDBCardTitle>
-
-                {value.map((v) => {
-                  return <MDBCardText>{v.wsString}</MDBCardText>;
-                })}
-              </MDBCardBody>
-            </MDBCard>
-          </MDBCol>
-          <MDBCol size="col-md-1"></MDBCol>
-        </MDBRow>
-      </MDBContainer>
-    );
-    cardsOtherWay.push(card);
-  }
+  let sc = scCalc.getSkillchainResults(selectedJob1, selectedJob2, selectedWeapon1, selectedWeapon2, lvl1sc, lvl2sc, lvl3sc, partyLevel);
+  let scOtherWay = scCalc.getSkillchainResults(selectedJob2, selectedJob1, selectedWeapon2, selectedWeapon1, lvl1sc, lvl2sc, lvl3sc, partyLevel);
 
   return (
-    <div className="App" id="bg">
-      {/* <video autoplay muted id="myVideo">
-        <source
-          src="http://gdl.square-enix.com/ffxi/ffxi_bg_video/Tulia.mp4"
-          type="video/mp4"
-        />
-      </video> */}
-
-      <h1>FFXI Skillchain Calculator</h1>
+    <div className="App ffxi-font" id="bg">
+      <h1 className="ffxi-font">FFXI Skillchain Calculator</h1>
       <hr></hr>
-      <MDBContainer>
-        <h3>Your Party</h3>
 
-        <MDBRow>
-          <CharacterTiles />
-        </MDBRow>
+      <Box>
+        <Slide direction="up" in={true}>
+          <MDBContainer>
+            <MDBRow>
+              <CharacterTiles />
+            </MDBRow>
 
-        <div className="row gx-5 justify-content-center">
-          <div className="dropzone col-6 chara" droppable="true" id="chara">
-            Character A
-          </div>
-          <div className="dropzone col-6 charb" droppable="true" id="charb">
-            Character B
-          </div>
-        </div>
+            <p>Your Party</p>
 
-        <hr></hr>
+            <MDBRow>
+              <MDBCol size="md">
+                <div className="row gx-5 justify-content-center">
+                  <div className="dropzone col-6 chara" droppable="true" id="chara">
+                    <p>Drag Party Member Here</p>
+                  </div>
+                </div>
+                <JobWeaponSelect selectedJob={selectedJob1} moveChanged={weaponChanged} />
+              </MDBCol>
 
-        <MDBRow>
-          <MDBCol size="md">
-            <JobWeaponSelect
-              selectedJob={selectedJob1}
-              moveChanged={weaponChanged}
-            />
-          </MDBCol>
+              <MDBCol size="md">
+                <div className="row gx-5 justify-content-center">
+                  <div className="dropzone col-6 charb" droppable="true" id="charb">
+                    <p>Drag Party Member Here</p>
+                  </div>
+                </div>
+                <JobWeaponSelect selectedJob={selectedJob2} moveChanged={weaponChanged} />
+              </MDBCol>
+            </MDBRow>
 
-          <MDBCol size="md">
-            <div style={{ width: 100, margin: "auto", padding: 20 }}>
-              <MDBInput
-                defaultValue={30}
-                label="level"
-                name="level"
-                onChange={(e) => setPartyLevel(e.target.value)}
-              ></MDBInput>
-            </div>
-          </MDBCol>
+            <MDBCol size="md">
+              <div style={{ width: 100, margin: "auto", padding: 20 }}>
+                <MDBInput defaultValue={30} label="level" name="level" onChange={(e) => setPartyLevel(e.target.value)}></MDBInput>
+              </div>
+            </MDBCol>
 
-          <MDBCol size="md">
-            <JobWeaponSelect
-              selectedJob={selectedJob2}
-              moveChanged={weaponChanged}
-            />
-          </MDBCol>
-        </MDBRow>
-      </MDBContainer>
+            <hr></hr>
+          </MDBContainer>
+        </Slide>
+      </Box>
       <hr></hr>
       <h3> Skillchains </h3>
 
       <hr />
 
-      <div className="row">
-        <div className="col-md-6">
-          <h5 style={{ paddingTop: 30 }}>
-            {selectedJob1.name &&
-              selectedJob2.name &&
-              selectedJob1.name + " -> " + selectedJob2.name}
-          </h5>
-          <div style={{ paddingTop: 20 }} />
-          <>{cards}</>
-        </div>
-        <div className="col-md-6">
-          <h5 style={{ paddingTop: 30 }}>
-            {selectedJob1.name &&
-              selectedJob2.name &&
-              selectedJob2.name + " -> " + selectedJob1.name}
-          </h5>
-          <>{cardsOtherWay}</>
-        </div>
-      </div>
+      <SkillchainResults sc={sc} scOtherWay={scOtherWay} selectedJob1={selectedJob1} selectedJob2={selectedJob2} />
     </div>
   );
 }

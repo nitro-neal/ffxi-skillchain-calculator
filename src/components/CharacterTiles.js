@@ -1,10 +1,4 @@
-import React, {
-  Fragment,
-  ReactDOM,
-  ReactMotion,
-  useState,
-  useEffect,
-} from "react";
+import React, { Fragment, ReactDOM, ReactMotion, useState, useEffect } from "react";
 import "../App.css";
 
 function CharacterTiles() {
@@ -58,7 +52,6 @@ function CharacterTiles() {
   return (
     <Fragment>
       <div>
-        CharacterTiles
         <div className="begin1 row" id="begin1"></div>
         <div className="begin2 row" id="begin2"></div>
       </div>
