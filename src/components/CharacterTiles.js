@@ -1,4 +1,10 @@
-import React, { Fragment, ReactDOM, ReactMotion, useState, useEffect } from "react";
+import React, {
+  Fragment,
+  ReactDOM,
+  ReactMotion,
+  useState,
+  useEffect,
+} from "react";
 import "../App.css";
 
 function CharacterTiles() {
@@ -35,6 +41,7 @@ function CharacterTiles() {
       temp.draggable = true;
       list.appendChild(temp);
     }
+
     for (let i = jobtiles.length / 2; i < jobtiles.length; i++) {
       const list = document.getElementById("begin2");
       const temp = document.createElement("div");
