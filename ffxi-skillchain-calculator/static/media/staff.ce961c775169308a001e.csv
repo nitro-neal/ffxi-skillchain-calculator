@@ -1,0 +1,12 @@
+lvl,name,element1,element2,element3,power
+5,Heavy Swing,Impaction,-,-,40
+40,Rock Crusher,Impaction,-,-,40
+70,Earth Crusher,Detonation,Impaction,-,40
+100,Starburst,Compression,Reverberation,-,40
+150,Sunburst,Compression,Reverberation,-,40
+175,Shell Crusher,Detonation,-,-,40
+200,Full Swing,Liquefaction,Impaction,-,40
+215,Spirit Taker,-,-,-,40
+230,Retribution,Gravitation,Reverberation,-,40
+290,Cataclysm,Compression,Reverberation,-,40
+357,Shattersoul,Gravitation,Induration,-,40

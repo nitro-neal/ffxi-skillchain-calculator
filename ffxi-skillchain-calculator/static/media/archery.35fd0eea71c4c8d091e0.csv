@@ -1,0 +1,10 @@
+lvl,name,element1,element2,element3,power
+5,Flaming Arrow,Liquefaction,Transfixion,-,50
+40,Piercing Arrow,Reverberation,Transfixion,-,50
+80,Dulling Arrow,Liquefaction,Transfixion,-,50
+175,Sidewinder,Reverberation,Transfixion,Detonation,50
+200,Blast Arrow,Induration,Transfixion,-,50
+225,Arching Arrow,Fusion,-,-,50
+250,Empyreal Arrow,Fusion,Transfixion,-,50
+290,Refulgent Arrow,Reverberation,Transfixion,-,50
+357,Apex Arrow,Fragmentation,Transfixion,-,50

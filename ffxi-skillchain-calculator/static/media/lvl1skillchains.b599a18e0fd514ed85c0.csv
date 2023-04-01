@@ -1,0 +1,16 @@
+ws1,ws2,result
+Impaction,Liquefaction,Liquefaction
+Scission,Liquefaction,Liquefaction
+Reverberation,Impaction,Impaction
+Induration,Impaction,Impaction
+Impaction,Detonation,Detonation
+Compression,Detonation,Detonation
+Scission,Detonation,Detonation
+Liquefaction,Scission,Scission
+Detonation,Scission,Scission
+Transfixion,Reverberation,Reverberation
+Scission,Reverberation,Reverberation
+Reverberation,Induration,Induration
+Induration,Compression,Compression
+Transfixion,Compression,Compression
+Compression,Transfixion,Transfixion

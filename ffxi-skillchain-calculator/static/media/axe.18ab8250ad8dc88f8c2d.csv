@@ -1,0 +1,12 @@
+lvl,name,element1,element2,element3,power
+5,Raging Axe,Detonation,Impaction,-,75
+40,Smash Axe,Induration,Reverberation,-,25
+70,Gale Axe,Detonation,-,-,70
+100,Avalanche Axe,Scission,Impaction,-,85
+150,Spinning Axe,Liquefaction,Scission,Impaction,50
+175,Rampage,Scission,-,-,75
+200,Calamity,Scission,Impaction,-,50
+225,Mistral Axe,Fusion,-,-,50
+240,Decimation,Fusion,Reverberation,-,50
+290,Bora Axe,Scission,Detonation,-,50
+357,Ruinator,Distortion,Detonation,-,

@@ -1,0 +1,12 @@
+lvl,name,element1,element2,element3,power
+5,Shield Break,Impaction,-,-,50
+40,Iron Tempest,Scission,-,-,50
+70,Sturmwind,Reverberation,Scission,-,100
+100,Armor Break,Impaction,-,-,50
+150,Keen Edge,Compression,-,-,50
+175,Weapon Break,Impaction,-,-,50
+200,Raging Rush,Induration,Reverberation,-,50
+225,Full Break,Distortion,-,-,50
+240,Steel Cyclone,Distortion,Detonation,-,50
+300,Fell Cleave,Impaction,Detonation,Scission,50
+357,Upheaval,Fusion,Compression,-,50
