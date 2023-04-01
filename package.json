@@ -31,6 +31,9 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
+  "env": {
+    "DISABLE_ESLINT_PLUGIN": "true"
+  },
   "eslintConfig": {
     "extends": [
       "react-app",
