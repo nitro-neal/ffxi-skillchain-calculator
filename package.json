@@ -1,7 +1,7 @@
 {
   "name": "ffxi-skillchain-calc",
   "version": "0.1.0",
-  "homepage": "https://nitro-neal.github.io/ffxi-skillchain-calculator/",
+  "homepage": "https://nitro-neal.github.io/",
   "private": true,
   "dependencies": {
     "@emotion/react": "^11.10.6",
@@ -30,6 +30,9 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
+  },
+  "env": {
+    "DISABLE_ESLINT_PLUGIN": "true"
   },
   "eslintConfig": {
     "extends": [
