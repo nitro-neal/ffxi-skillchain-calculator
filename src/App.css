@@ -27,7 +27,7 @@ body {
 }
 
 .ffxi-font {
-  font-family: 'Averia Serif Libre', cursive;
+  font-family: "Averia Serif Libre", cursive;
 }
 
 #myVideo {
@@ -57,9 +57,9 @@ body {
   background-color: white;
 }
 
-.dropzone {
-  min-width: 10em;
-  min-height: 25em;
+.characterselect {
+  min-width: 15em;
+  min-height: 27em;
   max-width: 20em;
   border: 3px solid black;
   align-items: center;
@@ -68,6 +68,19 @@ body {
   border-radius: 10px;
   margin: 5px;
   background-color: whitesmoke;
+}
+
+.dropzone {
+  min-width: 8em;
+  min-height: 20em;
+  max-width: 20em;
+  /* border: 3px solid black; */
+  align-items: center;
+  justify-content: center;
+  /* padding: 1rem;
+  border-radius: 10px;
+  margin: 5px; */
+  /* background-color: whitesmoke; */
 }
 
 .dragging {
