@@ -122,35 +122,27 @@ function App() {
           </MDBRow>
 
           <MDBRow>
-            <MDBCol size="md">
-              <div className="row gx-5 justify-content-center">
-                <div
-                  className="dropzone col-6 chara"
-                  droppable="true"
-                  id="chara"
-                >
+            <MDBCol size="md" className="d-flex justify-content-center">
+              <div className="gx-5 col-6 characterselect">
+                <div className="dropzone chara" droppable="true" id="chara">
                   <p>Drag Party Member Here</p>
-                  <JobWeaponSelect
-                    selectedJob={selectedJob1}
-                    moveChanged={weaponChanged}
-                  />
                 </div>
+                <JobWeaponSelect
+                  selectedJob={selectedJob1}
+                  moveChanged={weaponChanged}
+                />
               </div>
             </MDBCol>
 
-            <MDBCol size="md">
-              <div className="row gx-5 justify-content-center">
-                <div
-                  className="dropzone col-6 charb"
-                  droppable="true"
-                  id="charb"
-                >
+            <MDBCol size="md" className="d-flex justify-content-center">
+              <div className="gx-5 col-6 characterselect">
+                <div className="dropzone charb" droppable="true" id="charb">
                   <p>Drag Party Member Here</p>
-                  <JobWeaponSelect
-                    selectedJob={selectedJob2}
-                    moveChanged={weaponChanged}
-                  />
                 </div>
+                <JobWeaponSelect
+                  selectedJob={selectedJob2}
+                  moveChanged={weaponChanged}
+                />
               </div>
             </MDBCol>
           </MDBRow>

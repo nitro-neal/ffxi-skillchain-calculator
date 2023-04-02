@@ -283,8 +283,10 @@ export function initDroppable(
       const draggable = document.querySelector(".dragging");
       let position = "string";
       const targetID = event.target.id;
+      const targetElement = event.target;
+      const charaElement = targetElement.closest("#chara");
 
-      if (targetID === "chara" || targetID === "charaobj") {
+      if (charaElement) {
         position = "left";
       } else {
         position = "right";
@@ -307,6 +309,7 @@ export function initDroppable(
       if (dropzone.hasChildNodes()) {
         dropzone.removeChild(dropzone.firstChild);
       }
+
       dropzone.appendChild(clonedCharacterDiv);
 
       console.log("Dropped Left:");
@@ -316,6 +319,8 @@ export function initDroppable(
       setWeapon1(ffxi[clonedCharacterDiv.id].weapons[0].moves);
 
       clonedCharacterDiv.id = "charaobj";
+      clonedCharacterDiv.classList.add("charaobj");
+
       leftrighttoggle = "right";
     } else {
       let dropzone = document.querySelector(".charb");
