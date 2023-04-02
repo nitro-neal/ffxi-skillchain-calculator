@@ -7,25 +7,14 @@ import "./App.css";
 import React, { useState, useEffect } from "react";
 import Slide from "@mui/material/Slide";
 
+import crystal from "./crystal.png";
+
 import Box from "@mui/material/Box";
 import JobWeaponSelect from "./components/JobWeaponSelect.js";
 import CharacterTiles from "./components/CharacterTiles.js";
 import SkillchainResults from "./components/SkillchainResults.js";
 
-import {
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBInput,
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-  MDBCardImage,
-  MDBRipple,
-  MDBCardHeader,
-  MDBCardFooter,
-} from "mdb-react-ui-kit";
+import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBInput, MDBIcon, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardImage, MDBRipple, MDBCardHeader, MDBCardFooter } from "mdb-react-ui-kit";
 
 import * as util from "./Util.js";
 import * as scCalc from "./SkillchainCalc.js";
@@ -46,6 +35,7 @@ function App() {
   const [selectedJob2, setJob2] = useState({});
   const [selectedWeapon1, setWeapon1] = useState([]);
   const [selectedWeapon2, setWeapon2] = useState([]);
+  const [isShown, setIsShown] = useState(false);
 
   useEffect(() => {
     // Async promise runs in background
@@ -54,14 +44,7 @@ function App() {
       console.log({ ffix: retObj });
 
       // Select Charcter functions
-      util.initDroppable(
-        retObj.topFFXI,
-        leftrighttoggle,
-        setJob1,
-        setJob2,
-        setWeapon1,
-        setWeapon2
-      );
+      util.initDroppable(retObj.topFFXI, leftrighttoggle, setJob1, setJob2, setWeapon1, setWeapon2);
 
       setFFXI(retObj.topFFXI);
       setlvl1sc(retObj.lvl1sc);
@@ -86,31 +69,14 @@ function App() {
     }
   };
 
-  let sc = scCalc.getSkillchainResults(
-    selectedJob1,
-    selectedJob2,
-    selectedWeapon1,
-    selectedWeapon2,
-    lvl1sc,
-    lvl2sc,
-    lvl3sc,
-    partyLevel
-  );
-  let scOtherWay = scCalc.getSkillchainResults(
-    selectedJob2,
-    selectedJob1,
-    selectedWeapon2,
-    selectedWeapon1,
-    lvl1sc,
-    lvl2sc,
-    lvl3sc,
-    partyLevel
-  );
+  let sc = scCalc.getSkillchainResults(selectedJob1, selectedJob2, selectedWeapon1, selectedWeapon2, lvl1sc, lvl2sc, lvl3sc, partyLevel);
+  let scOtherWay = scCalc.getSkillchainResults(selectedJob2, selectedJob1, selectedWeapon2, selectedWeapon1, lvl1sc, lvl2sc, lvl3sc, partyLevel);
 
   return (
     <div className="App ffxi-font" id="bg">
+      {/* <img src={ffxilogo}></img> */}
       <h1 className="ffxi-font" style={{ paddingTop: "30px" }}>
-        FFXI Skillchain Calculator
+        <img style={{ maxWidth: "50px" }} src={crystal}></img>FFXI Skillchain Calculator<img style={{ maxWidth: "50px" }} src={crystal}></img>
       </h1>
       <hr></hr>
 
@@ -127,11 +93,23 @@ function App() {
                 <div className="dropzone chara" droppable="true" id="chara">
                   <p>Drag Party Member Here</p>
                 </div>
-                <JobWeaponSelect
-                  selectedJob={selectedJob1}
-                  moveChanged={weaponChanged}
-                />
+                <JobWeaponSelect selectedJob={selectedJob1} moveChanged={weaponChanged} />
               </div>
+
+              <MDBBtn
+                size="sm"
+                color="danger"
+                style={{ marginLeft: -40, marginTop: 20 }}
+                floating
+                tag="a"
+                onClick={(e) => {
+                  setJob1({});
+                  setWeapon1({});
+                  util.resetCharacterTile("left");
+                }}
+              >
+                <MDBIcon fas icon="close" />
+              </MDBBtn>
             </MDBCol>
 
             <MDBCol size="md" className="d-flex justify-content-center">
@@ -139,11 +117,22 @@ function App() {
                 <div className="dropzone charb" droppable="true" id="charb">
                   <p>Drag Party Member Here</p>
                 </div>
-                <JobWeaponSelect
-                  selectedJob={selectedJob2}
-                  moveChanged={weaponChanged}
-                />
+                <JobWeaponSelect selectedJob={selectedJob2} moveChanged={weaponChanged} />
               </div>
+              <MDBBtn
+                size="sm"
+                color="danger"
+                style={{ marginLeft: -50, marginTop: 20 }}
+                floating
+                tag="a"
+                onClick={(e) => {
+                  setJob2({});
+                  setWeapon2({});
+                  util.resetCharacterTile("right");
+                }}
+              >
+                <MDBIcon fas icon="close" />
+              </MDBBtn>
             </MDBCol>
           </MDBRow>
 
@@ -157,21 +146,11 @@ function App() {
       <hr />
       <MDBCol size="md">
         <div style={{ width: 100, margin: "auto", padding: 20 }}>
-          <MDBInput
-            defaultValue={30}
-            label="level"
-            name="level"
-            onChange={(e) => setPartyLevel(e.target.value)}
-          ></MDBInput>
+          <MDBInput defaultValue={30} label="level" name="level" onChange={(e) => setPartyLevel(e.target.value)}></MDBInput>
         </div>
       </MDBCol>
 
-      <SkillchainResults
-        sc={sc}
-        scOtherWay={scOtherWay}
-        selectedJob1={selectedJob1}
-        selectedJob2={selectedJob2}
-      />
+      <SkillchainResults sc={sc} scOtherWay={scOtherWay} selectedJob1={selectedJob1} selectedJob2={selectedJob2} />
     </div>
   );
 }
