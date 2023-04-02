@@ -12,7 +12,20 @@ import JobWeaponSelect from "./components/JobWeaponSelect.js";
 import CharacterTiles from "./components/CharacterTiles.js";
 import SkillchainResults from "./components/SkillchainResults.js";
 
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText } from "mdb-react-ui-kit";
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBInput,
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+  MDBCardImage,
+  MDBRipple,
+  MDBCardHeader,
+  MDBCardFooter,
+} from "mdb-react-ui-kit";
 
 import * as util from "./Util.js";
 import * as scCalc from "./SkillchainCalc.js";
@@ -41,7 +54,14 @@ function App() {
       console.log({ ffix: retObj });
 
       // Select Charcter functions
-      util.initDroppable(retObj.topFFXI, leftrighttoggle, setJob1, setJob2, setWeapon1, setWeapon2);
+      util.initDroppable(
+        retObj.topFFXI,
+        leftrighttoggle,
+        setJob1,
+        setJob2,
+        setWeapon1,
+        setWeapon2
+      );
 
       setFFXI(retObj.topFFXI);
       setlvl1sc(retObj.lvl1sc);
@@ -66,59 +86,100 @@ function App() {
     }
   };
 
-  let sc = scCalc.getSkillchainResults(selectedJob1, selectedJob2, selectedWeapon1, selectedWeapon2, lvl1sc, lvl2sc, lvl3sc, partyLevel);
-  let scOtherWay = scCalc.getSkillchainResults(selectedJob2, selectedJob1, selectedWeapon2, selectedWeapon1, lvl1sc, lvl2sc, lvl3sc, partyLevel);
+  let sc = scCalc.getSkillchainResults(
+    selectedJob1,
+    selectedJob2,
+    selectedWeapon1,
+    selectedWeapon2,
+    lvl1sc,
+    lvl2sc,
+    lvl3sc,
+    partyLevel
+  );
+  let scOtherWay = scCalc.getSkillchainResults(
+    selectedJob2,
+    selectedJob1,
+    selectedWeapon2,
+    selectedWeapon1,
+    lvl1sc,
+    lvl2sc,
+    lvl3sc,
+    partyLevel
+  );
 
   return (
     <div className="App ffxi-font" id="bg">
-      <h1 className="ffxi-font">FFXI Skillchain Calculator</h1>
+      <h1 className="ffxi-font" style={{ paddingTop: "30px" }}>
+        FFXI Skillchain Calculator
+      </h1>
       <hr></hr>
 
       <Box>
-        <Slide direction="up" in={true}>
-          <MDBContainer>
-            <MDBRow>
-              <CharacterTiles />
-            </MDBRow>
+        {/* <Slide direction="right" in={true}> */}
+        <MDBContainer>
+          <MDBRow>
+            <CharacterTiles />
+          </MDBRow>
 
-            <p>Your Party</p>
-
-            <MDBRow>
-              <MDBCol size="md">
-                <div className="row gx-5 justify-content-center">
-                  <div className="dropzone col-6 chara" droppable="true" id="chara">
-                    <p>Drag Party Member Here</p>
-                  </div>
-                </div>
-                <JobWeaponSelect selectedJob={selectedJob1} moveChanged={weaponChanged} />
-              </MDBCol>
-
-              <MDBCol size="md">
-                <div className="row gx-5 justify-content-center">
-                  <div className="dropzone col-6 charb" droppable="true" id="charb">
-                    <p>Drag Party Member Here</p>
-                  </div>
-                </div>
-                <JobWeaponSelect selectedJob={selectedJob2} moveChanged={weaponChanged} />
-              </MDBCol>
-            </MDBRow>
-
+          <MDBRow>
             <MDBCol size="md">
-              <div style={{ width: 100, margin: "auto", padding: 20 }}>
-                <MDBInput defaultValue={30} label="level" name="level" onChange={(e) => setPartyLevel(e.target.value)}></MDBInput>
+              <div className="row gx-5 justify-content-center">
+                <div
+                  className="dropzone col-6 chara"
+                  droppable="true"
+                  id="chara"
+                >
+                  <p>Drag Party Member Here</p>
+                  <JobWeaponSelect
+                    selectedJob={selectedJob1}
+                    moveChanged={weaponChanged}
+                  />
+                </div>
               </div>
             </MDBCol>
 
-            <hr></hr>
-          </MDBContainer>
-        </Slide>
+            <MDBCol size="md">
+              <div className="row gx-5 justify-content-center">
+                <div
+                  className="dropzone col-6 charb"
+                  droppable="true"
+                  id="charb"
+                >
+                  <p>Drag Party Member Here</p>
+                  <JobWeaponSelect
+                    selectedJob={selectedJob2}
+                    moveChanged={weaponChanged}
+                  />
+                </div>
+              </div>
+            </MDBCol>
+          </MDBRow>
+
+          <hr></hr>
+        </MDBContainer>
+        {/* </Slide> */}
       </Box>
       <hr></hr>
       <h3> Skillchains </h3>
 
       <hr />
+      <MDBCol size="md">
+        <div style={{ width: 100, margin: "auto", padding: 20 }}>
+          <MDBInput
+            defaultValue={30}
+            label="level"
+            name="level"
+            onChange={(e) => setPartyLevel(e.target.value)}
+          ></MDBInput>
+        </div>
+      </MDBCol>
 
-      <SkillchainResults sc={sc} scOtherWay={scOtherWay} selectedJob1={selectedJob1} selectedJob2={selectedJob2} />
+      <SkillchainResults
+        sc={sc}
+        scOtherWay={scOtherWay}
+        selectedJob1={selectedJob1}
+        selectedJob2={selectedJob2}
+      />
     </div>
   );
 }
