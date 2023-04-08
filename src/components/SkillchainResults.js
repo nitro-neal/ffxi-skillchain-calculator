@@ -1,6 +1,21 @@
-import React, { Fragment, ReactDOM, ReactMotion, useState, useEffect } from "react";
+import React, {
+  Fragment,
+  ReactDOM,
+  ReactMotion,
+  useState,
+  useEffect,
+} from "react";
 import "../App.css";
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText } from "mdb-react-ui-kit";
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBInput,
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+} from "mdb-react-ui-kit";
 
 function SkillchainResults(props) {
   const scMap = {
@@ -24,11 +39,11 @@ function SkillchainResults(props) {
   for (const [key, value] of Object.entries(props.sc)) {
     let card = (
       <MDBContainer>
-        <MDBRow>
+        <MDBRow className="justify-content-center">
           <MDBCol size="col-md-1"></MDBCol>
-          <MDBCol size="col-md-10">
+          <MDBCol size="col-md-10 resultcard">
             <MDBCard alignment="center">
-              <MDBCardBody className="p-3 mb-2 bg-secondary bg-gradient text-white">
+              <MDBCardBody>
                 <MDBCardTitle>
                   <p>
                     {key} {scMap[key]}
@@ -36,7 +51,11 @@ function SkillchainResults(props) {
                 </MDBCardTitle>
 
                 {value.map((v) => {
-                  return <MDBCardText>{v.wsString}</MDBCardText>;
+                  return (
+                    <MDBCardText className="resultcard">
+                      {v.wsString}
+                    </MDBCardText>
+                  );
                 })}
               </MDBCardBody>
             </MDBCard>
@@ -51,9 +70,9 @@ function SkillchainResults(props) {
   for (const [key, value] of Object.entries(props.scOtherWay)) {
     let card = (
       <MDBContainer>
-        <MDBRow>
+        <MDBRow className="justify-content-center">
           <MDBCol size="col-md-1"></MDBCol>
-          <MDBCol size="col-md-10">
+          <MDBCol size="col-md-10 resultcard">
             <MDBCard alignment="center">
               <MDBCardBody>
                 <MDBCardTitle>
@@ -63,7 +82,11 @@ function SkillchainResults(props) {
                 </MDBCardTitle>
 
                 {value.map((v) => {
-                  return <MDBCardText>{v.wsString}</MDBCardText>;
+                  return (
+                    <MDBCardText className="resultcard">
+                      {v.wsString}
+                    </MDBCardText>
+                  );
                 })}
               </MDBCardBody>
             </MDBCard>
@@ -79,12 +102,20 @@ function SkillchainResults(props) {
     <Fragment>
       <div className="row">
         <div className="col-md-6">
-          <h5 style={{ paddingTop: 30 }}>{props.selectedJob1.name && props.selectedJob2.name && props.selectedJob1.name + " -> " + props.selectedJob2.name}</h5>
+          <h5 style={{ paddingTop: 30 }}>
+            {props.selectedJob1.name &&
+              props.selectedJob2.name &&
+              props.selectedJob1.name + " -> " + props.selectedJob2.name}
+          </h5>
           <div style={{ paddingTop: 20 }} />
           <>{cards}</>
         </div>
         <div className="col-md-6">
-          <h5 style={{ paddingTop: 30 }}>{props.selectedJob1.name && props.selectedJob2.name && props.selectedJob2.name + " -> " + props.selectedJob1.name}</h5>
+          <h5 style={{ paddingTop: 30 }}>
+            {props.selectedJob1.name &&
+              props.selectedJob2.name &&
+              props.selectedJob2.name + " -> " + props.selectedJob1.name}
+          </h5>
           <>{cardsOtherWay}</>
         </div>
       </div>

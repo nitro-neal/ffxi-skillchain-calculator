@@ -1,4 +1,10 @@
-import React, { Fragment, ReactDOM, ReactMotion, useState, useEffect } from "react";
+import React, {
+  Fragment,
+  ReactDOM,
+  ReactMotion,
+  useState,
+  useEffect,
+} from "react";
 import "../App.css";
 
 import war from "./img/war.webp";
@@ -17,7 +23,20 @@ import whm from "./img/whm.webp";
 import blm from "./img/blm.webp";
 import brd from "./img/brd.webp";
 
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardImage, MDBRipple, MDBCardHeader, MDBCardFooter } from "mdb-react-ui-kit";
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBInput,
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+  MDBCardImage,
+  MDBRipple,
+  MDBCardHeader,
+  MDBCardFooter,
+} from "mdb-react-ui-kit";
 import { Slide, imageListClasses } from "@mui/material";
 
 function CharacterTiles() {
@@ -26,11 +45,11 @@ function CharacterTiles() {
     { Name: "Monk", id: "mnk", value: "mnk", img: mnk },
     { Name: "Red Mage", id: "rdm", value: "rdm", img: rdm },
     { Name: "Thief", id: "thf", value: "thf", img: thf },
-    { Name: "Ranger", id: "rng", value: "rng", img: rng },
-    { Name: "Summoner", id: "smn", value: "smn", img: smn },
     { Name: "Paladin", id: "pld", value: "pld", img: pld },
     { Name: "Dark Knight", id: "drk", value: "drk", img: drk },
     { Name: "Beast Master", id: "bst", value: "bst", img: bst },
+    { Name: "Ranger", id: "rng", value: "rng", img: rng },
+    { Name: "Summoner", id: "smn", value: "smn", img: smn },
     { Name: "Samurai", id: "sam", value: "sam", img: sam },
     { Name: "Ninja", id: "nin", value: "nin", img: nin },
     { Name: "Dragoon", id: "drg", value: "drg", img: drg },
@@ -41,9 +60,21 @@ function CharacterTiles() {
 
   for (let i = 0; i < jobtiles.length / 2; i++) {
     topROW.push(
-      <div draggable="true" className="jobtile col" value={jobtiles[i].value} id={jobtiles[i].id} title={jobtiles[i].Name}>
+      <div
+        draggable="true"
+        className="jobtile col"
+        value={jobtiles[i].value}
+        id={jobtiles[i].id}
+        title={jobtiles[i].Name}
+      >
         <MDBCard>
-          <MDBCardImage className="img-fluid" src={jobtiles[i].img} position="top" alt="..." style={{ maxWidth: "15em", maxHeight: "15em" }} />
+          <MDBCardImage
+            className="img-fluid"
+            src={jobtiles[i].img}
+            position="top"
+            alt="..."
+            style={{ maxWidth: "15em", maxHeight: "15em" }}
+          />
           <MDBCardBody>
             <MDBCardTitle>{jobtiles[i].Name}</MDBCardTitle>
           </MDBCardBody>
@@ -54,9 +85,21 @@ function CharacterTiles() {
 
   for (let i = jobtiles.length / 2; i < jobtiles.length; i++) {
     bottomROW.push(
-      <div draggable="true" className="jobtile col" value={jobtiles[i].value} id={jobtiles[i].id} title={jobtiles[i].Name}>
+      <div
+        draggable="true"
+        className="jobtile col"
+        value={jobtiles[i].value}
+        id={jobtiles[i].id}
+        title={jobtiles[i].Name}
+      >
         <MDBCard>
-          <MDBCardImage className="img-fluid" src={jobtiles[i].img} position="top" alt="..." style={{ maxWidth: "15em", maxHeight: "15em" }} />
+          <MDBCardImage
+            className="img-fluid"
+            src={jobtiles[i].img}
+            position="top"
+            alt="..."
+            style={{ maxWidth: "15em", maxHeight: "15em" }}
+          />
           <MDBCardBody>
             <MDBCardTitle>{jobtiles[i].Name}</MDBCardTitle>
           </MDBCardBody>
