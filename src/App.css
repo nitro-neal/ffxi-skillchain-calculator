@@ -44,6 +44,20 @@ body {
     0px 0px 30px rgba(0, 145, 255, 0.6);
 }
 
+.resultcard {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  transition: 0.3s;
+  border-radius: 5px;
+  max-width: 30em;
+  border: 3px solid black;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+  margin: 2px;
+  border-radius: 10px;
+  background-color: white;
+}
+
 .jobtile {
   min-width: 10em;
   min-height: 10em;
