@@ -150,7 +150,7 @@ function App() {
         </div>
       </MDBCol>
 
-      <SkillchainResults sc={sc} scOtherWay={scOtherWay} selectedJob1={selectedJob1} selectedJob2={selectedJob2} />
+      <SkillchainResults ffxi={ffxi} sc={sc} scOtherWay={scOtherWay} selectedJob1={selectedJob1} selectedJob2={selectedJob2} />
     </div>
   );
 }

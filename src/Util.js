@@ -337,3 +337,23 @@ export function resetCharacterTile(position) {
     dropzone.removeChild(dropzone.firstChild);
   }
 }
+
+function capitalizeFirstLetters(str) {
+  return str
+    .toLowerCase()
+    .split(" ")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+}
+
+export function formatJobName(name) {
+  return capitalizeFirstLetters(name);
+}
+
+export function formatWeaponSkillName(name) {
+  let scName = name.split("=")[0];
+  scName = scName.replaceAll("-", " ");
+  scName = capitalizeFirstLetters(scName);
+  scName = scName.replace(">", "➡");
+  return scName;
+}
