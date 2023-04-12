@@ -1,6 +1,24 @@
-import React, { Fragment, ReactDOM, ReactMotion, useState, useEffect } from "react";
+import React, {
+  Fragment,
+  ReactDOM,
+  ReactMotion,
+  useState,
+  useEffect,
+} from "react";
 import "../App.css";
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText } from "mdb-react-ui-kit";
+import arrow from "./img/arrow2tran.png";
+
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBInput,
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+  MDBCardImage,
+} from "mdb-react-ui-kit";
 
 import * as util from "../Util.js";
 
@@ -22,10 +40,22 @@ function SkillchainResults(props) {
 
   const lvl3SC = ["Light II", "Darkness II", "Light", "Darkness"];
   const lvl2SC = ["Fusion", "Fragmentation", "Gravitation", "Distortion"];
-  const lvl1SC = ["Transfixion", "Induration", "Compression", "Detonation", "Liquefaction", "Impaction", "Reverberation", "Scission"];
+  const lvl1SC = [
+    "Transfixion",
+    "Induration",
+    "Compression",
+    "Detonation",
+    "Liquefaction",
+    "Impaction",
+    "Reverberation",
+    "Scission",
+  ];
 
   let cards = [];
   let cardsOtherWay = [];
+
+  let titleCard = [];
+  let titleCardOtherWay = [];
 
   const orderedSC = {};
 
@@ -47,6 +77,67 @@ function SkillchainResults(props) {
     }
   }
 
+  if (props.selectedJob1.name && props.selectedJob2.name) {
+    console.log("weapon 1", props.selectedWeaponName1);
+    console.log("weapon 2", props.selectedWeaponName2);
+
+    let title = (
+      <MDBContainer>
+        <MDBRow className="justify-content-center">
+          <MDBCol size="col-md" className="row titlecard">
+            <MDBCol>
+              <div style={{ fontSize: "35px" }} className="col">
+                {util.formatJobName(props.selectedJob1.name)}
+              </div>
+              <div>{util.formatJobName(props.selectedWeaponName1)}</div>
+            </MDBCol>
+            <MDBCardImage
+              className="col img-fluid"
+              src={arrow}
+              alt="..."
+              style={{ maxWidth: "7em", maxHeight: "7em" }}
+            />
+            <MDBCol>
+              <div style={{ fontSize: "35px" }} className="col">
+                {util.formatJobName(props.selectedJob2.name)}
+              </div>
+              <div>{util.formatJobName(props.selectedWeaponName2)}</div>
+            </MDBCol>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+    );
+    titleCard.push(title);
+
+    let titleOW = (
+      <MDBContainer>
+        <MDBRow className="justify-content-center">
+          <MDBCol size="col-md" className="row titlecard">
+            <MDBCol>
+              <div style={{ fontSize: "35px" }} className="col">
+                {util.formatJobName(props.selectedJob2.name)}
+              </div>
+              <div>{util.formatJobName(props.selectedWeaponName2)}</div>
+            </MDBCol>
+            <MDBCardImage
+              className="col img-fluid"
+              src={arrow}
+              alt="..."
+              style={{ maxWidth: "7em", maxHeight: "7em" }}
+            />
+            <MDBCol>
+              <div style={{ fontSize: "35px" }} className="col">
+                {util.formatJobName(props.selectedJob1.name)}
+              </div>
+              <div>{util.formatJobName(props.selectedWeaponName1)}</div>
+            </MDBCol>
+          </MDBCol>
+        </MDBRow>
+      </MDBContainer>
+    );
+    titleCardOtherWay.push(titleOW);
+  }
+
   for (const [key, value] of Object.entries(orderedSC)) {
     let card = (
       <MDBContainer>
@@ -62,7 +153,11 @@ function SkillchainResults(props) {
                 </MDBCardTitle>
 
                 {value.map((v) => {
-                  return <MDBCardText className="resultcard">{util.formatWeaponSkillName(v.wsString)}</MDBCardText>;
+                  return (
+                    <MDBCardText className="resultcard">
+                      {util.formatWeaponSkillName(v.wsString)}
+                    </MDBCardText>
+                  );
                 })}
               </MDBCardBody>
             </MDBCard>
@@ -108,7 +203,11 @@ function SkillchainResults(props) {
                 </MDBCardTitle>
 
                 {value.map((v) => {
-                  return <MDBCardText className="resultcard">{util.formatWeaponSkillName(v.wsString)}</MDBCardText>;
+                  return (
+                    <MDBCardText className="resultcard">
+                      {util.formatWeaponSkillName(v.wsString)}
+                    </MDBCardText>
+                  );
                 })}
               </MDBCardBody>
             </MDBCard>
@@ -124,12 +223,12 @@ function SkillchainResults(props) {
     <Fragment>
       <div className="row">
         <div className="col-md-6">
-          <h5 style={{ paddingTop: 30 }}>{props.selectedJob1.name && props.selectedJob2.name && util.formatJobName(props.selectedJob1.name) + " -> " + util.formatJobName(props.selectedJob2.name)}</h5>
+          <>{titleCard}</>
           <div style={{ paddingTop: 20 }} />
           <>{cards}</>
         </div>
         <div className="col-md-6">
-          <h5 style={{ paddingTop: 30 }}>{props.selectedJob1.name && props.selectedJob2.name && util.formatJobName(props.selectedJob2.name) + " -> " + util.formatJobName(props.selectedJob1.name)}</h5>
+          <>{titleCardOtherWay}</>
           <div style={{ paddingTop: 20 }} />
           <>{cardsOtherWay}</>
         </div>
