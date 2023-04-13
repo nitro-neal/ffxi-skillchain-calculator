@@ -150,9 +150,7 @@ export async function init() {
       weapons.push(new Weapon("greatSword", greatSwordMoves, greatSwordCSV));
       weapons.push(new Weapon("handToHand", handToHandMoves, handToHandCSV));
       weapons.push(new Weapon("katana", katanaMoves, katanaCSV));
-      weapons.push(
-        new Weapon("marksmanship", marksmanshipMoves, marksmanshipCSV)
-      );
+      weapons.push(new Weapon("marksmanship", marksmanshipMoves, marksmanshipCSV));
       weapons.push(new Weapon("polearm", polearmMoves, polearmCSV));
       weapons.push(new Weapon("scythe", scytheMoves, scytheCSV));
       weapons.push(new Weapon("staff", staffMoves, staffCSV));
@@ -160,80 +158,20 @@ export async function init() {
       weapons.push(new Weapon("sword", swordMoves, swordCSV));
 
       let topFFXI = {};
-      topFFXI["war"] = new Job(
-        "warrior",
-        "war",
-        getWeapons("warrior", weapons, jobWeaponMapping),
-        warWsLvl
-      );
-      topFFXI["thf"] = new Job(
-        "thief",
-        "thf",
-        getWeapons("thief", weapons, jobWeaponMapping),
-        thfWsLvl
-      );
-      topFFXI["drk"] = new Job(
-        "dark knight",
-        "drk",
-        getWeapons("dark knight", weapons, jobWeaponMapping),
-        drkWsLvl
-      );
-      topFFXI["pld"] = new Job(
-        "paladin",
-        "pld",
-        getWeapons("paladin", weapons, jobWeaponMapping),
-        pldWsLvl
-      );
-      topFFXI["bst"] = new Job(
-        "beast master",
-        "bst",
-        getWeapons("beast master", weapons, jobWeaponMapping),
-        bstWsLvl
-      );
+      topFFXI["war"] = new Job("warrior", "war", getWeapons("warrior", weapons, jobWeaponMapping), warWsLvl);
+      topFFXI["thf"] = new Job("thief", "thf", getWeapons("thief", weapons, jobWeaponMapping), thfWsLvl);
+      topFFXI["drk"] = new Job("dark knight", "drk", getWeapons("dark knight", weapons, jobWeaponMapping), drkWsLvl);
+      topFFXI["pld"] = new Job("paladin", "pld", getWeapons("paladin", weapons, jobWeaponMapping), pldWsLvl);
+      topFFXI["bst"] = new Job("beast master", "bst", getWeapons("beast master", weapons, jobWeaponMapping), bstWsLvl);
 
-      topFFXI["drg"] = new Job(
-        "dragoon",
-        "drg",
-        getWeapons("dragoon", weapons, jobWeaponMapping),
-        drgWsLvl
-      );
-      topFFXI["mnk"] = new Job(
-        "monk",
-        "mnk",
-        getWeapons("monk", weapons, jobWeaponMapping),
-        mnkWsLvl
-      );
-      topFFXI["nin"] = new Job(
-        "ninja",
-        "nin",
-        getWeapons("ninja", weapons, jobWeaponMapping),
-        ninWsLvl
-      );
-      topFFXI["rdm"] = new Job(
-        "red mage",
-        "rdm",
-        getWeapons("red mage", weapons, jobWeaponMapping),
-        rdmWsLvl
-      );
-      topFFXI["rng"] = new Job(
-        "ranger",
-        "rng",
-        getWeapons("ranger", weapons, jobWeaponMapping),
-        rngWsLvl
-      );
-      topFFXI["sam"] = new Job(
-        "samurai",
-        "sam",
-        getWeapons("samurai", weapons, jobWeaponMapping),
-        samWsLvl
-      );
+      topFFXI["drg"] = new Job("dragoon", "drg", getWeapons("dragoon", weapons, jobWeaponMapping), drgWsLvl);
+      topFFXI["mnk"] = new Job("monk", "mnk", getWeapons("monk", weapons, jobWeaponMapping), mnkWsLvl);
+      topFFXI["nin"] = new Job("ninja", "nin", getWeapons("ninja", weapons, jobWeaponMapping), ninWsLvl);
+      topFFXI["rdm"] = new Job("red mage", "rdm", getWeapons("red mage", weapons, jobWeaponMapping), rdmWsLvl);
+      topFFXI["rng"] = new Job("ranger", "rng", getWeapons("ranger", weapons, jobWeaponMapping), rngWsLvl);
+      topFFXI["sam"] = new Job("samurai", "sam", getWeapons("samurai", weapons, jobWeaponMapping), samWsLvl);
 
-      topFFXI["smn"] = new Job(
-        "summoner",
-        "snm",
-        getWeapons("summoner", weapons, jobWeaponMapping),
-        smnWsLvl
-      );
+      topFFXI["smn"] = new Job("summoner", "snm", getWeapons("summoner", weapons, jobWeaponMapping), smnWsLvl);
 
       // setFFXI(topFFXI);
 
@@ -246,16 +184,7 @@ export async function init() {
     );
 }
 
-export function initDroppable(
-  ffxi,
-  leftrighttoggle,
-  setJob1,
-  setJob2,
-  setWeapon1,
-  setWeapon2,
-  setWeaponName1,
-  setWeaponName2
-) {
+export function initDroppable(ffxi, leftrighttoggle, setJob1, setJob2, setWeapon1, setWeapon2, setWeaponName1, setWeaponName2) {
   //New Select Charcter functions
   const jobtiles = document.querySelectorAll(".jobtile");
   const dropzones = document.querySelectorAll(".dropzone");
@@ -319,7 +248,7 @@ export function initDroppable(
 
       setJob1(ffxi[clonedCharacterDiv.id]);
       setWeapon1(ffxi[clonedCharacterDiv.id].weapons[0].moves);
-      setWeaponName1(ffxi[clonedCharacterDiv.id].weapons[0].name);
+      setWeaponName1(formatWeaponName(ffxi[clonedCharacterDiv.id].weapons[0].name));
 
       clonedCharacterDiv.id = "charaobj";
       clonedCharacterDiv.classList.add("charaobj");
@@ -337,7 +266,7 @@ export function initDroppable(
 
       setJob2(ffxi[clonedCharacterDiv.id]);
       setWeapon2(ffxi[clonedCharacterDiv.id].weapons[0].moves);
-      setWeaponName2(ffxi[clonedCharacterDiv.id].weapons[0].name);
+      setWeaponName2(formatWeaponName(ffxi[clonedCharacterDiv.id].weapons[0].name));
 
       leftrighttoggle = "left";
     }
@@ -384,9 +313,7 @@ export function getWeapons(jobName, allWeapons, jobWeaponMappings) {
   jobWeapons = jobWeapons.map((jw) => jw.replace(" ", ""));
 
   for (let weapon of jobWeapons) {
-    let wpn = allWeapons.filter(
-      (w) => w.name.toLowerCase() == weapon.toLowerCase()
-    );
+    let wpn = allWeapons.filter((w) => w.name.toLowerCase() == weapon.toLowerCase());
     if (wpn[0]) {
       retJobWeapons.push(wpn[0]);
     }
@@ -431,4 +358,32 @@ export function formatWeaponSkillName(name) {
   scName = capitalizeFirstLetters(scName);
   scName = scName.replace(">", "➡");
   return scName;
+}
+
+export function groupByFirstWs(arr) {
+  const grouped = {};
+
+  for (const item of arr) {
+    const key = item.firstWs;
+    if (!grouped[key]) {
+      grouped[key] = [];
+    }
+    grouped[key].push(item);
+  }
+
+  return Object.values(grouped);
+}
+
+export function formatWeaponName(name) {
+  if (name.toLowerCase() == "greatsword") {
+    return "Great Sword";
+  } else if (name.toLowerCase() == "greataxe") {
+    return "Great Axe";
+  } else if (name.toLowerCase() == "handtohand") {
+    return "Hand To Hand";
+  } else if (name.toLowerCase() == "greatkatana") {
+    return "Great Katana";
+  } else {
+    return capitalizeFirstLetters(name);
+  }
 }

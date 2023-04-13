@@ -14,22 +14,7 @@ import JobWeaponSelect from "./components/JobWeaponSelect.js";
 import CharacterTiles from "./components/CharacterTiles.js";
 import SkillchainResults from "./components/SkillchainResults.js";
 
-import {
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBBtn,
-  MDBInput,
-  MDBIcon,
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-  MDBCardImage,
-  MDBRipple,
-  MDBCardHeader,
-  MDBCardFooter,
-} from "mdb-react-ui-kit";
+import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBInput, MDBIcon, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardImage, MDBRipple, MDBCardHeader, MDBCardFooter } from "mdb-react-ui-kit";
 
 import * as util from "./Util.js";
 import * as scCalc from "./SkillchainCalc.js";
@@ -61,16 +46,7 @@ function App() {
       console.log({ ffix: retObj });
 
       // Select Charcter functions
-      util.initDroppable(
-        retObj.topFFXI,
-        leftrighttoggle,
-        setJob1,
-        setJob2,
-        setWeapon1,
-        setWeapon2,
-        setWeaponName1,
-        setWeaponName2
-      );
+      util.initDroppable(retObj.topFFXI, leftrighttoggle, setJob1, setJob2, setWeapon1, setWeapon2, setWeaponName1, setWeaponName2);
 
       setFFXI(retObj.topFFXI);
       setlvl1sc(retObj.lvl1sc);
@@ -81,52 +57,35 @@ function App() {
     console.log("DONE LOADING");
   }, []);
 
-  const weaponChanged = (e) => {
+  const weaponChanged = (e, oneOrTwo) => {
+    console.log(e.target.value);
+    console.log(oneOrTwo);
+
     let str = e.target.value.split("_");
     let jobName = str[0];
-    let weaponName = str[1].trim();
+    let weaponName = str[1];
     console.log("Weapon Change Function Fired");
     console.log("Name:", weaponName);
 
-    if (selectedJob1.name == jobName) {
-      let weapons = selectedJob1.weapons.filter((w) => w.name == weaponName);
-      setWeaponName1(weaponName);
+    if (oneOrTwo == 1) {
+      let weapons = selectedJob1.weapons.filter((w) => w.name == weaponName.trim());
+      setWeaponName1(util.formatWeaponName(weaponName));
       setWeapon1(weapons[0].moves);
-    } else if (selectedJob2.name == jobName) {
-      let weapons = selectedJob2.weapons.filter((w) => w.name == weaponName);
-      weapons.name = weaponName;
-      setWeaponName2(weaponName);
+    } else {
+      let weapons = selectedJob2.weapons.filter((w) => w.name == weaponName.trim());
+      setWeaponName2(util.formatWeaponName(weaponName));
       setWeapon2(weapons[0].moves);
     }
   };
 
-  let sc = scCalc.getSkillchainResults(
-    selectedJob1,
-    selectedJob2,
-    selectedWeapon1,
-    selectedWeapon2,
-    lvl1sc,
-    lvl2sc,
-    lvl3sc,
-    partyLevel
-  );
-  let scOtherWay = scCalc.getSkillchainResults(
-    selectedJob2,
-    selectedJob1,
-    selectedWeapon2,
-    selectedWeapon1,
-    lvl1sc,
-    lvl2sc,
-    lvl3sc,
-    partyLevel
-  );
+  let sc = scCalc.getSkillchainResults(selectedJob1, selectedJob2, selectedWeapon1, selectedWeapon2, lvl1sc, lvl2sc, lvl3sc, partyLevel);
+  let scOtherWay = scCalc.getSkillchainResults(selectedJob2, selectedJob1, selectedWeapon2, selectedWeapon1, lvl1sc, lvl2sc, lvl3sc, partyLevel);
 
   return (
     <div className="App ffxi-font" id="bg">
       {/* <img src={ffxilogo}></img> */}
       <h1 className="ffxi-font" style={{ paddingTop: "30px" }}>
-        <img style={{ maxWidth: "50px" }} src={crystal}></img>FFXI Skillchain
-        Calculator<img style={{ maxWidth: "50px" }} src={crystal}></img>
+        <img style={{ maxWidth: "50px" }} src={crystal}></img>FFXI Skillchain Calculator<img style={{ maxWidth: "50px" }} src={crystal}></img>
       </h1>
       <hr></hr>
 
@@ -143,10 +102,7 @@ function App() {
                 <div className="dropzone chara" droppable="true" id="chara">
                   <p>Drag Party Member Here</p>
                 </div>
-                <JobWeaponSelect
-                  selectedJob={selectedJob1}
-                  moveChanged={weaponChanged}
-                />
+                <JobWeaponSelect selectedJob={selectedJob1} moveChanged={(e) => weaponChanged(e, "1")} />
               </div>
 
               <MDBBtn
@@ -170,10 +126,7 @@ function App() {
                 <div className="dropzone charb" droppable="true" id="charb">
                   <p>Drag Party Member Here</p>
                 </div>
-                <JobWeaponSelect
-                  selectedJob={selectedJob2}
-                  moveChanged={weaponChanged}
-                />
+                <JobWeaponSelect selectedJob={selectedJob2} moveChanged={(e) => weaponChanged(e, "2")} />
               </div>
               <MDBBtn
                 size="sm"
@@ -202,24 +155,13 @@ function App() {
       <hr />
       <MDBCol size="md">
         <div style={{ width: 100, margin: "auto", padding: 20 }}>
-          <MDBInput
-            defaultValue={30}
-            label="level"
-            name="level"
-            onChange={(e) => setPartyLevel(e.target.value)}
-          ></MDBInput>
+          <MDBInput defaultValue={30} label="level" name="level" onChange={(e) => setPartyLevel(e.target.value)}></MDBInput>
         </div>
       </MDBCol>
 
-      <SkillchainResults
-        ffxi={ffxi}
-        sc={sc}
-        scOtherWay={scOtherWay}
-        selectedJob1={selectedJob1}
-        selectedJob2={selectedJob2}
-        selectedWeaponName1={selectedWeaponName1}
-        selectedWeaponName2={selectedWeaponName2}
-      />
+      {Object.keys(selectedJob1).length !== 0 && Object.keys(selectedJob2).length !== 0 && (
+        <SkillchainResults ffxi={ffxi} sc={sc} scOtherWay={scOtherWay} selectedJob1={selectedJob1} selectedJob2={selectedJob2} selectedWeaponName1={selectedWeaponName1} selectedWeaponName2={selectedWeaponName2} />
+      )}
     </div>
   );
 }

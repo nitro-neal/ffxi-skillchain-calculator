@@ -1,9 +1,4 @@
-import {
-  MDBDropdown,
-  MDBDropdownToggle,
-  MDBDropdownMenu,
-  MDBDropdownItem,
-} from "mdb-react-ui-kit";
+import { MDBDropdown, MDBDropdownToggle, MDBDropdownMenu, MDBDropdownItem } from "mdb-react-ui-kit";
 
 import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
@@ -11,6 +6,7 @@ import MenuItem from "@mui/material/MenuItem";
 import Grid from "@mui/material/Grid";
 import FormControl from "@mui/material/FormControl";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import * as util from "../Util.js";
 
 export default function JobWeaponSelect(props) {
   if (Object.keys(props.selectedJob).length == 0) {
@@ -39,11 +35,8 @@ export default function JobWeaponSelect(props) {
           >
             {weapons.map((w) => {
               return (
-                <MenuItem
-                  name={props.selectedJob.name}
-                  value={props.selectedJob.name + "_" + w}
-                >
-                  {w}
+                <MenuItem name={props.selectedJob.name} value={props.selectedJob.name + "_" + w}>
+                  {util.formatWeaponName(w)}
                 </MenuItem>
               );
             })}

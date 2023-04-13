@@ -1,24 +1,8 @@
-import React, {
-  Fragment,
-  ReactDOM,
-  ReactMotion,
-  useState,
-  useEffect,
-} from "react";
+import React, { Fragment, ReactDOM, ReactMotion, useState, useEffect } from "react";
 import "../App.css";
 import arrow from "./img/arrow2tran.png";
 
-import {
-  MDBContainer,
-  MDBRow,
-  MDBCol,
-  MDBInput,
-  MDBCard,
-  MDBCardBody,
-  MDBCardTitle,
-  MDBCardText,
-  MDBCardImage,
-} from "mdb-react-ui-kit";
+import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardImage } from "mdb-react-ui-kit";
 
 import * as util from "../Util.js";
 
@@ -40,42 +24,13 @@ function SkillchainResults(props) {
 
   const lvl3SC = ["Light II", "Darkness II", "Light", "Darkness"];
   const lvl2SC = ["Fusion", "Fragmentation", "Gravitation", "Distortion"];
-  const lvl1SC = [
-    "Transfixion",
-    "Induration",
-    "Compression",
-    "Detonation",
-    "Liquefaction",
-    "Impaction",
-    "Reverberation",
-    "Scission",
-  ];
+  const lvl1SC = ["Transfixion", "Induration", "Compression", "Detonation", "Liquefaction", "Impaction", "Reverberation", "Scission"];
 
   let cards = [];
   let cardsOtherWay = [];
 
   let titleCard = [];
   let titleCardOtherWay = [];
-
-  const orderedSC = {};
-
-  for (const [key, value] of Object.entries(props.sc)) {
-    if (lvl3SC.includes(key)) {
-      orderedSC[key] = value;
-    }
-  }
-
-  for (const [key, value] of Object.entries(props.sc)) {
-    if (lvl2SC.includes(key)) {
-      orderedSC[key] = value;
-    }
-  }
-
-  for (const [key, value] of Object.entries(props.sc)) {
-    if (lvl1SC.includes(key)) {
-      orderedSC[key] = value;
-    }
-  }
 
   if (props.selectedJob1.name && props.selectedJob2.name) {
     console.log("weapon 1", props.selectedWeaponName1);
@@ -91,12 +46,7 @@ function SkillchainResults(props) {
               </div>
               <div>{util.formatJobName(props.selectedWeaponName1)}</div>
             </MDBCol>
-            <MDBCardImage
-              className="col img-fluid"
-              src={arrow}
-              alt="..."
-              style={{ maxWidth: "7em", maxHeight: "7em" }}
-            />
+            <MDBCardImage className="col img-fluid" src={arrow} alt="..." style={{ maxWidth: "7em", maxHeight: "7em" }} />
             <MDBCol>
               <div style={{ fontSize: "35px" }} className="col">
                 {util.formatJobName(props.selectedJob2.name)}
@@ -119,12 +69,7 @@ function SkillchainResults(props) {
               </div>
               <div>{util.formatJobName(props.selectedWeaponName2)}</div>
             </MDBCol>
-            <MDBCardImage
-              className="col img-fluid"
-              src={arrow}
-              alt="..."
-              style={{ maxWidth: "7em", maxHeight: "7em" }}
-            />
+            <MDBCardImage className="col img-fluid" src={arrow} alt="..." style={{ maxWidth: "7em", maxHeight: "7em" }} />
             <MDBCol>
               <div style={{ fontSize: "35px" }} className="col">
                 {util.formatJobName(props.selectedJob1.name)}
@@ -136,6 +81,31 @@ function SkillchainResults(props) {
       </MDBContainer>
     );
     titleCardOtherWay.push(titleOW);
+  }
+
+  const orderedSC = {};
+
+  for (const [key, value] of Object.entries(props.sc)) {
+    if (lvl3SC.includes(key)) {
+      orderedSC[key] = value;
+    }
+  }
+
+  for (const [key, value] of Object.entries(props.sc)) {
+    if (lvl2SC.includes(key)) {
+      orderedSC[key] = value;
+    }
+  }
+
+  for (const [key, value] of Object.entries(props.sc)) {
+    if (lvl1SC.includes(key)) {
+      orderedSC[key] = value;
+    }
+  }
+
+  for (const [key, value] of Object.entries(orderedSC)) {
+    let grouped = util.groupByFirstWs(value);
+    orderedSC[key] = grouped;
   }
 
   for (const [key, value] of Object.entries(orderedSC)) {
@@ -155,7 +125,13 @@ function SkillchainResults(props) {
                 {value.map((v) => {
                   return (
                     <MDBCardText className="resultcard">
-                      {util.formatWeaponSkillName(v.wsString)}
+                      {v.map((o, index) => {
+                        if (index == v.length - 1) {
+                          return <p style={{ marginBottom: 0 }}>{util.formatWeaponSkillName(o.wsString)}</p>;
+                        } else {
+                          return <p>{util.formatWeaponSkillName(o.wsString)}</p>;
+                        }
+                      })}
                     </MDBCardText>
                   );
                 })}
@@ -189,6 +165,11 @@ function SkillchainResults(props) {
   }
 
   for (const [key, value] of Object.entries(orderedOtherWaySC)) {
+    let grouped = util.groupByFirstWs(value);
+    orderedOtherWaySC[key] = grouped;
+  }
+
+  for (const [key, value] of Object.entries(orderedOtherWaySC)) {
     let card = (
       <MDBContainer>
         <MDBRow className="justify-content-center">
@@ -205,7 +186,13 @@ function SkillchainResults(props) {
                 {value.map((v) => {
                   return (
                     <MDBCardText className="resultcard">
-                      {util.formatWeaponSkillName(v.wsString)}
+                      {v.map((o, index) => {
+                        if (index == v.length - 1) {
+                          return <p style={{ marginBottom: 0 }}>{util.formatWeaponSkillName(o.wsString)}</p>;
+                        } else {
+                          return <p>{util.formatWeaponSkillName(o.wsString)}</p>;
+                        }
+                      })}
                     </MDBCardText>
                   );
                 })}
