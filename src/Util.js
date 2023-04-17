@@ -349,6 +349,9 @@ function capitalizeFirstLetters(str) {
 }
 
 export function formatJobName(name) {
+  if (!name) {
+    return "";
+  }
   return capitalizeFirstLetters(name);
 }
 
@@ -386,4 +389,44 @@ export function formatWeaponName(name) {
   } else {
     return capitalizeFirstLetters(name);
   }
+}
+
+export function filterByFirstMove(obj, move) {
+  const result = {};
+
+  for (const key in obj) {
+    result[key] = obj[key].filter((item) => item.firstWs === move);
+  }
+
+  return result;
+}
+
+export function filterByBothMoves(obj, moves) {
+  const result = {};
+
+  for (const key in obj) {
+    result[key] = obj[key].filter((item) => moves.includes(item.firstWs) || moves.includes(item.secondWs));
+  }
+
+  return result;
+}
+
+export function filterByFirstMoves(obj, moves) {
+  const result = {};
+
+  for (const key in obj) {
+    result[key] = obj[key].filter((item) => moves.includes(item.firstWs));
+  }
+
+  return result;
+}
+
+export function filterBySecondMoves(obj, moves) {
+  const result = {};
+
+  for (const key in obj) {
+    result[key] = obj[key].filter((item) => moves.includes(item.secondWs));
+  }
+
+  return result;
 }

@@ -6,7 +6,39 @@ import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBCard, MDBCardBody, MDBCardTi
 
 import * as util from "../Util.js";
 
+import SkillchainFilter from "../components/SkillchainFilter.js";
+
 function SkillchainResults(props) {
+  const [selectedFilteredMoves, setSelectedFilteredMoves] = React.useState([]);
+
+  let filteredMoves;
+  let filteredMovesOtherWay;
+
+  if (selectedFilteredMoves.length !== 0) {
+    filteredMoves = util.filterByBothMoves(props.sc, selectedFilteredMoves);
+
+    for (const [key, value] of Object.entries(filteredMoves)) {
+      if (value.length == 0) {
+        delete filteredMoves[key];
+      }
+    }
+
+    filteredMovesOtherWay = util.filterByBothMoves(props.scOtherWay, selectedFilteredMoves);
+
+    for (const [key, value] of Object.entries(filteredMovesOtherWay)) {
+      if (value.length == 0) {
+        delete filteredMovesOtherWay[key];
+      }
+    }
+  } else {
+    filteredMoves = props.sc;
+    filteredMovesOtherWay = props.scOtherWay;
+  }
+
+  const changeFilter = (e) => {
+    setSelectedFilteredMoves(e);
+  };
+
   const scMap = {
     Scission: "🟤",
     Detonation: "🟢",
@@ -33,9 +65,6 @@ function SkillchainResults(props) {
   let titleCardOtherWay = [];
 
   if (props.selectedJob1.name && props.selectedJob2.name) {
-    console.log("weapon 1", props.selectedWeaponName1);
-    console.log("weapon 2", props.selectedWeaponName2);
-
     let title = (
       <MDBContainer>
         <MDBRow className="justify-content-center">
@@ -85,19 +114,19 @@ function SkillchainResults(props) {
 
   const orderedSC = {};
 
-  for (const [key, value] of Object.entries(props.sc)) {
+  for (const [key, value] of Object.entries(filteredMoves)) {
     if (lvl3SC.includes(key)) {
       orderedSC[key] = value;
     }
   }
 
-  for (const [key, value] of Object.entries(props.sc)) {
+  for (const [key, value] of Object.entries(filteredMoves)) {
     if (lvl2SC.includes(key)) {
       orderedSC[key] = value;
     }
   }
 
-  for (const [key, value] of Object.entries(props.sc)) {
+  for (const [key, value] of Object.entries(filteredMoves)) {
     if (lvl1SC.includes(key)) {
       orderedSC[key] = value;
     }
@@ -146,19 +175,19 @@ function SkillchainResults(props) {
   }
 
   const orderedOtherWaySC = {};
-  for (const [key, value] of Object.entries(props.scOtherWay)) {
+  for (const [key, value] of Object.entries(filteredMovesOtherWay)) {
     if (lvl3SC.includes(key)) {
       orderedOtherWaySC[key] = value;
     }
   }
 
-  for (const [key, value] of Object.entries(props.scOtherWay)) {
+  for (const [key, value] of Object.entries(filteredMovesOtherWay)) {
     if (lvl2SC.includes(key)) {
       orderedOtherWaySC[key] = value;
     }
   }
 
-  for (const [key, value] of Object.entries(props.scOtherWay)) {
+  for (const [key, value] of Object.entries(filteredMovesOtherWay)) {
     if (lvl1SC.includes(key)) {
       orderedOtherWaySC[key] = value;
     }
@@ -206,17 +235,68 @@ function SkillchainResults(props) {
     cardsOtherWay.push(card);
   }
 
+  let selectedJob2Ws = [];
+  let selectedJob1Ws = [];
+  for (const [key, value] of Object.entries(props.sc)) {
+    for (let ws of value) {
+      if (ws.firstWs) {
+        selectedJob1Ws.push(ws.firstWs);
+      }
+    }
+  }
+
+  for (const [key, value] of Object.entries(props.scOtherWay)) {
+    for (let ws of value) {
+      if (ws.secondWs) {
+        selectedJob1Ws.push(ws.secondWs);
+      }
+    }
+  }
+
+  for (const [key, value] of Object.entries(props.sc)) {
+    for (let ws of value) {
+      if (ws.secondWs) {
+        selectedJob2Ws.push(ws.secondWs);
+      }
+    }
+  }
+
+  for (const [key, value] of Object.entries(props.scOtherWay)) {
+    for (let ws of value) {
+      if (ws.firstWs) {
+        selectedJob2Ws.push(ws.firstdWs);
+      }
+    }
+  }
+
+  // dedupe
+  selectedJob1Ws = Array.from(new Set(selectedJob1Ws));
+  selectedJob1Ws = selectedJob1Ws.filter((value) => value !== undefined);
+
+  selectedJob2Ws = Array.from(new Set(selectedJob2Ws));
+  selectedJob2Ws = selectedJob2Ws.filter((value) => value !== undefined);
+
+  let allWs = selectedJob1Ws.concat(selectedJob2Ws);
+  allWs = allWs.filter((value) => value !== undefined);
+
   return (
     <Fragment>
       <div className="row">
         <div className="col-md-6">
           <>{titleCard}</>
-          <div style={{ paddingTop: 20 }} />
-          <>{cards}</>
         </div>
         <div className="col-md-6">
           <>{titleCardOtherWay}</>
-          <div style={{ paddingTop: 20 }} />
+        </div>
+      </div>
+
+      <SkillchainFilter selectedJob1={props.selectedJob1.name} selectedJob2={props.selectedJob2.name} selectedJobWs={allWs} selectedJob1Ws={selectedJob1Ws} selectedJob2Ws={selectedJob2Ws} changeFilter={changeFilter} />
+
+      <div className="row">
+        <div className="col-md-6">
+          <>{cards}</>
+        </div>
+        <div className="col-md-6">
           <>{cardsOtherWay}</>
         </div>
       </div>

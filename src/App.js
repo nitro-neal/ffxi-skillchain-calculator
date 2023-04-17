@@ -13,6 +13,7 @@ import Box from "@mui/material/Box";
 import JobWeaponSelect from "./components/JobWeaponSelect.js";
 import CharacterTiles from "./components/CharacterTiles.js";
 import SkillchainResults from "./components/SkillchainResults.js";
+import SkillchainFilter from "./components/SkillchainFilter.js";
 
 import { MDBContainer, MDBRow, MDBCol, MDBBtn, MDBInput, MDBIcon, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardImage, MDBRipple, MDBCardHeader, MDBCardFooter } from "mdb-react-ui-kit";
 
