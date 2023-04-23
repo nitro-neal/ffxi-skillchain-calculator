@@ -1,12 +1,45 @@
-import React, { Fragment, ReactDOM, ReactMotion, useState, useEffect } from "react";
+import React, {
+  Fragment,
+  ReactDOM,
+  ReactMotion,
+  useState,
+  useEffect,
+} from "react";
 import "../App.css";
 import arrow from "./img/arrow2tran.png";
 
-import { MDBContainer, MDBRow, MDBCol, MDBInput, MDBCard, MDBCardBody, MDBCardTitle, MDBCardText, MDBCardImage } from "mdb-react-ui-kit";
+import {
+  MDBContainer,
+  MDBRow,
+  MDBCol,
+  MDBInput,
+  MDBCard,
+  MDBCardBody,
+  MDBCardTitle,
+  MDBCardText,
+  MDBCardImage,
+} from "mdb-react-ui-kit";
 
 import * as util from "../Util.js";
 
 import SkillchainFilter from "../components/SkillchainFilter.js";
+
+//weapon icons
+import archeryIcon from "./img/archery.webp";
+import axeIcon from "./img/axe.webp";
+import clubIcon from "./img/club.webp";
+import daggerIcon from "./img/dagger.webp";
+import greatAxeIcon from "./img/greataxe.webp";
+import greatKatanaIcon from "./img/greatkatana.webp";
+import greatSwordIcon from "./img/greatsword.webp";
+import handToHandIcon from "./img/handtohand.webp";
+import katanaIcon from "./img/katana.webp";
+import marksmanshipIcon from "./img/marksmanship.webp";
+import polearmIcon from "./img/polearm.webp";
+import scytheIcon from "./img/scythe.webp";
+import staffIcon from "./img/staff.webp";
+import summonerIcon from "./img/summoner.png";
+import swordIcon from "./img/sword.webp";
 
 function SkillchainResults(props) {
   const [selectedFilteredMoves, setSelectedFilteredMoves] = React.useState([]);
@@ -23,7 +56,10 @@ function SkillchainResults(props) {
       }
     }
 
-    filteredMovesOtherWay = util.filterByBothMoves(props.scOtherWay, selectedFilteredMoves);
+    filteredMovesOtherWay = util.filterByBothMoves(
+      props.scOtherWay,
+      selectedFilteredMoves
+    );
 
     for (const [key, value] of Object.entries(filteredMovesOtherWay)) {
       if (value.length == 0) {
@@ -54,9 +90,36 @@ function SkillchainResults(props) {
     Gravitation: "⚫🟤",
   };
 
+  const weaponsImageDictionary = {
+    Dagger: daggerIcon,
+    Sword: swordIcon,
+    Polearm: polearmIcon,
+    Scythe: scytheIcon,
+    Summon: summonerIcon,
+    Archery: archeryIcon,
+    Axe: axeIcon,
+    Club: clubIcon,
+    Katana: katanaIcon,
+    Marksmanship: marksmanshipIcon,
+    Staff: staffIcon,
+    "Hand To Hand": handToHandIcon,
+    "Great Katana": greatKatanaIcon,
+    "Great Sword": greatSwordIcon,
+    "Great Axe": greatAxeIcon,
+  };
+
   const lvl3SC = ["Light II", "Darkness II", "Light", "Darkness"];
   const lvl2SC = ["Fusion", "Fragmentation", "Gravitation", "Distortion"];
-  const lvl1SC = ["Transfixion", "Induration", "Compression", "Detonation", "Liquefaction", "Impaction", "Reverberation", "Scission"];
+  const lvl1SC = [
+    "Transfixion",
+    "Induration",
+    "Compression",
+    "Detonation",
+    "Liquefaction",
+    "Impaction",
+    "Reverberation",
+    "Scission",
+  ];
 
   let cards = [];
   let cardsOtherWay = [];
@@ -73,14 +136,59 @@ function SkillchainResults(props) {
               <div style={{ fontSize: "35px" }} className="col">
                 {util.formatJobName(props.selectedJob1.name)}
               </div>
-              <div>{util.formatJobName(props.selectedWeaponName1)}</div>
+              <MDBRow>
+                <MDBCol
+                  className="col-sm-4"
+                  style={{
+                    textAlign: "right",
+                    paddingTop: "0",
+                    paddingRight: "0",
+                  }}
+                >
+                  <img
+                    style={{
+                      width: "32px",
+                      height: "32px",
+                    }}
+                    src={weaponsImageDictionary[props.selectedWeaponName1]}
+                  />
+                </MDBCol>
+                <MDBCol classnName="col-sm-8" style={{ textAlign: "left" }}>
+                  {util.formatJobName(props.selectedWeaponName1)}
+                </MDBCol>
+              </MDBRow>
             </MDBCol>
-            <MDBCardImage className="col img-fluid" src={arrow} alt="..." style={{ maxWidth: "7em", maxHeight: "7em" }} />
+            <MDBCardImage
+              className="col img-fluid"
+              src={arrow}
+              alt="..."
+              style={{ maxWidth: "7em", maxHeight: "7em" }}
+            />
             <MDBCol>
               <div style={{ fontSize: "35px" }} className="col">
                 {util.formatJobName(props.selectedJob2.name)}
               </div>
-              <div>{util.formatJobName(props.selectedWeaponName2)}</div>
+              <MDBRow>
+                <MDBCol
+                  className="col-sm-4"
+                  style={{
+                    textAlign: "right",
+                    paddingTop: "0",
+                    paddingRight: "0",
+                  }}
+                >
+                  <img
+                    style={{
+                      width: "32px",
+                      height: "32px",
+                    }}
+                    src={weaponsImageDictionary[props.selectedWeaponName2]}
+                  />
+                </MDBCol>
+                <MDBCol className="col-sm-8" style={{ textAlign: "left" }}>
+                  {util.formatJobName(props.selectedWeaponName2)}
+                </MDBCol>
+              </MDBRow>
             </MDBCol>
           </MDBCol>
         </MDBRow>
@@ -96,14 +204,59 @@ function SkillchainResults(props) {
               <div style={{ fontSize: "35px" }} className="col">
                 {util.formatJobName(props.selectedJob2.name)}
               </div>
-              <div>{util.formatJobName(props.selectedWeaponName2)}</div>
+              <MDBRow>
+                <MDBCol
+                  className="col-sm-4"
+                  style={{
+                    textAlign: "right",
+                    paddingTop: "0",
+                    paddingRight: "0",
+                  }}
+                >
+                  <img
+                    style={{
+                      width: "32px",
+                      height: "32px",
+                    }}
+                    src={weaponsImageDictionary[props.selectedWeaponName2]}
+                  />
+                </MDBCol>
+                <MDBCol classnName="col-sm-8" style={{ textAlign: "left" }}>
+                  {util.formatJobName(props.selectedWeaponName2)}
+                </MDBCol>
+              </MDBRow>
             </MDBCol>
-            <MDBCardImage className="col img-fluid" src={arrow} alt="..." style={{ maxWidth: "7em", maxHeight: "7em" }} />
+            <MDBCardImage
+              className="col img-fluid"
+              src={arrow}
+              alt="..."
+              style={{ maxWidth: "7em", maxHeight: "7em" }}
+            />
             <MDBCol>
               <div style={{ fontSize: "35px" }} className="col">
                 {util.formatJobName(props.selectedJob1.name)}
               </div>
-              <div>{util.formatJobName(props.selectedWeaponName1)}</div>
+              <MDBRow>
+                <MDBCol
+                  className="col-sm-4"
+                  style={{
+                    textAlign: "right",
+                    paddingTop: "0",
+                    paddingRight: "0",
+                  }}
+                >
+                  <img
+                    style={{
+                      width: "32px",
+                      height: "32px",
+                    }}
+                    src={weaponsImageDictionary[props.selectedWeaponName1]}
+                  />
+                </MDBCol>
+                <MDBCol classnName="col-sm-8" style={{ textAlign: "left" }}>
+                  {util.formatJobName(props.selectedWeaponName1)}
+                </MDBCol>
+              </MDBRow>
             </MDBCol>
           </MDBCol>
         </MDBRow>
@@ -156,9 +309,15 @@ function SkillchainResults(props) {
                     <MDBCardText className="resultcard">
                       {v.map((o, index) => {
                         if (index == v.length - 1) {
-                          return <p style={{ marginBottom: 0 }}>{util.formatWeaponSkillName(o.wsString)}</p>;
+                          return (
+                            <p style={{ marginBottom: 0 }}>
+                              {util.formatWeaponSkillName(o.wsString)}
+                            </p>
+                          );
                         } else {
-                          return <p>{util.formatWeaponSkillName(o.wsString)}</p>;
+                          return (
+                            <p>{util.formatWeaponSkillName(o.wsString)}</p>
+                          );
                         }
                       })}
                     </MDBCardText>
@@ -217,9 +376,15 @@ function SkillchainResults(props) {
                     <MDBCardText className="resultcard">
                       {v.map((o, index) => {
                         if (index == v.length - 1) {
-                          return <p style={{ marginBottom: 0 }}>{util.formatWeaponSkillName(o.wsString)}</p>;
+                          return (
+                            <p style={{ marginBottom: 0 }}>
+                              {util.formatWeaponSkillName(o.wsString)}
+                            </p>
+                          );
                         } else {
-                          return <p>{util.formatWeaponSkillName(o.wsString)}</p>;
+                          return (
+                            <p>{util.formatWeaponSkillName(o.wsString)}</p>
+                          );
                         }
                       })}
                     </MDBCardText>
@@ -290,7 +455,14 @@ function SkillchainResults(props) {
         </div>
       </div>
 
-      <SkillchainFilter selectedJob1={props.selectedJob1.name} selectedJob2={props.selectedJob2.name} selectedJobWs={allWs} selectedJob1Ws={selectedJob1Ws} selectedJob2Ws={selectedJob2Ws} changeFilter={changeFilter} />
+      <SkillchainFilter
+        selectedJob1={props.selectedJob1.name}
+        selectedJob2={props.selectedJob2.name}
+        selectedJobWs={allWs}
+        selectedJob1Ws={selectedJob1Ws}
+        selectedJob2Ws={selectedJob2Ws}
+        changeFilter={changeFilter}
+      />
 
       <div className="row">
         <div className="col-md-6">
