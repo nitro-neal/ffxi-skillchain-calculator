@@ -154,3 +154,63 @@ body {
     transform: rotate(360deg);
   }
 }
+
+
+/* App.css */
+.chat__app {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+}
+
+.app__chatContainer {
+  flex: 1;
+  padding: 30px;
+  overflow: auto;
+}
+
+.app__message {
+  margin: 13px 0;
+}
+
+.app__message--even {
+  /* background: #d6c8c8;
+  color: black; */
+  /* background-image: "./crystal.p"; */
+}
+
+.app__message--odd {
+  /* background: #37a1d2; 
+  color: black; */
+  font-style: italic;
+  padding-bottom: 15px;
+}
+
+.app__form {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-top: 1px solid lightgray;
+}
+
+.app__form > input {
+  flex: 1;
+  padding: 10px;
+  border: none;
+}
+
+.app__form > button {
+  padding: 10px;
+}
+
+.app__loading {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 20px;
+  border-radius: 5px;
+}
