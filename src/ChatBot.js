@@ -20,7 +20,9 @@ function ChatBot() {
     setMessages([...messages, "Q: " + query]);
 
     try {
-      const response = await fetch("http://159.89.81.211:5000/query", {
+      // http://159.89.81.211:5000/query
+      // https://your-netlify-site.netlify.app/.netlify/functions/proxy
+      const response = await fetch("https://ffxi.xyz/.netlify/functions/proxy", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
