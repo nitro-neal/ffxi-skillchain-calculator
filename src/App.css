@@ -2,6 +2,17 @@ body {
   font-family: Roboto, Helvetica, Arial, sans-serif;
 }
 
+.nav-link {
+  position: absolute;
+  top: 0;
+  margin-top: 32px;
+  font-size: 20px;
+}
+
+.nav-link:hover {
+  color: #000;
+}
+
 #bg {
   background: hsla(199, 100%, 83%, 1);
 
@@ -155,7 +166,6 @@ body {
   }
 }
 
-
 /* App.css */
 .chat__app {
   display: flex;
@@ -192,6 +202,7 @@ body {
   justify-content: space-between;
   padding: 20px;
   border-top: 1px solid lightgray;
+  box-shadow: 5px 10px 20px black;
 }
 
 .app__form > input {
