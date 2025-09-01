@@ -80,8 +80,12 @@ export function getSkillchainResults(job1, job2, weapons1, weapons2, lvl1sc, lvl
 
 const GetWeaponSkillInfoAtLevelForJob = (job, weapon, partyLevel) => {
   let selectJob1WsAtLvl = {};
+  // Ensure partyLevel is a number and within bounds of wsLevel array
+  const levelCount = Array.isArray(job.wsLevel) ? job.wsLevel.length : 0;
+  const maxIdx = Math.min(parseInt(partyLevel, 10) || 0, levelCount);
 
-  for (let i = 0; i < partyLevel; i++) {
+  for (let i = 0; i < maxIdx; i++) {
+    if (!job.wsLevel[i]) continue;
     let wsAtLvl = job.wsLevel[i].ws;
     if (wsAtLvl.length > 0) {
       let wsAtLvlArr = wsAtLvl.split(",");

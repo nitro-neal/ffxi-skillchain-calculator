@@ -23,6 +23,7 @@ import {
 import * as util from "../Util.js";
 
 import SkillchainFilter from "../components/SkillchainFilter.js";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
 //weapon icons
 import archeryIcon from "./img/archery.webp";
@@ -42,6 +43,7 @@ import summonerIcon from "./img/summoner.png";
 import swordIcon from "./img/sword.webp";
 
 function SkillchainResults(props) {
+  const isMobile = useMediaQuery("(max-width:600px)");
   const [selectedFilteredMoves, setSelectedFilteredMoves] = React.useState([]);
 
   let filteredMoves;
@@ -443,6 +445,36 @@ function SkillchainResults(props) {
 
   let allWs = selectedJob1Ws.concat(selectedJob2Ws);
   allWs = allWs.filter((value) => value !== undefined);
+
+  if (isMobile) {
+    return (
+      <Fragment>
+        <SkillchainFilter
+          selectedJob1={props.selectedJob1.name}
+          selectedJob2={props.selectedJob2.name}
+          selectedJobWs={allWs}
+          selectedJob1Ws={selectedJob1Ws}
+          selectedJob2Ws={selectedJob2Ws}
+          changeFilter={changeFilter}
+        />
+
+        <div className="row">
+          <div className="col-12">
+            <>{titleCard}</>
+          </div>
+          <div className="col-12">
+            <>{cards}</>
+          </div>
+          <div className="col-12">
+            <>{titleCardOtherWay}</>
+          </div>
+          <div className="col-12">
+            <>{cardsOtherWay}</>
+          </div>
+        </div>
+      </Fragment>
+    );
+  }
 
   return (
     <Fragment>

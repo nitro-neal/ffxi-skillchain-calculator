@@ -10,10 +10,27 @@ import Slide from "@mui/material/Slide";
 import crystal from "./crystal.png";
 
 import Box from "@mui/material/Box";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 import JobWeaponSelect from "./components/JobWeaponSelect.js";
 import CharacterTiles from "./components/CharacterTiles.js";
 import SkillchainResults from "./components/SkillchainResults.js";
 import SkillchainFilter from "./components/SkillchainFilter.js";
+// Job images for mobile preview
+import warImg from "./components/img/war.webp";
+import bstImg from "./components/img/bst.webp";
+import drgImg from "./components/img/drg.webp";
+import drkImg from "./components/img/drk.webp";
+import mnkImg from "./components/img/mnk.webp";
+import ninImg from "./components/img/nin.webp";
+import pldImg from "./components/img/pld.webp";
+import rdmImg from "./components/img/rdm.webp";
+import rngImg from "./components/img/rng.webp";
+import samImg from "./components/img/sam.webp";
+import smnImg from "./components/img/smn.webp";
+import thfImg from "./components/img/thf.webp";
 
 import {
   MDBContainer,
@@ -54,6 +71,22 @@ function App() {
   const [selectedWeaponName1, setWeaponName1] = useState([]);
   const [selectedWeaponName2, setWeaponName2] = useState([]);
   const [isShown, setIsShown] = useState(false);
+
+  const jobImageMap = {
+    war: warImg,
+    mnk: mnkImg,
+    rdm: rdmImg,
+    thf: thfImg,
+    pld: pldImg,
+    drk: drkImg,
+    bst: bstImg,
+    rng: rngImg,
+    smn: smnImg,
+    snm: smnImg,
+    sam: samImg,
+    nin: ninImg,
+    drg: drgImg,
+  };
 
   useEffect(() => {
     // Async promise runs in background
@@ -130,38 +163,17 @@ function App() {
 
   return (
     <div className="App ffxi-font" id="bg">
-      <header>
-        <div class="nav-container">
-          <MDBContainer>
-            <MDBRow>
-              <MDBCol className="col-sm-1">
-                <a href="/" class="nav-link ffxi-font">
-                  Home
-                </a>
-              </MDBCol>
-              <MDBCol className="col-sm-1">
-                <a href="/chatbot" class="nav-link ffxi-font">
-                  Chatbot
-                </a>
-              </MDBCol>
-
-              <MDBCol className="col-sm-1"></MDBCol>
-              <MDBCol className="col-sm-1"></MDBCol>
-            </MDBRow>
-          </MDBContainer>
-        </div>
-      </header>
-
-      <h1 className="ffxi-font" style={{ paddingTop: "30px" }}>
-        <img style={{ maxWidth: "50px" }} src={crystal}></img>FFXI Skillchain
-        Calculator
-        <img style={{ maxWidth: "50px" }} src={crystal}></img>
+      {/* Title */}
+      <h1 className="ffxi-font app-title" style={{ paddingTop: "30px" }}>
+        <img className="title-icon" style={{ maxWidth: "50px" }} src={crystal} alt="crystal" />
+        <span className="title-text">FFXI Skillchain Calculator</span>
+        <img className="title-icon" style={{ maxWidth: "50px" }} src={crystal} alt="crystal" />
       </h1>
       <hr></hr>
 
       <Box>
-        {/* <Slide direction="right" in={true}> */}
-        <MDBContainer>
+        {/* Desktop/Tablet (drag & drop) */}
+        <MDBContainer className="d-none d-md-block">
           <MDBRow>
             <CharacterTiles />
           </MDBRow>
@@ -223,7 +235,107 @@ function App() {
 
           <hr></hr>
         </MDBContainer>
-        {/* </Slide> */}
+
+        {/* Mobile: dropdown pickers */}
+        <MDBContainer className="d-block d-md-none">
+          <MDBRow className="justify-content-center">
+            <MDBCol className="col-12">
+              <p style={{ marginBottom: 8 }}>Pick two jobs</p>
+            </MDBCol>
+            <MDBCol className="col-12 mb-3 d-flex justify-content-center">
+              <div className="gx-5 characterselect" style={{ textAlign: "center" }}>
+                <div style={{ marginBottom: 8, fontWeight: 600 }}>Party Member 1</div>
+                {selectedJob1 && selectedJob1.shortName && jobImageMap[selectedJob1.shortName] && (
+                  <img
+                    className="mobile-job-image"
+                    src={jobImageMap[selectedJob1.shortName]}
+                    alt={util.formatJobName(selectedJob1.name)}
+                  />
+                )}
+                <FormControl fullWidth>
+                  <InputLabel id="job1-label">Job 1</InputLabel>
+                  <Select
+                    labelId="job1-label"
+                    value={Object.keys(ffxi || {}).find((k) => ffxi[k] === selectedJob1) || ""}
+                    onChange={(e) => {
+                      const key = e.target.value;
+                      if (ffxi && ffxi[key]) {
+                        const job = ffxi[key];
+                        setJob1(job);
+                        if (job.weapons && job.weapons[0]) {
+                          setWeapon1(job.weapons[0].moves);
+                          setWeaponName1(util.formatWeaponName(job.weapons[0].name));
+                        } else {
+                          setWeapon1([]);
+                          setWeaponName1("");
+                        }
+                      }
+                    }}
+                  >
+                    {Object.keys(ffxi || {}).map((k) => (
+                      <MenuItem key={k} value={k}>
+                        {util.formatJobName(ffxi[k].name)}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <div style={{ marginTop: 12 }}>
+                  <JobWeaponSelect
+                    selectedJob={selectedJob1}
+                    moveChanged={(e) => weaponChanged(e, "1")}
+                  />
+                </div>
+              </div>
+            </MDBCol>
+
+            <MDBCol className="col-12 mb-3 d-flex justify-content-center">
+              <div className="gx-5 characterselect" style={{ textAlign: "center" }}>
+                <div style={{ marginBottom: 8, fontWeight: 600 }}>Party Member 2</div>
+                {selectedJob2 && selectedJob2.shortName && jobImageMap[selectedJob2.shortName] && (
+                  <img
+                    className="mobile-job-image"
+                    src={jobImageMap[selectedJob2.shortName]}
+                    alt={util.formatJobName(selectedJob2.name)}
+                  />
+                )}
+                <FormControl fullWidth>
+                  <InputLabel id="job2-label">Job 2</InputLabel>
+                  <Select
+                    labelId="job2-label"
+                    value={Object.keys(ffxi || {}).find((k) => ffxi[k] === selectedJob2) || ""}
+                    onChange={(e) => {
+                      const key = e.target.value;
+                      if (ffxi && ffxi[key]) {
+                        const job = ffxi[key];
+                        setJob2(job);
+                        if (job.weapons && job.weapons[0]) {
+                          setWeapon2(job.weapons[0].moves);
+                          setWeaponName2(util.formatWeaponName(job.weapons[0].name));
+                        } else {
+                          setWeapon2([]);
+                          setWeaponName2("");
+                        }
+                      }
+                    }}
+                  >
+                    {Object.keys(ffxi || {}).map((k) => (
+                      <MenuItem key={k} value={k}>
+                        {util.formatJobName(ffxi[k].name)}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
+                <div style={{ marginTop: 12 }}>
+                  <JobWeaponSelect
+                    selectedJob={selectedJob2}
+                    moveChanged={(e) => weaponChanged(e, "2")}
+                  />
+                </div>
+              </div>
+            </MDBCol>
+          </MDBRow>
+          <hr />
+        </MDBContainer>
       </Box>
       <hr></hr>
       <h3> Skillchains </h3>
@@ -232,10 +344,11 @@ function App() {
       <MDBCol size="md">
         <div style={{ width: 100, margin: "auto", padding: 20 }}>
           <MDBInput
+            type="number"
             defaultValue={30}
             label="level"
             name="level"
-            onChange={(e) => setPartyLevel(e.target.value)}
+            onChange={(e) => setPartyLevel(parseInt(e.target.value, 10) || 0)}
           ></MDBInput>
         </div>
       </MDBCol>

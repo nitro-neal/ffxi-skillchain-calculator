@@ -41,6 +41,22 @@ body {
   font-family: "Averia Serif Libre", cursive;
 }
 
+/* Title styling */
+.app-title {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.app-title .title-text {
+  white-space: nowrap;
+}
+
+.app-title .title-icon {
+  height: auto;
+}
+
 /* #myVideo {
   position: fixed;
   right: 0;
@@ -224,4 +240,24 @@ body {
   color: white;
   padding: 20px;
   border-radius: 5px;
+}
+
+/* Mobile tweaks */
+@media (max-width: 576px) {
+  .app-title {
+    font-size: 22px;
+  }
+  .app-title .title-icon {
+    max-width: 28px !important;
+  }
+  .characterselect {
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .mobile-job-image {
+    max-width: 120px;
+    height: auto;
+    display: block;
+    margin: 0 auto 8px auto;
+  }
 }
