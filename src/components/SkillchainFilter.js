@@ -56,9 +56,8 @@ export default function SkillchainResults(props) {
     <div>
       {props.selectedJobWs && (
         <div>
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <div style={{ display: "flex" }}></div>
-            <FormControl sx={{ m: 1, width: 400 }}>
+          <div className="filters">
+            <FormControl sx={{ m: 1, width: { xs: 'min(92vw, 560px)', sm: 400 } }}>
               <InputLabel id="demo-multiple-checkbox-label"> Weaponskills Filter</InputLabel>
               <Select labelId="demo-multiple-checkbox-label" id="demo-multiple-checkbox" multiple value={selectedWs} onChange={handleChange} input={<OutlinedInput label="Tag" />} renderValue={(selected) => selected.join(", ")} MenuProps={MenuProps}>
                 <MenuItem key="selectedJob1" value="selectedJob1">
